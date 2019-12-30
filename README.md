@@ -48,6 +48,7 @@ Your application must be dockerized and have a docker compose file to describe a
 - You can use any language / framework / SDK of your choice.
 - The API **MUST** return valid JSON and **MUST** follow the endpoints set out above.
 - You **SHOULD** write testable code and demonstrate unit testing it.
+- You **SHOULD** have both unit tests and integration tests
 - You can use any testing, mocking libraries provided that you state the reasoning and it's simple to install and run.
 - You **SHOULD** document your code and scripts.
 - You need to have everything automated in scripts and use docker as a unit of deployment locally.
