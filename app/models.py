@@ -10,7 +10,7 @@ class Config(Base):
 
     name: str (unique)
     
-    metadatac: nested key:value implemented as str
+    metadata: nested key:value implemented as str
     """
 
     __tablename__ = "configs"
