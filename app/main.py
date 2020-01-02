@@ -4,7 +4,7 @@ from typing import List
 
 # local import
 from . import crud, models, schemas
-from .database import SessionLocal, engine
+from app.database import SessionLocal, engine
 
 # create the database tables
 models.Base.metadata.create_all(bind=engine)
