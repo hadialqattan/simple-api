@@ -9,13 +9,13 @@ class ConfigBase(BaseModel):
     So this will help us avoiding confusion while using both. 
     """
     name: str 
-    metadatac: dict
+    metadata: dict
 
 
 class ConfigRead(ConfigBase):
     """ Child class for reading operation """
     name: str
-    metadatac: dict
+    metadata: dict
 
     class Config:
         """ 
