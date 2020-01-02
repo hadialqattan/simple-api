@@ -27,7 +27,7 @@ Following are the endpoints that implemented:
 
 # Tests
 
-## There are two types of tests implemented:
+### There are two types of tests implemented:
 
 ### - **Unit tests**
 ```shell
