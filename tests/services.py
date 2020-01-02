@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 import requests
 
 # local import 
-from .constants import BASE_URL
+from tests.constants import BASE_URL
 
 
 def get_configs():
