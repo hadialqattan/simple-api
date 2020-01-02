@@ -1,28 +1,14 @@
-# SimpleProject 1
+# Simpe API
 
 
-## Problem definition
+## wiki
 
-The aim of test is to create a simple HTTP service that stores and returns configurations that satisfy certain conditions.
-The service should have a docker-compose file and everything is dockerized
+Simple API is HTTP service that stores and returns configurations that satisfy certain conditions.
 
+  
+## Endpoints 
 
-## Instructions
-
-1. Clone this repository.
-2. Create a new branch.
-3. Solve the task and commit your code. Commit often.
-4. Do a pull request from your branch to the `master` branch.
-
-In your pull request, make sure to write about your approach in the description.
-
-I believe it will take 2 to 6 hours to develop this task.
-
-### Endpoints
-
-Your application **MUST** conform to the following endpoint structure and return the HTTP status codes appropriate to each operation.
-
-Following are the endpoints that should be implemented:
+Following are the endpoints that implemented:
 
 | Name   | Method      | URL
 | ---    | ---         | ---
@@ -36,21 +22,26 @@ Following are the endpoints that should be implemented:
 #### Schema
 
 - **Config**
-  - Name (string of length no more than 120 characters)
-  - Metadata (nested key:value pairs where both key and value are strings of length no more than 160 characters)
+  - Name (string)
+  - Metadata (nested key:value pairs where both key and value are strings)
 
-### Deployment
+# Tests
 
-Your application must be dockerized and have a docker compose file to describe all it needs and docker files for all parts of the application
+## There are two types of tests implemented:
 
-## Rules
+## - **Unit tests**
+```shell
+$ pytest test -vv
+```
 
-- You can use any language / framework / SDK of your choice.
-- The API **MUST** return valid JSON and **MUST** follow the endpoints set out above.
-- You **SHOULD** write testable code and demonstrate unit testing it.
-- You **SHOULD** have both unit tests and integration tests
-- You can use any testing, mocking libraries provided that you state the reasoning and it's simple to install and run.
-- You **SHOULD** document your code and scripts.
-- You need to have everything automated in scripts and use docker as a unit of deployment locally.
-- You can use any database you want for this.
+## - **Integration tests**
+```shell 
+$ nosetests --verbosity=2 tests/test_integration.py
+```
 
+# Swagger UI documentation
+
+## There are two different swagger UI documentation:
+
+- ### Swagger UI powerd by openAPI at **/docs** endpoint
+- ### Swagger UI powred by redoc at **/redoc** endpoint
