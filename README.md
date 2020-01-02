@@ -29,19 +29,19 @@ Following are the endpoints that implemented:
 
 ## There are two types of tests implemented:
 
-## - **Unit tests**
+### - **Unit tests**
 ```shell
 $ pytest test -vv
 ```
 
-## - **Integration tests**
+### - **Integration tests**
 ```shell 
 $ nosetests --verbosity=2 tests/test_integration.py
 ```
 
 # Swagger UI documentation
 
-## There are two different swagger UI documentation:
+### There are two different swagger UI documentation:
 
-- ### Swagger UI powerd by openAPI at **/docs** endpoint
-- ### Swagger UI powred by redoc at **/redoc** endpoint
+- #### Swagger UI powerd by openAPI at **/docs** endpoint
+- #### Swagger UI powred by redoc at **/redoc** endpoint
