@@ -35,7 +35,7 @@ def create_config(db: Session, config: schemas.ConfigCreate):
 
     return: new config
     """
-    db_config = models.Config(name=config.name, metadatac=str(config.metadatac))
+    db_config = models.Config(name=config.name, metadatac=str(config.metadata))
     db.add(db_config)
     db.commit()
     db.refresh(db_config)
@@ -72,7 +72,7 @@ def update_config(db: Session, config: schemas.ConfigUpdate):
     db_config = db.query(models.Config).filter(models.Config.name == config.name).first()
     if not db_config: 
         return False
-    db_config.metadatac = str(config.metadatac)
+    db_config.metadatac = str(config.metadata)
     db.commit() 
     db.refresh(db_config)
     return db_config
