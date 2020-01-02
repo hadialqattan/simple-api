@@ -5,7 +5,7 @@
 
 Simple API is HTTP service that stores and returns configurations that satisfy certain conditions.
 
-
+  
 ## Endpoints 
 
 Following are the endpoints that implemented:
