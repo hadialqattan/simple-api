@@ -16,7 +16,7 @@ app = FastAPI()
 def get_db():
     try:
         db = SessionLocal()
-        yield db    
+        yield db
     finally:
         db.close()
 
@@ -45,7 +45,7 @@ def list(db: Session = Depends(get_db)):
 @app.post('/configs')
 def create(config:schemas.ConfigCreate, db: Session = Depends(get_db)):    
     """
-    SQL query: INSERT INTO configs (name, metadatac) VALUES (nameValue, metadatacValue)
+    SQL query: INSERT INTO configs (name, metadata) VALUES (nameValue, metadataValue)
     
     summary: create new config into configs table
 
@@ -60,7 +60,7 @@ def create(config:schemas.ConfigCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="name already exists")
     # create new config 
     new_config = crud.create_config(config=config, db=db)
-    return {"New config has created": {"name":config.name, "metadata":config.metadatac}}
+    return {"New config has created": {"name":config.name, "metadata":config.metadata}}
 
 
 @app.get('/configs/{name}')
@@ -95,14 +95,14 @@ def update(name:str, metadata:dict, db: Session = Depends(get_db)):
     return: json response
     """
     # create new config with update value
-    config_schema = schemas.ConfigUpdate(name=name, metadatac=metadata)
+    config_schema = schemas.ConfigUpdate(name=name, metadata=metadata)
     # update the config with new metadata value
     db_config = crud.update_config(config=config_schema, db=db)
     # check for unexists name
     if not db_config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
     # return success response
-    return {"The config has updated": {"name":config_schema.name, "metadata":config_schema.metadatac}}
+    return {"The config has updated": {"name":config_schema.name, "metadata":config_schema.metadata}}
 
 
 @app.delete('/configs/{name}')
