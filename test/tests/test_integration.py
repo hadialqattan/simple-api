@@ -123,4 +123,3 @@ def pytest_sessionfinish(session, exitstatus):
     from app import models
     db = Depends(get_db)
     db.query(models.Config).delete()
-
