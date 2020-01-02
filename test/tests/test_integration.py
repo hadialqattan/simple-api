@@ -1,14 +1,17 @@
 from nose.tools import assert_is_not_none, assert_equal, assert_list_equal
+from unittest.mock import Mock, patch
 
 # local import 
-from test.integration.services import get_configs, get_config, post_create_config, put_update_config, delete_config
+from .services import get_configs, get_config, post_create_config, put_update_config, delete_config
 
 
 # [list : GET : /configs] endpoint
-def test_get_all_empty():
+@patch('project.services.requests.get')
+def test_get_all_empty(mock_get):
     """
     get all configs from empty table 
     """
+    mock_get.return_value.ok = True
     response = get_configs()
     assert_is_not_none(response)
     assert_equal(response.status_code, 200)
@@ -16,10 +19,12 @@ def test_get_all_empty():
 
 
 # [create : POST : /configs] endpoint
-def test_create_config_success():
+@patch('project.services.requests.post')
+def test_create_config_success(mock_get):
     """
     create new config (success case)
     """
+    mock_get.return_value.ok = True
     response = post_create_config(body={'name':'car', 'metadatac':{'speed':15, 'weight': '1000kg', 'language':'english'}})
     assert_is_not_none(response)
     assert_equal(response.status_code, 200)
@@ -27,10 +32,12 @@ def test_create_config_success():
 
 
 # [create : POST : /configs] endpoint
-def test_create_config_name_already_exists():
+@patch('project.services.requests.post')
+def test_create_config_name_already_exists(mock_get):
     """ 
     create new config with exists name
     """
+    mock_get.return_value.ok = True
     response = post_create_config(body={'name':'car', 'metadatac':{'speed':15, 'weight': '1000kg', 'language':'english'}})
     assert_is_not_none(response)
     assert_equal(response.status_code, 400)
@@ -38,10 +45,12 @@ def test_create_config_name_already_exists():
 
 
 # [list : GET : /configs] endpoint
-def test_get_all():
+@patch('project.services.requests.get')
+def test_get_all(mock_get):
     """
     get all configs (success case)
     """
+    mock_get.return_value.ok = True
     response = get_configs()
     assert_is_not_none(response)
     assert_equal(response.status_code, 200)
@@ -49,10 +58,12 @@ def test_get_all():
 
 
 # [get : GET : /configs/{name}]
-def test_get_config_by_name_success():
+@patch('project.services.requests.get')
+def test_get_config_by_name_success(mock_get):
     """
     get config by name (success case)
     """
+    mock_get.return_value.ok = True
     response = get_config('car')
     assert_is_not_none(response)
     assert_equal(response.status_code, 200)
@@ -60,10 +71,12 @@ def test_get_config_by_name_success():
 
 
 # [get : GET : /configs/{name}]
-def test_get_config_by_name_unexists_name():
+@patch('project.services.requests.get')
+def test_get_config_by_name_unexists_name(mock_get):
     """
     get config by unexists name
     """
+    mock_get.return_value.ok = True
     response = get_config('ThisIsNotExists')
     assert_is_not_none(response)
     assert_equal(response.status_code, 404)
@@ -71,10 +84,12 @@ def test_get_config_by_name_unexists_name():
 
 
 # [update : PUT : /configs/{name}]
-def test_update_config_by_name_success():
+@patch('project.services.requests.put')
+def test_update_config_by_name_success(mock_get):
     """
     update config by name (success case)
     """
+    mock_get.return_value.ok = True
     response = put_update_config('car', metadata={'speed':150, 'weight': '1000kg', 'language':'arabic'})
     assert_is_not_none(response)
     assert_equal(response.status_code, 200)
@@ -82,10 +97,12 @@ def test_update_config_by_name_success():
 
 
 # [update : PUT : /configs/{name}]
-def test_update_config_by_name_unexists_name():
+@patch('project.services.requests.put')
+def test_update_config_by_name_unexists_name(mock_get):
     """
     update unexsists config by name 
     """
+    mock_get.return_value.ok = True
     response = put_update_config('ThisIsNotExists', metadata={'speed':343})
     assert_is_not_none(response)
     assert_equal(response.status_code, 404)
@@ -93,10 +110,12 @@ def test_update_config_by_name_unexists_name():
 
 
 # [delete : DELETE : /configs/{name}]
-def test_delete_config_by_name_success():
+@patch('project.services.requests.delete')
+def test_delete_config_by_name_success(mock_get):
     """ 
     delete config by name (success case)
     """
+    mock_get.return_value.ok = True
     response = delete_config('car')
     assert_is_not_none(response)
     assert_equal(response.status_code, 200)
@@ -104,10 +123,12 @@ def test_delete_config_by_name_success():
 
 
 # [delete : DELETE : /configs/{name}]
-def test_delete_config_by_name_unexists_name():
+@patch('project.services.requests.delete')
+def test_delete_config_by_name_unexists_name(mock_get):
     """ 
     delete unexists config by name
     """
+    mock_get.return_value.ok = True
     response = delete_config('ThisIsUnexists')
     assert_is_not_none(response)
     assert_equal(response.status_code, 404)
