@@ -25,6 +25,11 @@ Following are the endpoints that implemented:
   - Name (string)
   - Metadata (nested key:value pairs where both key and value are strings)
 
+# Docker Image 
+```shell 
+docker pull alqattanhadizaki/simple-project-1_web
+```
+
 # Tests
 
 ### There are two types of tests implemented:
