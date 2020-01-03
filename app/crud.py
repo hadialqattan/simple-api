@@ -5,7 +5,7 @@ CRUD comes from: Create, Read, Update, and Delete.
 from sqlalchemy.orm import Session
 
 # local import
-from app import models, schemas
+import models, schemas
 
 
 def get_configs(db: Session):

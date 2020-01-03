@@ -2,7 +2,7 @@ from nose.tools import assert_is_not_none, assert_equal, assert_list_equal
 from unittest.mock import Mock, patch
 
 # local import 
-from tests.services import get_configs, get_config, post_create_config, put_update_config, delete_config
+from services import get_configs, get_config, post_create_config, put_update_config, delete_config
 
 
 # [list : GET : /configs] endpoint

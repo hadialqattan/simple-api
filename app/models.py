@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 
 # local import
-from app.database import Base
+from database import Base
 
 
 class Config(Base):
