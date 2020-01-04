@@ -22,9 +22,9 @@ def test_create_config_success():
     """
     create new config (success case)
     """
-    response = client.post('/configs', json={'name':'car', 'metadata':{'speed':15, 'weight': '1000kg', 'language':'english'}})
+    response = client.post('/configs', json={'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}})
     assert response.status_code == 200
-    assert response.json() == {"New config has created":{'name':'car', 'metadata':{'speed':15, 'weight': '1000kg', 'language':'english'}}}
+    assert response.json() == {"New config has created":{'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}}
 
 
 # [create : POST : /configs] endpoint
@@ -32,7 +32,7 @@ def test_create_config_name_already_exists():
     """ 
     create new config with exists name
     """
-    response = client.post('/configs', json={'name':'car', 'metadata':{'speed':15, 'weight': '1000kg', 'language':'english'}})
+    response = client.post('/configs', json={'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}})
     assert response.status_code == 400
     assert response.json() == {"detail":"name already exists"}
 
@@ -44,7 +44,7 @@ def test_get_all():
     """
     response = client.get('/configs')
     assert response.status_code == 200
-    assert response.json() == {"Configs":[{'name':'car', 'metadata':{'speed':15, 'weight': '1000kg', 'language':'english'}}]}
+    assert response.json() == {"Configs":[{'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}]}
 
 
 # [get : GET : /configs/{name}]
@@ -54,7 +54,7 @@ def test_get_config_by_name_success():
     """
     response = client.get('/configs/car')
     assert response.status_code == 200 
-    assert response.json() == {"Config":{'name':'car', 'metadata':{'speed':15, 'weight': '1000kg', 'language':'english'}}}
+    assert response.json() == {"Config":{'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}}
 
 
 # [get : GET : /configs/{name}]
@@ -72,9 +72,9 @@ def test_update_config_by_name_success():
     """
     update config by name (success case)
     """
-    response = client.put('/configs/car', json={'speed':150, 'weight': '1000kg', 'language':'arabic'})
+    response = client.put('/configs/car', json={'speed':"150", 'weight': '1000kg', 'language':'arabic'})
     assert response.status_code == 200
-    assert response.json() == {"The config has updated":{'name':'car', 'metadata':{'speed':150, 'weight': '1000kg', 'language':'arabic'}}}
+    assert response.json() == {"The config has updated":{'name':'car', 'metadata':{'speed':"150", 'weight': '1000kg', 'language':'arabic'}}}
 
 
 # [update : PUT : /configs/{name}]
@@ -106,13 +106,3 @@ def test_delete_config_by_name_unexists_name():
     assert response.status_code == 404
     assert response.json() == {"detail":"name doesn't exists"}
 
-
-# clean the DB
-def pytest_sessionfinish(session, exitstatus):
-    """
-    clean the Database after unit test
-    """
-    from app.main import Depends, get_db
-    from app import models
-    db = Depends(get_db)
-    db.query(models.Config).delete()
