@@ -35,7 +35,7 @@ def create_config(db: Session, config: schemas.ConfigCreate):
 
     return: new config
     """
-    db_config = models.Config(name=config.name, metadatac=str(config.metadata))
+    db_config = models.Config(name=config.name, metadatac=dict(config.metadata))
     db.add(db_config)
     db.commit()
     db.refresh(db_config)
@@ -61,7 +61,7 @@ def update_config(db: Session, config: schemas.ConfigUpdate):
     """ 
     designed for [Update : PUT : /configs/{name}]
 
-    SQL query: UPDATE configs SET metadatac=metadatac WHERE name=name;
+    SQL query: UPDATE configs SET metadata=metadata WHERE name=name;
 
     summary: update config by name
 
@@ -72,7 +72,7 @@ def update_config(db: Session, config: schemas.ConfigUpdate):
     db_config = db.query(models.Config).filter(models.Config.name == config.name).first()
     if not db_config: 
         return False
-    db_config.metadatac = str(config.metadata)
+    db_config.metadatac = config.metadata
     db.commit() 
     db.refresh(db_config)
     return db_config

@@ -37,7 +37,7 @@ def list(db: Session = Depends(get_db)):
     # select all configs
     configs = crud.get_configs(db=db)
     # convert str metadata to dict
-    configs_list = [{"name":config.name, "metadata":eval(config.metadatac)} for config in configs]
+    configs_list = [{"name":config.name, "metadata":config.metadatac} for config in configs]
     # check for empty configs table
     return {"Configs":configs_list} if configs_list else {"Configs":"Empty"}
 
@@ -80,7 +80,7 @@ def get(name:str, db: Session = Depends(get_db)):
     if not config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
     # convert str metadata to key:value
-    return {"Config":{"name":config.name, "metadata":eval(config.metadatac)}}
+    return {"Config":{"name":config.name, "metadata":config.metadatac}}
 
 
 @app.put('/configs/{name}')
