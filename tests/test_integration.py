@@ -143,14 +143,3 @@ def test_delete_config_by_name_unexists_name(mock_delete):
     response = delete_config('ThisIsUnexists')
     assert_is_not_none(response)
     assert_list_equal(response.json(), jsonres)
-
-
-# clean the DB
-def pytest_sessionfinish(session, exitstatus):
-    """
-    clean the Database after unit test
-    """
-    from app.main import Depends, get_db
-    from app import models
-    db = Depends(get_db)
-    db.query(models.Config).delete()
