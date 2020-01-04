@@ -1,21 +1,38 @@
 version: '3'
 services:
-  myproj_redis:
+  
+  redis:
     image: redis:4.0.6-alpine
     ports:
       - "6379:6379"
     volumes:
       - ./redis:/data
-  myproj_api:
+  
+  api:
     image: simpleapi:latest
     command: uvicorn main:app --host 0.0.0.0 --port 5057
     ports:
       - "5057:5057"
     depends_on:
-      - myproj_redis
+      - redis
+      - db
     links:
-      - myproj_redis
-    stdin_open: true
-    tty: true
+      - redis
+
+  db:
     volumes:
-      - ./app/db/:/root/db/
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    deploy:
+      placement:
+        constraints:
+          - node.labels.${STACK_NAME}.app-db-data == true
+  
+  proxy:
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+volumes:
+  app-db-data:
+  

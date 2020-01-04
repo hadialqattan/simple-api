@@ -1,11 +1,11 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
 COPY ./app /app
-COPY ./test /test
-COPY ./tests /tests 
 COPY requirements.txt /
+COPY tests_runner.sh /
 
 RUN pip install -r /requirements.txt
+RUN pip install -U pytest
 
 EXPOSE 80
 
