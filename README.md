@@ -1,47 +1,3 @@
-# Simpe API
-
-
-## wiki
-
-Simple API is HTTP service that stores and returns configurations that satisfy certain conditions.
-
-  
-## Endpoints 
-
-Following are the endpoints that implemented:
-
-| Name   | Method      | URL
-| ---    | ---         | ---
-| List   | `GET`       | `/configs`
-| Create | `POST`      | `/configs`
-| Get    | `GET`       | `/configs/{name}`
-| Update | `PUT` | `/configs/{name}`
-| Delete | `DELETE`    | `/configs/{name}`
-
-
-#### Schema
-
-- **Config**
-  - Name (string)
-  - Metadata (nested key:value pairs where both key and value are strings)
-
-# Tests
-
-### There are two types of tests implemented:
-
-### - **Unit tests**
-```shell
-$ pytest test -vv
-```
-
-### - **Integration tests**
-```shell 
-$ nosetests --verbosity=2 tests/test_integration.py
-```
-
-
----
----
 # SimpleAPI
 
 SimpleAPI is a restful API provids simple service that stores and returns configurations using FastAPI and PostgreSQL.
@@ -241,19 +197,42 @@ Delete specific config
 
 <br>
 
-# Dockerization
+# Dockerizing the app
 
-## Prerequisites:
-    - docker 
-    - docker-compose
+### Prerequisites:
+- docker 
+- docker-compose
 
-## Dockerizing the app
+### Building the image:
+```shell
+$ docker build -t simpleapi .
+```
+### Run docker-compose services
+```shell
+$ docker-compose up
+```
 
-- building the image
-    ```shell
-    $ docker build -t simpleapi .
-    ```
-- compose the image
+<br>
+
+# Tests
+
+### Types:
+- Unit tests
+- Integration tests
+
+### Run instructions:
+
+- open second bash terminal
+- run bash from api service :
     ```shell 
-    $ docker-compose up
+    $ docker-compose run api bash
     ```
+- CD out of app directory:
+    ```shell 
+    $ cd ..
+    ```
+- run tests_getter.sh script:
+    ```shell 
+    $ ./tests_getter.sh
+    ```
+- the command line script will lead you to run the tests
