@@ -56,7 +56,7 @@ run_test() {
 repeat() {
     echo ""
     echo -e "${GREEN}Cleaning${NC} the database..."
-    python3 test/db_cleaner.py
+    python test/db_cleaner.py
     echo ""
     echo -ne "${GREEN}Run${NC} another test? (${GREEN}y${NC}/${RED}n${NC}) "
     read reans
@@ -78,6 +78,6 @@ if [[ $allow == "Y" ]] || [[ $allow == "y" ]]; then
     run_test
 else 
     echo ""
-    echo -e "If you want to run tests without losing data you can take a backup or change the DB."
+    echo -e "If you want to run tests without losing data, you can take a backup or change the DB."
     echo ""
 fi 
