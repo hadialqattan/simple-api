@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
 # database URL and engine
-SQLALCHEMY_DATABASE_URL = "postgresql://api_owner:api112233@localhost/apidb"
+SQLALCHEMY_DATABASE_URL = "postgresql://api_owner:api112233@db:5432/apidb"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # clean the db
