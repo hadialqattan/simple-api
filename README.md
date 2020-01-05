@@ -31,7 +31,81 @@ Following are the endpoints that should be implemented:
 | Get    | `GET`       | `/configs/{name}`
 | Update | `PUT` | `/configs/{name}`
 | Delete | `DELETE`    | `/configs/{name}`
+| Query  | `GET`       | `/search?metadata.key=value`
 
+
+#### Query
+
+The query endpoint **MUST** return all configs that satisfy the query argument.
+
+Query example-1:
+
+```sh
+curl http://config-service/search?metadata.monitoring.enabled=true
+```
+
+Response example:
+
+```json
+[
+  {
+    "name": "datacenter-1",
+    "metadata": {
+      "monitoring": {
+        "enabled": "true"
+      },
+      "limits": {
+        "cpu": {
+          "enabled": "false",
+          "value": "300m"
+        }
+      }
+    }
+  },
+  {
+    "name": "datacenter-2",
+    "metadata": {
+      "monitoring": {
+        "enabled": "true"
+      },
+      "limits": {
+        "cpu": {
+          "enabled": "true",
+          "value": "250m"
+        }
+      }
+    }
+  },
+]
+```
+
+
+Query example-2:
+
+```sh
+curl http://config-service/search?metadata.limits.cpu.enabled=true
+```
+
+Response example-2:
+
+```json
+[
+  {
+    "name": "datacenter-2",
+    "metadata": {
+      "monitoring": {
+        "enabled": "true"
+      },
+      "limits": {
+        "cpu": {
+          "enabled": "true",
+          "value": "250m"
+        }
+      }
+    }
+  }
+]
+```
 
 #### Schema
 
