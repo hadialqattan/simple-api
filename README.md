@@ -4,7 +4,7 @@ SimpleAPI is a restful API provids simple service that stores and returns config
 
 The entire API is contained within the `app` folder.
 
-`tests_runner.sh` runs command line script that provids you tests instructions.
+`tests_runner.sh` runs command line script that provids you tests instructions (if you want to run tests inside docker please take a look at tests instructions below).
 
 All stuffs `dockerized` (build instructions described below).
 
@@ -203,7 +203,7 @@ Delete specific config
 - docker 
 - docker-compose
 
-### Building the image:
+### Build docker image:
 ```shell
 $ docker build -t simpleapi .
 ```
@@ -222,8 +222,8 @@ $ docker-compose up
 
 ### Run instructions:
 
-- open second bash terminal
-- run bash from api service :
+- open second bash terminal in the repo directory
+- run bash for api service :
     ```shell 
     $ docker-compose run api bash
     ```
