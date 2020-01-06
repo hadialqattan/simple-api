@@ -1,10 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os 
 
 
 # database URL and engine
-SQLALCHEMY_DATABASE_URL = "postgresql://api_owner:api112233@db:5432/apidb"
+SQLALCHEMY_DATABASE_URL = 'postgresql://' + os.environ['DB_OWNER'] + ':' + os.environ['DB_PASSWORD'] + '@db:5432/' + os.environ['DB']
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # database session class

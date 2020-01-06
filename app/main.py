@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
 
 # local import
 import crud, models, schemas
@@ -36,10 +35,8 @@ def list(db: Session = Depends(get_db)):
     """
     # select all configs
     configs = crud.get_configs(db=db)
-    # convert str metadata to dict
-    configs_list = [{"name":config.name, "metadata":config.metadatac} for config in configs]
     # check for empty configs table
-    return {"Configs":configs_list} if configs_list else {"Configs":"Empty"}
+    return {"Configs":configs} if configs else {"Configs":"Empty"}
 
 
 @app.post('/configs')
@@ -53,10 +50,8 @@ def create(config:schemas.ConfigCreate, db: Session = Depends(get_db)):
 
     return: json response contain success message or failed message with 400 
     """
-    # get config by name
-    db_config = crud.get_config(name=config.name, db=db)
     # check for exists config
-    if db_config:
+    if crud.get_config(name=config.name, db=db):
         raise HTTPException(status_code=400, detail="name already exists")
     # create new config 
     new_config = crud.create_config(config=config, db=db)
@@ -80,7 +75,7 @@ def get(name:str, db: Session = Depends(get_db)):
     if not config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
     # convert str metadata to key:value
-    return {"Config":{"name":config.name, "metadata":config.metadatac}}
+    return {"Config":config}
 
 
 @app.put('/configs/{name}')
@@ -102,7 +97,7 @@ def update(name:str, metadata:dict, db: Session = Depends(get_db)):
     if not db_config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
     # return success response
-    return {"The config has updated": {"name":config_schema.name, "metadata":config_schema.metadata}}
+    return {"The config has updated": config_schema}
 
 
 @app.delete('/configs/{name}')
