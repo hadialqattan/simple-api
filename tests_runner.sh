@@ -4,12 +4,14 @@ NC='\033[0m' # No Color
 
 echo ""
 echo -e "Tests ${GREEN}runner${NC}:"
+if [ -f .env ]; then
+    export $(cat .env | sed 's/#.*//g' | xargs)
+fi
 echo ""
-
 
 run_test() {
 
-    while true; do 
+    while true; do
 
         echo ""
         echo -e "  ---------------------"
@@ -24,7 +26,7 @@ run_test() {
         read ans
         echo ""
 
-        if [[ $ans == "1" ]]; then 
+        if [[ $ans == "1" ]]; then
             echo "Run unit tests..."
             echo ""
             cd unit
@@ -32,47 +34,46 @@ run_test() {
             cd ..
             if repeat; then
                 continue
-            else 
+            else
                 break
             fi
-        elif [[ $ans == "2" ]]; then 
+        elif [[ $ans == "2" ]]; then
             echo -ne "Do you ${GREEN}allow${NC} tests runner to ${RED}clean${NC} the DB? (${GREEN}y${NC}/${RED}n${NC}) "
             read allow
             if [[ $allow == "Y" ]] || [[ $allow == "y" ]]; then
-                echo "" 
+                echo ""
                 echo -e "${GREEN}Cleaning${NC} the database..."
-                cd integration
-                python db_cleaner.py
+                cd
+                python integration/db_cleaner.py
                 echo ""
                 echo "Run integration tests..."
                 echo ""
                 nosetests --verbosity=2 test_integration.py
                 cd ..
-                if repeat; then 
+                if repeat; then
                     continue
-                else 
+                else
                     break
                 fi
-            else 
+            else
                 echo ""
                 echo -e "If you want to run tests without losing data, you can take a backup or change the DB."
                 echo ""
             fi
-        else 
+        else
             echo -e "${RED}Invalid${NC} test ${RED}id${NC}!"
             echo ""
         fi
-    
-    done 
-}
 
+    done
+}
 
 repeat() {
     echo ""
     echo -ne "${GREEN}Run${NC} another test? (${GREEN}y${NC}/${RED}n${NC}) "
     read reans
     echo ""
-    if [[ $reans == "y" ]] || [[ $reans == "Y" ]]; then 
+    if [[ $reans == "y" ]] || [[ $reans == "Y" ]]; then
         return 0
     else
         echo -e "${GREEN}Goodbye!${NC}"
@@ -80,6 +81,5 @@ repeat() {
         return 1
     fi
 }
-
 
 run_test

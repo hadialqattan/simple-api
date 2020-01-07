@@ -69,11 +69,13 @@ def update_config(db: Session, config: schemas.ConfigUpdate):
 
     return: updated config or false if config doesn't exists
     """
-    db_config = db.query(models.Config).filter(models.Config.name == config.name).first()
-    if not db_config: 
+    db_config = (
+        db.query(models.Config).filter(models.Config.name == config.name).first()
+    )
+    if not db_config:
         return False
     db_config.metadatac = config.metadata
-    db.commit() 
+    db.commit()
     db.refresh(db_config)
     return db_config
 

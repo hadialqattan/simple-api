@@ -6,4 +6,3 @@ RUN pip install -r /requirements.txt
 RUN pip install -U pytest
 
 COPY ./app /app
-COPY tests_getter.sh /

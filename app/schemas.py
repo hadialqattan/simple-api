@@ -8,12 +8,14 @@ class ConfigBase(BaseModel):
     These Pydantic models define more or less a "schema" (a valid data shape).
     So this will help us avoiding confusion while using both. 
     """
-    name: str 
+
+    name: str
     metadata: dict
 
 
 class ConfigRead(ConfigBase):
     """ Child class for reading operation """
+
     name: str
     metadata: dict
 
@@ -28,14 +30,17 @@ class ConfigRead(ConfigBase):
         it will also try to get it from an attribute, as in:
         name = data.name
         """
+
         orm_mode = True
 
 
 class ConfigCreate(ConfigBase):
     """ Child class for create operation, it does not has any additional data """
+
     pass
 
 
 class ConfigUpdate(ConfigBase):
     """ Child class for update operation, it does not has any additional data """
+
     pass

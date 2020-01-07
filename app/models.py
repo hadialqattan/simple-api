@@ -15,5 +15,5 @@ class Config(Base):
 
     __tablename__ = "configs"
 
-    name = Column('name', String, primary_key=True)
-    metadatac = Column('metadata', JSON)
+    name = Column("name", String, primary_key=True)
+    metadatac = Column("metadata", JSON)

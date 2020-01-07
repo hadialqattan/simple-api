@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 import requests
 
-# local import 
+# local import
 from .constants import BASE_URL
 
 
@@ -13,7 +13,7 @@ def get_configs():
     return response if response.ok else None
 
 
-def get_config(name:str):
+def get_config(name: str):
     """
     return get request response with base_url + name
     """
@@ -21,7 +21,7 @@ def get_config(name:str):
     return response if response.ok else None
 
 
-def post_create_config(body:dict):
+def post_create_config(body: dict):
     """
     return post request response with base_url + body
     """
@@ -29,7 +29,7 @@ def post_create_config(body:dict):
     return response if response.ok else None
 
 
-def put_update_config(name:str, metadata:dict):
+def put_update_config(name: str, metadata: dict):
     """
     return put request response with base_url + name + body 
     """
@@ -37,7 +37,7 @@ def put_update_config(name:str, metadata:dict):
     return response if response.ok else None
 
 
-def delete_config(name:str):
+def delete_config(name: str):
     """
     return delete request response with base_url + name
     """

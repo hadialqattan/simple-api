@@ -14,201 +14,380 @@ All stuffs `dockerized` (build instructions described below).
 
 | Name   | Method      | URL
 | ---    | ---         | ---
-| List   | `GET`       | `/configs`
-| Create | `POST`      | `/configs`
-| Get    | `GET`       | `/configs/{name}`
-| Update | `PUT` | `/configs/{name}`
-| Delete | `DELETE`    | `/configs/{name}`
-
+| List   | `GET` | `/configs` 
+| Create | `POST` | `/configs` 
+| Get    | `GET` | `/configs/{name}` 
+| Update | `PUT` | `/configs/{name}` 
+| Delete | `DELETE` | `/configs/{name}` 
 
 #### Schema
 
-- **Config**
-  - Name (string of length no more than 120 characters)
-  - Metadata (nested key:value pairs where both key and value are strings of length no more than 160 characters)
+* **Config**
+  + Name (string of length no more than 120 characters)
+  + Metadata (nested key:value pairs where both key and value are strings of length no more than 160 characters)
 
 ---
 
-## `GET /configs`
+## `GET /configs` 
 
 ### Request
 
-Get list of configs: 
-
-- path params: 
-    ```shell 
-    none
-    ```
-- query params: 
-    ```shell 
-    none
-    ```
+    $ curl -X GET "http://localhost:5057/configs" -H "accept: application/json"
 
 ### Response
 
-if no configs added yet:
-    
-    status code: 200
-    json response: {"Configs":"Empty"}
+#### if no configs added yet :
+```shell  
+status code 200
 
-else:
+``` 
+response headers:
+```shell
+content-length: 19 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:40:11 GMT 
+server: uvicorn 
+```
 
-    status code: 200
-    json response: {"Configs":[ list of configs ]}
+response body:
 
-example:
-    
-    json response: {"Configs":[{'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}...]}
+``` shell
+{"Configs":"Empty"}
+```
+
+#### else :
+
+```shell  
+status code 200
+
+``` 
+response headers:
+```shell
+content-length: 256 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:47:28 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "Configs": [
+    {
+      "name": "datacenter-1",
+      "metadatac": {
+        "monitoring": {
+          "enabled": "true"
+        },
+        "limits": {
+          "cpu": {
+            "enabled": "false",
+            "value": "300m"
+          }
+        }
+      }
+    },
+    {
+      "name": "datacenter-2",
+      "metadatac": {
+        "monitoring": {
+          "enabled": "true"
+        },
+        "limits": {
+          "cpu": {
+            "enabled": "true",
+            "value": "250m"
+          }
+        }
+      }
+    }
+  ]
+}
+```
 
 ---
 
-## `POST /configs`
+## `POST /configs` 
 
 ### Request
 
 Create a new config: 
 
-- path params: 
-    ```shell 
-    none
-    ```
-- query params: 
-    ```shell 
-    name: string
-    metadata: json
-    ```
+    $ curl -X POST "http://localhost:5057/configs" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"name\":\"datacenter-1\",\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"false\",\"value\":\"300m\"}}}}"
 
 ### Response
 
-- None-exists name 
-    ```shell 
-    data example: {'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}
-    
-    status code: 200
-    json response: {"New config has created":{'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}}
-    ```
+#### None-exists name :
+```shell  
+status code 200
 
-- Exists name 
-    ```shell 
-    status code: 400
-    json response: {"detail":"name already exists"}
-    ```
+``` 
+response headers:
+```shell
+content-length: 147 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:49:52 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "New config has created": {
+    "name": "datacenter-1",
+    "metadata": {
+      "monitoring": {
+        "enabled": "true"
+      },
+      "limits": {
+        "cpu": {
+          "enabled": "false",
+          "value": "300m"
+        }
+      }
+    }
+  }
+}
+```
+
+#### Exists name :
+
+```shell 
+status code 400
+
+``` 
+response headers:
+```shell
+content-length: 32 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:52:48 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "detail": "name already exists"
+}
+```
 
 ---
 
-## `GET /configs/{name}`
+## `GET /configs/{name}` 
 
 ### Request
 
-Get a specific config:
-
-- path params:
-    ```shell 
-    name: string
-    ```
-- query params: 
-    ```shell
-    metadata: json
-    ```
+    $ curl -X GET "http://localhost:5057/configs/datacenter-1" -H "accept: application/json"
 
 ### Response
 
-- Exists name 
-    ```shell
-    status code: 200
-    json response: {"Config":{'name':'car', 'metadata':{'speed':"15", 'weight': '1000kg', 'language':'english'}}}
-    ```
+#### Exists name :
 
-- None-exists name
-    ```shell 
-    status code: 404
-    json response: {"detail":"name doesn't exists"}
-    ```
+``` shell
+status code 200
+```
+
+response headers:
+
+``` shell
+content-length: 132 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:54:17 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "Config": {
+    "name": "datacenter-1",
+    "metadatac": {
+      "monitoring": {
+        "enabled": "true"
+      },
+      "limits": {
+        "cpu": {
+          "enabled": "false",
+          "value": "300m"
+        }
+      }
+    }
+  }
+}
+```
+
+#### None-exists name :
+
+```shell 
+status code 404
+
+``` 
+response headers:
+```shell
+content-length: 32 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:56:26 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "detail": "name doesn't exists"
+}
+```
 
 ---
 
-## `UPDATE /configs/{name}`
+## `UPDATE /configs/{name}` 
 
 ### Request
 
 Update specific config:
 
-- path params:
-    ```shell 
-    name: string
-    ```
-- query params: 
-    ```shell
-    metadata: json
-    ```
+    curl -X PUT "http://localhost:5057/configs/datacenter-1" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"false\",\"value\":\"300m\"}}}"
 
 ### Response
 
-- Exists name
-    ```shell
-    data example: {'name':'car', 'metadata':{'speed':"150", 'weight': '1000kg', 'language':'arabic'}}
+#### Exists name :
 
-    status code: 200
-    json response: {"The config has updated":{'name':'car', 'metadata':{'speed':"150", 'weight': '1000kg', 'language':'arabic'}}}
-    ```
+``` shell
+status code: 200
+```
 
-- None-exists name
-    ```shell 
-    status code: 404
-    json response: {"detail":"name doesn't exists"}
-    ```
+response headers:
+
+``` shell
+content-length: 147 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:57:55 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "The config has updated": {
+    "name": "datacenter-1",
+    "metadata": {
+      "monitoring": {
+        "enabled": "true"
+      },
+      "limits": {
+        "cpu": {
+          "enabled": "false",
+          "value": "300m"
+        }
+      }
+    }
+  }
+}
+```
+
+#### None-exists name : 
+
+```shell 
+status code: 404
+
+``` 
+response headers:
+```shell
+content-length: 32 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:59:26 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "detail": "name doesn't exists"
+}
+```
 
 ---
 
-## `Delete /configs/{name}`
+## `Delete /configs/{name}` 
 
 ### Request
 
-Delete specific config
-
-- path params:
-    ```shell 
-    name: string
-    ```
-- query params: 
-    ```shell
-    none
-    ```
+    $ curl -X DELETE "http://127.0.0.1:5057/configs/datacenter-1" -H "accept: application/json"
 
 ### Response
 
-- Exists name
-    ```shell
-    status code: 200
-    json response: {"The config has deleted": {"name":"config name"}}
-    ```
+#### Exists name :
 
-- None-exists name
-    ```shell 
-    status code: 404
-    json response: {"detail":"name doesn't exists"}
-    ```
+``` shell
+status code: 200
+```
+
+response headers:
+
+``` shell
+content-length: 50 
+content-type: application/json 
+date: Tue, 07 Jan 2020 06:03:48 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "The config has deleted": {
+    "name": "datacenter-1"
+  }
+}
+```
+
+#### None-exists name : 
+
+```shell 
+status code: 404
+
+``` 
+response headers:
+```shell
+content-length: 32 
+content-type: application/json 
+date: Tue, 07 Jan 2020 06:06:27 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "detail": "name doesn't exists"
+}
+```
 
 ---
 
 ## Swagger UI documentation
-- #### Swagger UI powerd by openAPI @ **/docs** endpoint ( http://localhost:5057/docs )
-- #### Swagger UI powred by redoc @ **/redoc** endpoint ( http://localhost:5057/redoc )
+
+* #### Swagger UI powerd by openAPI (tests include) @ **/docs** endpoint ( http://localhost:5057/docs )
+* #### Swagger UI powred by redoc @ **/redoc** endpoint ( http://localhost:5057/redoc )
 
 <br>
 
 # Dockerizing the app
 
 ### Prerequisites:
-- docker 
-- docker-compose
 
-### Build docker image:
-```shell
-$ docker build -t simpleapi .
-```
-### Run docker-compose services
-```shell
+* docker 
+* docker-compose
+
+### Build the image and run docker-compose services
+
+``` shell
 $ docker-compose up
 ```
 
@@ -217,22 +396,11 @@ $ docker-compose up
 # Tests
 
 ### Types:
-- Unit tests
-- Integration tests
+
+* Unit tests
+* Integration tests
 
 ### Run instructions:
 
-- open second bash terminal in the repo directory
-- run bash for api service :
-    ```shell 
-    $ docker-compose run api bash
-    ```
-- CD out of app directory:
-    ```shell 
-    $ cd ..
-    ```
-- run tests_getter.sh script:
-    ```shell 
-    $ ./tests_getter.sh
-    ```
-- the command line script will lead you to run the tests
+# **TODO**
+

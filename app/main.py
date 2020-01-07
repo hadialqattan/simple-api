@@ -22,7 +22,8 @@ def get_db():
 
 # Endpoints
 
-@app.get('/configs')
+
+@app.get("/configs")
 def list(db: Session = Depends(get_db)):
     """
     SQL query: SELECT * FROM configs;
@@ -36,11 +37,11 @@ def list(db: Session = Depends(get_db)):
     # select all configs
     configs = crud.get_configs(db=db)
     # check for empty configs table
-    return {"Configs":configs} if configs else {"Configs":"Empty"}
+    return {"Configs": configs} if configs else {"Configs": "Empty"}
 
 
-@app.post('/configs')
-def create(config:schemas.ConfigCreate, db: Session = Depends(get_db)):    
+@app.post("/configs")
+def create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
     """
     SQL query: INSERT INTO configs (name, metadata) VALUES (nameValue, metadataValue)
     
@@ -53,13 +54,15 @@ def create(config:schemas.ConfigCreate, db: Session = Depends(get_db)):
     # check for exists config
     if crud.get_config(name=config.name, db=db):
         raise HTTPException(status_code=400, detail="name already exists")
-    # create new config 
+    # create new config
     new_config = crud.create_config(config=config, db=db)
-    return {"New config has created": {"name":config.name, "metadata":config.metadata}}
+    return {
+        "New config has created": {"name": config.name, "metadata": config.metadata}
+    }
 
 
-@app.get('/configs/{name}')
-def get(name:str, db: Session = Depends(get_db)):
+@app.get("/configs/{name}")
+def get(name: str, db: Session = Depends(get_db)):
     """
     SQL query: SELECT * FROM configs WHERE name=name;
 
@@ -75,11 +78,11 @@ def get(name:str, db: Session = Depends(get_db)):
     if not config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
     # convert str metadata to key:value
-    return {"Config":config}
+    return {"Config": config}
 
 
-@app.put('/configs/{name}')
-def update(name:str, metadata:dict, db: Session = Depends(get_db)):
+@app.put("/configs/{name}")
+def update(name: str, metadata: dict, db: Session = Depends(get_db)):
     """
     SQL query: UPDATE configs SET metadata=metadata WHERE name=name;
 
@@ -100,8 +103,8 @@ def update(name:str, metadata:dict, db: Session = Depends(get_db)):
     return {"The config has updated": config_schema}
 
 
-@app.delete('/configs/{name}')
-def delete(name:str, db: Session = Depends(get_db)):
+@app.delete("/configs/{name}")
+def delete(name: str, db: Session = Depends(get_db)):
     """
     SQL query: DELETE FROM configs WHERE name=name;
 
@@ -116,4 +119,4 @@ def delete(name:str, db: Session = Depends(get_db)):
     # check for unexists name
     if not success:
         raise HTTPException(status_code=404, detail="name doesn't exists")
-    return {"The config has deleted": {"name":name}}
+    return {"The config has deleted": {"name": name}}
