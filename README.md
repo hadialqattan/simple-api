@@ -19,6 +19,7 @@ All stuffs `dockerized` (build instructions described below).
 | Get    | `GET` | `/configs/{name}` 
 | Update | `PUT` | `/configs/{name}` 
 | Delete | `DELETE` | `/configs/{name}` 
+| Query  | `GET`  | `/search?metadata.key=value`
 
 #### Schema
 
@@ -76,7 +77,7 @@ response body:
   "Configs": [
     {
       "name": "datacenter-1",
-      "metadatac": {
+      "metadata": {
         "monitoring": {
           "enabled": "true"
         },
@@ -90,7 +91,7 @@ response body:
     },
     {
       "name": "datacenter-2",
-      "metadatac": {
+      "metadata": {
         "monitoring": {
           "enabled": "true"
         },
@@ -205,7 +206,7 @@ response body:
 {
   "Config": {
     "name": "datacenter-1",
-    "metadatac": {
+    "metadata": {
       "monitoring": {
         "enabled": "true"
       },
@@ -318,7 +319,7 @@ response body:
 
 ### Request
 
-    $ curl -X DELETE "http://127.0.0.1:5057/configs/datacenter-1" -H "accept: application/json"
+    $ curl -X DELETE "http://localhost:5057/configs/datacenter-1" -H "accept: application/json"
 
 ### Response
 
@@ -368,13 +369,89 @@ response body:
   "detail": "name doesn't exists"
 }
 ```
+---
+## `GET /search?metadata.key=value` 
+
+### Request
+
+    $ curl -X GET 'http://localhost:5057/search?metadata.monitoring.enabled=true' -H "Content-type: application/json"
+
+### Response
+
+#### if no configs added yet :
+```shell  
+status code 200
+``` 
+response headers:
+```shell
+content-length:	254 bytes
+content-type:	application/json
+date:	Wed, 08 Jan 2020 10:21:26 GMT
+server:	uvicorn
+```
+
+response body:
+
+``` shell
+{"Configs":"Empty"}
+```
+
+#### else :
+
+```shell  
+status code 200
+
+``` 
+response headers:
+```shell
+content-length: 256 
+content-type: application/json 
+date: Tue, 06 Jan 2020 10:47:28 GMT 
+server: uvicorn 
+```
+
+response body:
+
+``` shell
+{
+  "Configs": [
+    {
+      "name": "datacenter-1",
+      "metadata": {
+        "monitoring": {
+          "enabled": "true"
+        },
+        "limits": {
+          "cpu": {
+            "enabled": "false",
+            "value": "300m"
+          }
+        }
+      }
+    },
+    {
+      "name": "datacenter-2",
+      "metadata": {
+        "monitoring": {
+          "enabled": "true"
+        },
+        "limits": {
+          "cpu": {
+            "enabled": "true",
+            "value": "250m"
+          }
+        }
+      }
+    }
+  ]
+}
+```
 
 ---
 
 ## Swagger UI documentation
 
 * #### Swagger UI powerd by openAPI (tests include) @ **/docs** endpoint ( http://localhost:5057/docs )
-* #### Swagger UI powred by redoc @ **/redoc** endpoint ( http://localhost:5057/redoc )
 
 <br>
 

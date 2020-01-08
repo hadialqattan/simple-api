@@ -7,6 +7,7 @@ from .services import (
     post_create_config,
     put_update_config,
     delete_config,
+    get_query,
 )
 
 
@@ -158,3 +159,40 @@ def test_delete_config_by_name_unexists_name():
     response = delete_config("ThisIsUnexists")
     assert_is_not_none(response)
     assert_list_equal(response.json(), {"detail": "name doesn't exists"})
+
+
+# [query : GET : /search?metadata.key=value]
+def test_query_metadata_success():
+    """
+    query metadata by nested key and value (success case)
+    """
+    response = get_query(["language"], "arabic")
+    assert_is_not_none(response)
+    assert_list_equal(
+        response.json(),
+        {
+            "Configs": [
+                {
+                    "name": "car",
+                    "metadata": {
+                        "speed": 150,
+                        "weight": "1000kg",
+                        "language": "arabic",
+                    },
+                }
+            ]
+        },
+    )
+
+
+# [query : GET : /search?metadata.key=value]
+def test_query_metadata_unproccessable_entity():
+    """
+    query metadata by nested key and value (422)
+    """
+    response = get_query(["key"], "value.value")
+    assert_is_not_none(response)
+    assert_list_equal(
+        response.json(),
+        {"detail": "Unprocessable Entity, valid format: metadata.key=value"},
+    )

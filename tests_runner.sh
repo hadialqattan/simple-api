@@ -7,6 +7,7 @@ echo -e "Tests ${GREEN}runner${NC}:"
 if [ -f .env ]; then
     export $(cat .env | sed 's/#.*//g' | xargs)
 fi
+export DB_URL=postgresql://api_owner:api112233@localhost/apidb
 echo ""
 
 run_test() {
@@ -38,27 +39,15 @@ run_test() {
                 break
             fi
         elif [[ $ans == "2" ]]; then
-            echo -ne "Do you ${GREEN}allow${NC} tests runner to ${RED}clean${NC} the DB? (${GREEN}y${NC}/${RED}n${NC}) "
-            read allow
-            if [[ $allow == "Y" ]] || [[ $allow == "y" ]]; then
-                echo ""
-                echo -e "${GREEN}Cleaning${NC} the database..."
-                cd
-                python integration/db_cleaner.py
-                echo ""
-                echo "Run integration tests..."
-                echo ""
-                nosetests --verbosity=2 test_integration.py
-                cd ..
-                if repeat; then
-                    continue
-                else
-                    break
-                fi
+            echo "Run integration tests..."
+            echo ""
+            cd integration
+            nosetests --verbosity=2 test_integration.py
+            cd ..
+            if repeat; then
+                continue
             else
-                echo ""
-                echo -e "If you want to run tests without losing data, you can take a backup or change the DB."
-                echo ""
+                break
             fi
         else
             echo -e "${RED}Invalid${NC} test ${RED}id${NC}!"
@@ -74,6 +63,9 @@ repeat() {
     read reans
     echo ""
     if [[ $reans == "y" ]] || [[ $reans == "Y" ]]; then
+        echo -e "${GREEN}Cleaning${NC} the DB..."
+        python integration/db_cleaner.py
+        echo ""
         return 0
     else
         echo -e "${GREEN}Goodbye!${NC}"

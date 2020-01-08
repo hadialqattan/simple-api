@@ -10,7 +10,7 @@ services:
       - DB=${DB}
       - DB_OWNER=${DB_OWNER}
       - DB_PASSWORD=${DB_PASSWORD}
-      - HnP=${HnP}
+      - DB_URL=${DB_URL}
     ports:
       - "5057:5057"
     depends_on:

@@ -1,14 +1,20 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Body
+from starlette.requests import Request
 from sqlalchemy.orm import Session
+import re
 
 # local import
-import crud, models, schemas
-from database import SessionLocal, engine
+from . import crud, models, schemas
+from .database import SessionLocal, engine
+from .custom_openapi import custom_openapi
 
 # create the database tables
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+# custom openAPI
+app.openapi = custom_openapi
 
 
 # Dependency
@@ -24,24 +30,28 @@ def get_db():
 
 
 @app.get("/configs")
-def list(db: Session = Depends(get_db)):
+def List(db: Session = Depends(get_db)):
     """
     SQL query: SELECT * FROM configs;
     
     summary: list all configs
     
-    get_args: None
+    arguments: None
     
     return: valid json contain all configs table rows
     """
     # select all configs
     configs = crud.get_configs(db=db)
+    # convert metadatac to metadata
+    configslist = [
+        {"name": config.name, "metadata": config.metadatac} for config in configs
+    ]
     # check for empty configs table
-    return {"Configs": configs} if configs else {"Configs": "Empty"}
+    return {"Configs": configslist} if configs else {"Configs": "Empty"}
 
 
 @app.post("/configs")
-def create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
+def Create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
     """
     SQL query: INSERT INTO configs (name, metadata) VALUES (nameValue, metadataValue)
     
@@ -62,7 +72,7 @@ def create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/configs/{name}")
-def get(name: str, db: Session = Depends(get_db)):
+def Get(name: str, db: Session = Depends(get_db)):
     """
     SQL query: SELECT * FROM configs WHERE name=name;
 
@@ -77,12 +87,12 @@ def get(name: str, db: Session = Depends(get_db)):
     # check for unexists name
     if not config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
-    # convert str metadata to key:value
-    return {"Config": config}
+    # convert metadatac to metadata
+    return {"Config": {"name": config.name, "metadata": config.metadatac}}
 
 
 @app.put("/configs/{name}")
-def update(name: str, metadata: dict, db: Session = Depends(get_db)):
+def Update(name: str, metadata: dict, db: Session = Depends(get_db)):
     """
     SQL query: UPDATE configs SET metadata=metadata WHERE name=name;
 
@@ -104,7 +114,7 @@ def update(name: str, metadata: dict, db: Session = Depends(get_db)):
 
 
 @app.delete("/configs/{name}")
-def delete(name: str, db: Session = Depends(get_db)):
+def Delete(name: str, db: Session = Depends(get_db)):
     """
     SQL query: DELETE FROM configs WHERE name=name;
 
@@ -120,3 +130,35 @@ def delete(name: str, db: Session = Depends(get_db)):
     if not success:
         raise HTTPException(status_code=404, detail="name doesn't exists")
     return {"The config has deleted": {"name": name}}
+
+
+@app.get("/search")
+def Query(request: Request, db: Session = Depends(get_db)):
+    """
+    SQL query: SELECT * FROM configs WHERE (configs.metadata #>> %(metadata_1)s) = %(param_1)s;
+
+    summary: get all configs has specific metadata by nested key and value
+
+    arguments: (query param: str [metadata.keys...=value])
+
+    return: valid json contain all configs matched by metadata search
+    """
+    # get params
+    q_params = str(request.query_params)
+    # validation handler
+    if not re.findall(r"^metadata\..+=[\w']+$", q_params):
+        raise HTTPException(
+            status_code=422,
+            detail="Unprocessable Entity, valid format: metadata.key=value",
+        )
+    # fetch query keys from query params
+    keys = re.findall(r"[\w']+", q_params)
+    value = keys.pop()
+    # get all matched configs
+    configs = crud.query_metadata(keys=keys[1:], value=value, db=db)
+    # convert metadatac to metadata
+    configslist = [
+        {"name": config.name, "metadata": config.metadatac} for config in configs
+    ]
+    # check for empty configs
+    return {"Configs": configslist} if configs else {"Configs": "Empty"}

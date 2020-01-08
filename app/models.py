@@ -1,7 +1,8 @@
-from sqlalchemy import Column, String, JSON
+from sqlalchemy import Column, String
+from sqlalchemy.dialects.postgresql import JSONB
 
 # local import
-from database import Base
+from .database import Base
 
 
 class Config(Base):
@@ -15,5 +16,5 @@ class Config(Base):
 
     __tablename__ = "configs"
 
-    name = Column("name", String, primary_key=True)
-    metadatac = Column("metadata", JSON)
+    name = Column(name="name", type_=String, primary_key=True)
+    metadatac = Column(name="metadata", type_=JSONB)

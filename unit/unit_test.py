@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 
 # local import
 from app.main import app
+from app.models import Config
 
 
 client = TestClient(app)
@@ -72,12 +73,10 @@ def test_get_all(mock):
     """
     get all configs (success case)
     """
-    mock.return_value = [
-        {
-            "name": "car",
-            "metadata": {"speed": "15", "weight": "1000kg", "language": "english"},
-        }
-    ]
+    mconfig = Config()
+    mconfig.name = "car"
+    mconfig.metadatac = {"speed": "15", "weight": "1000kg", "language": "english"}
+    mock.return_value = [mconfig]
     response = client.get("/configs")
     assert response.status_code == 200
     assert response.json() == {
@@ -96,10 +95,10 @@ def test_get_config_by_name_success(mock):
     """
     get config by name (success case)
     """
-    mock.return_value = {
-        "name": "car",
-        "metadata": {"speed": "15", "weight": "1000kg", "language": "english"},
-    }
+    mconfig = Config()
+    mconfig.name = "car"
+    mconfig.metadatac = {"speed": "15", "weight": "1000kg", "language": "english"}
+    mock.return_value = mconfig
     response = client.get("/configs/car")
     assert response.status_code == 200
     assert response.json() == {
@@ -165,13 +164,36 @@ def test_delete_config_by_name_success(mock):
     assert response.json() == {"The config has deleted": {"name": "car"}}
 
 
-# [delete : DELETE : /configs/{name}]
-@patch("app.crud.delete_config")
-def test_delete_config_by_name_unexists_name(mock):
-    """ 
-    delete unexists config by name
+# [query : GET : /search?metadata.key=value]
+@patch("app.crud.query_metadata")
+def test_query_metadata_success(mock):
     """
-    mock.return_value = False
-    response = client.delete("/configs/ThisIsUnexists")
-    assert response.status_code == 404
-    assert response.json() == {"detail": "name doesn't exists"}
+    query metadata by nested key and value (success case)
+    """
+    mconfig = Config()
+    mconfig.name = "car"
+    mconfig.metadatac = {"speed": 150, "weight": "1000kg", "language": "arabic"}
+    mock.return_value = [mconfig]
+    response = client.get("/search?metadata.language=arabic")
+    assert response.status_code == 200
+    assert response.json() == {
+        "Configs": [
+            {
+                "name": "car",
+                "metadata": {"speed": 150, "weight": "1000kg", "language": "arabic"},
+            }
+        ]
+    }
+
+
+# [query : GET : /search?metadata.key=value]
+# @patch("app.crud.query_metadata")
+def test_query_metadata_unproccessable_entity():
+    """
+    query metadata by nested key and value (422)
+    """
+    response = client.get("/search?metadata.key=value.value")
+    assert response.status_code == 422
+    assert response.json() == {
+        "detail": "Unprocessable Entity, valid format: metadata.key=value"
+    }

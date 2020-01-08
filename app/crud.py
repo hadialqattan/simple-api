@@ -5,7 +5,7 @@ CRUD comes from: Create, Read, Update, and Delete.
 from sqlalchemy.orm import Session
 
 # local import
-import models, schemas
+from . import models, schemas
 
 
 def get_configs(db: Session):
@@ -98,3 +98,22 @@ def delete_config(db: Session, name: str):
     db.delete(db_config)
     db.commit()
     return True
+
+
+def query_metadata(db: Session, keys: list, value: str):
+    """
+    designed for [Query : GET : /search] 
+
+    SQL query: SELECT * FROM configs WHERE (configs.metadata #>> %(metadata_1)s) = %(param_1)s;
+
+    summary: get all configs has specific metadata by keys and value
+
+    arguments: (db: Session [sqlalchemy database session]), (keys: list [list of keys and value])
+
+    return: List of configs
+    """
+    return (
+        db.query(models.Config)
+        .filter(models.Config.metadatac[keys].astext == value)
+        .all()
+    )
