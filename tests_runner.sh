@@ -7,8 +7,14 @@ echo -e "Tests ${GREEN}runner${NC}:"
 if [ -f .env ]; then
     export $(cat .env | sed 's/#.*//g' | xargs)
 fi
-export DB_URL=postgresql://api_owner:api112233@localhost/apidb
+# export DB_URL=postgresql://api_owner:api112233@localhost/apidb
 echo ""
+
+docker run --rm -d \
+        --name the_db \
+        -p 5432:5432 \
+        --env-file ./.env \
+         postgres:12.0-alpine 
 
 run_test() {
 
@@ -41,9 +47,9 @@ run_test() {
         elif [[ $ans == "2" ]]; then
             echo "Run integration tests..."
             echo ""
-            cd integration
-            nosetests --verbosity=2 test_integration.py
-            cd ..
+            # cd integration
+            docker run --rm --env-file ./.env simpleapi && nosetests --verbosity=2 integration/test_integration.py
+            # cd ..
             if repeat; then
                 continue
             else

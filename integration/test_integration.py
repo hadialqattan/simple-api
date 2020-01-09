@@ -1,4 +1,4 @@
-from nose.tools import assert_is_not_none, assert_equal, assert_list_equal
+from nose.tools import assert_equal
 
 # local import
 from .services import (
@@ -17,8 +17,8 @@ def test_get_all_empty():
     get all configs from empty table 
     """
     response = get_configs()
-    assert_is_not_none(response)
-    assert_list_equal([response.json()], [{"Configs": "Empty"}])
+    assert_equal(response.status_code, 200)
+    assert_equal(response.json(), {"Configs": "Empty"})
 
 
 # [create : POST : /configs] endpoint
@@ -32,15 +32,15 @@ def test_create_config_success():
             "metadata": {"speed": 15, "weight": "1000kg", "language": "english"},
         }
     )
-    assert_is_not_none(response)
-    assert_list_equal(
-        [response.json()],
-        [{
+    assert_equal(response.status_code, 200)
+    assert_equal(
+        response.json(),
+        {
             "New config has created": {
                 "name": "car",
                 "metadata": {"speed": 15, "weight": "1000kg", "language": "english"},
             }
-        },]
+        },
     )
 
 
@@ -55,7 +55,8 @@ def test_create_config_name_already_exists():
             "metadata": {"speed": 15, "weight": "1000kg", "language": "english"},
         }
     )
-    assert_list_equal([response.json()], [{"detail": "name already exists"}])
+    assert_equal(response.status_code, 400)
+    assert_equal(response.json(), {"detail": "name already exists"})
 
 
 # [list : GET : /configs] endpoint
@@ -64,10 +65,10 @@ def test_get_all():
     get all configs (success case)
     """
     response = get_configs()
-    assert_is_not_none(response)
-    assert_list_equal(
-        [response.json()],
-        [{
+    assert_equal(response.status_code, 200)
+    assert_equal(
+        response.json(),
+        {
             "Configs": [
                 {
                     "name": "car",
@@ -78,7 +79,7 @@ def test_get_all():
                     },
                 }
             ]
-        },]
+        },
     )
 
 
@@ -88,15 +89,15 @@ def test_get_config_by_name_success():
     get config by name (success case)
     """
     response = get_config("car")
-    assert_is_not_none(response)
-    assert_list_equal(
-        [response.json()],
-        [{
+    assert_equal(response.status_code, 200)
+    assert_equal(
+        response.json(),
+        {
             "Config": {
                 "name": "car",
                 "metadata": {"speed": 15, "weight": "1000kg", "language": "english"},
             }
-        },]
+        },
     )
 
 
@@ -106,7 +107,8 @@ def test_get_config_by_name_unexists_name():
     get config by unexists name
     """
     response = get_config("ThisIsNotExists")
-    assert_list_equal([response.json()], [{"detail": "name doesn't exists"}])
+    assert_equal(response.status_code, 404)
+    assert_equal(response.json(), {"detail": "name doesn't exists"})
 
 
 # [update : PUT : /configs/{name}]
@@ -117,15 +119,15 @@ def test_update_config_by_name_success():
     response = put_update_config(
         "car", metadata={"speed": 150, "weight": "1000kg", "language": "arabic"}
     )
-    assert_is_not_none(response)
-    assert_list_equal(
-        [response.json()],
-        [{
+    assert_equal(response.status_code, 200)
+    assert_equal(
+        response.json(),
+        {
             "The config has updated": {
                 "name": "car",
                 "metadata": {"speed": 150, "weight": "1000kg", "language": "arabic"},
             }
-        },]
+        },
     )
 
 
@@ -135,26 +137,8 @@ def test_update_config_by_name_unexists_name():
     update unexsists config by name 
     """
     response = put_update_config("ThisIsNotExists", metadata={"speed": 343})
-    assert_list_equal([response.json()], [{"detail": "name doesn't exists"}])
-
-
-# [delete : DELETE : /configs/{name}]
-def test_delete_config_by_name_success():
-    """ 
-    delete config by name (success case)
-    """
-    response = delete_config("car")
-    assert_is_not_none(response)
-    assert_list_equal([response.json()], [{"The config has deleted": {"name": "car"}}])
-
-
-# [delete : DELETE : /configs/{name}]
-def test_delete_config_by_name_unexists_name():
-    """ 
-    delete unexists config by name
-    """
-    response = delete_config("ThisIsUnexists")
-    assert_list_equal([response.json()], [{"detail": "name doesn't exists"}])
+    assert_equal(response.status_code, 404)
+    assert_equal(response.json(), {"detail": "name doesn't exists"})
 
 
 # [query : GET : /search?metadata.key=value]
@@ -163,10 +147,10 @@ def test_query_metadata_success():
     query metadata by nested key and value (success case)
     """
     response = get_query(["language"], "arabic")
-    assert_is_not_none(response)
-    assert_list_equal(
-        [response.json()],
-        [{
+    assert_equal(response.status_code, 200)
+    assert_equal(
+        response.json(),
+        {
             "Configs": [
                 {
                     "name": "car",
@@ -177,17 +161,25 @@ def test_query_metadata_success():
                     },
                 }
             ]
-        },]
+        },
     )
 
 
-# [query : GET : /search?metadata.key=value]
-def test_query_metadata_unproccessable_entity():
+# [delete : DELETE : /configs/{name}]
+def test_delete_config_by_name_success():
+    """ 
+    delete config by name (success case)
     """
-    query metadata by nested key and value (422)
+    response = delete_config("car")
+    assert_equal(response.status_code, 200)
+    assert_equal(response.json(), {"The config has deleted": {"name": "car"}})
+
+
+# [delete : DELETE : /configs/{name}]
+def test_delete_config_by_name_unexists_name():
+    """ 
+    delete unexists config by name
     """
-    response = get_query(["key"], "value.value")
-    assert_list_equal(
-        [response.json()],
-        [{"detail": "Unprocessable Entity, valid format: metadata.key=value"},]
-    )
+    response = delete_config("ThisIsUnexists")
+    assert_equal(response.status_code, 404)
+    assert_equal(response.json(), {"detail": "name doesn't exists"})

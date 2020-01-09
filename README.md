@@ -374,7 +374,7 @@ response body:
 
 ### Request
 
-    $ curl -X GET 'http://localhost:5057/search?metadata.monitoring.enabled=true' -H "Content-type: application/json"
+    $ curl -X GET 'http://localhost:5057/search/metadata.monitoring.enabled=true' -H "Content-type: application/json"
 
 ### Response
 

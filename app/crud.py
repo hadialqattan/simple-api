@@ -5,7 +5,8 @@ CRUD comes from: Create, Read, Update, and Delete.
 from sqlalchemy.orm import Session
 
 # local import
-from . import models, schemas
+from app.models import Config
+from app.schemas import ConfigCreate, ConfigUpdate
 
 
 def get_configs(db: Session):
@@ -20,10 +21,10 @@ def get_configs(db: Session):
 
     return: all configs table rows
     """
-    return db.query(models.Config).all()
+    return db.query(Config).all()
 
 
-def create_config(db: Session, config: schemas.ConfigCreate):
+def create_config(db: Session, config: ConfigCreate):
     """
     designed for [Create : POST : /configs]
 
@@ -35,7 +36,7 @@ def create_config(db: Session, config: schemas.ConfigCreate):
 
     return: new config
     """
-    db_config = models.Config(name=config.name, metadatac=dict(config.metadata))
+    db_config = Config(name=config.name, metadatac=dict(config.metadata))
     db.add(db_config)
     db.commit()
     db.refresh(db_config)
@@ -54,10 +55,10 @@ def get_config(db: Session, name: str):
 
     return: single config
     """
-    return db.query(models.Config).filter(models.Config.name == name).first()
+    return db.query(Config).filter(Config.name == name).first()
 
 
-def update_config(db: Session, config: schemas.ConfigUpdate):
+def update_config(db: Session, config: ConfigUpdate):
     """ 
     designed for [Update : PUT : /configs/{name}]
 
@@ -69,9 +70,7 @@ def update_config(db: Session, config: schemas.ConfigUpdate):
 
     return: updated config or false if config doesn't exists
     """
-    db_config = (
-        db.query(models.Config).filter(models.Config.name == config.name).first()
-    )
+    db_config = db.query(Config).filter(Config.name == config.name).first()
     if not db_config:
         return False
     db_config.metadatac = config.metadata
@@ -92,7 +91,7 @@ def delete_config(db: Session, name: str):
 
     return: True if config exits else False
     """
-    db_config = db.query(models.Config).filter(models.Config.name == name).first()
+    db_config = db.query(Config).filter(Config.name == name).first()
     if not db_config:
         return False
     db.delete(db_config)
@@ -112,8 +111,4 @@ def query_metadata(db: Session, keys: list, value: str):
 
     return: List of configs
     """
-    return (
-        db.query(models.Config)
-        .filter(models.Config.metadatac[keys].astext == value)
-        .all()
-    )
+    return db.query(Config).filter(Config.metadatac[keys].astext == value).all()

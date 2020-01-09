@@ -10,7 +10,7 @@ client = TestClient(app)
 
 
 # [list : GET : /configs] endpoint
-@patch("app.crud.get_configs")
+@patch("app.main.get_configs")
 def test_get_all_empty(mock):
     """
     get all configs from empty table 
@@ -22,7 +22,7 @@ def test_get_all_empty(mock):
 
 
 # [create : POST : /configs] endpoint
-@patch("app.crud.create_config")
+@patch("app.main.create_config")
 def test_create_config_success(mock):
     """
     create new config (success case)
@@ -50,7 +50,7 @@ def test_create_config_success(mock):
 
 
 # [create : POST : /configs] endpoint
-@patch("app.crud.get_config")
+@patch("app.main.get_config")
 def test_create_config_name_already_exists(mock):
     """ 
     create new config with exists name
@@ -68,7 +68,7 @@ def test_create_config_name_already_exists(mock):
 
 
 # [list : GET : /configs] endpoint
-@patch("app.crud.get_configs")
+@patch("app.main.get_configs")
 def test_get_all(mock):
     """
     get all configs (success case)
@@ -90,7 +90,7 @@ def test_get_all(mock):
 
 
 # [get : GET : /configs/{name}]
-@patch("app.crud.get_config")
+@patch("app.main.get_config")
 def test_get_config_by_name_success(mock):
     """
     get config by name (success case)
@@ -110,7 +110,7 @@ def test_get_config_by_name_success(mock):
 
 
 # [get : GET : /configs/{name}]
-@patch("app.crud.get_config")
+@patch("app.main.get_config")
 def test_get_config_by_name_unexists_name(mock):
     """
     get config by unexists name
@@ -122,7 +122,7 @@ def test_get_config_by_name_unexists_name(mock):
 
 
 # [update : PUT : /configs/{name}]
-@patch("app.crud.update_config")
+@patch("app.main.update_config")
 def test_update_config_by_name_success(mock):
     """
     update config by name (success case)
@@ -141,7 +141,7 @@ def test_update_config_by_name_success(mock):
 
 
 # [update : PUT : /configs/{name}]
-@patch("app.crud.update_config")
+@patch("app.main.update_config")
 def test_update_config_by_name_unexists_name(mock):
     """
     update unexsists config by name 
@@ -152,8 +152,30 @@ def test_update_config_by_name_unexists_name(mock):
     assert response.json() == {"detail": "name doesn't exists"}
 
 
+# [query : GET : /search?metadata.key=value]
+@patch("app.main.query_metadata")
+def test_query_metadata_success(mock):
+    """
+    query metadata by nested key and value (success case)
+    """
+    mconfig = Config()
+    mconfig.name = "car"
+    mconfig.metadatac = {"speed": 150, "weight": "1000kg", "language": "english"}
+    mock.return_value = [mconfig]
+    response = client.get("/search/metadata.language=english")
+    assert response.status_code == 200
+    assert response.json() == {
+        "Configs": [
+            {
+                "name": "car",
+                "metadata": {"speed": 150, "weight": "1000kg", "language": "english"},
+            }
+        ]
+    }
+
+
 # [delete : DELETE : /configs/{name}]
-@patch("app.crud.delete_config")
+@patch("app.main.delete_config")
 def test_delete_config_by_name_success(mock):
     """
     delete config by name (success case)
@@ -164,36 +186,13 @@ def test_delete_config_by_name_success(mock):
     assert response.json() == {"The config has deleted": {"name": "car"}}
 
 
-# [query : GET : /search?metadata.key=value]
-@patch("app.crud.query_metadata")
-def test_query_metadata_success(mock):
+# [delete : DELETE : /configs/{name}]
+@patch("app.main.delete_config")
+def test_delete_config_by_name_unexists_name(mock):
+    """ 
+    delete unexists config by name
     """
-    query metadata by nested key and value (success case)
-    """
-    mconfig = Config()
-    mconfig.name = "car"
-    mconfig.metadatac = {"speed": 150, "weight": "1000kg", "language": "arabic"}
-    mock.return_value = [mconfig]
-    response = client.get("/search?metadata.language=arabic")
-    assert response.status_code == 200
-    assert response.json() == {
-        "Configs": [
-            {
-                "name": "car",
-                "metadata": {"speed": 150, "weight": "1000kg", "language": "arabic"},
-            }
-        ]
-    }
-
-
-# [query : GET : /search?metadata.key=value]
-# @patch("app.crud.query_metadata")
-def test_query_metadata_unproccessable_entity():
-    """
-    query metadata by nested key and value (422)
-    """
-    response = client.get("/search?metadata.key=value.value")
-    assert response.status_code == 422
-    assert response.json() == {
-        "detail": "Unprocessable Entity, valid format: metadata.key=value"
-    }
+    mock.return_value = False
+    response = client.delete("/configs/thisis999")
+    assert response.status_code == 404
+    assert response.json() == {"detail": "name doesn't exists"}

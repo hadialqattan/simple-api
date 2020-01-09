@@ -2,7 +2,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import JSONB
 
 # local import
-from .database import Base
+from app.database import Base
 
 
 class Config(Base):
