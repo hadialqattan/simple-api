@@ -6,6 +6,9 @@ The entire API is contained within the `app` folder.
 
 `tests_runner.sh` full automated script aim to run tests inside docker container (run instructions described at the bottom).
 
+All app env vars have set in `.env` include (app & db) (hosts & ports)
+also all tests env vars have set in `.env-tests` include (app & db) (hosts & ports).
+
 All stuffs `dockerized` (build instructions described below).
 
 <br>
@@ -473,12 +476,28 @@ $ docker-compose up
 # Tests
 
 ### Run instructions:
+* Both (Unit & Integration) tests
+  - run docker-compose services (required for integation tests) :
+    ```shell 
+    $ docker-compose up
+    ```
+  - run unit && integation tests :
+    ```shell 
+    $ ./tests_runner.sh b
+    ```
 
 * Unit tests :
-  ```shell
-  $ ./tests_runner.sh 1
-  ```
+  - run unit tests :
+    ```shell
+    $ ./tests_runner.sh u
+    ```
+
 * Integration tests :
-  ```shell
-  $ ./tests_runner.sh 2
-  ```
+  - run docker-compose services :
+    ```shell 
+    $ docker-compose up
+    ```
+  - run integration tests :
+    ```shell
+    $ ./tests_runner.sh i
+    ```
