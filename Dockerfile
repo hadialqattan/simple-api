@@ -6,3 +6,5 @@ RUN pip install -r /requirements.txt
 RUN pip install -U pytest
 
 COPY ./app /app
+
+ENV PYTHONPATH=/
