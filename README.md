@@ -4,7 +4,7 @@ SimpleAPI is a restful API provids simple service that stores and returns config
 
 The entire API is contained within the `app` folder.
 
-`tests_runner.sh` runs command line script that provids you tests instructions (if you want to run tests inside docker please take a look at tests instructions below).
+`tests_runner.sh` full automated script aim to run tests inside docker container (run instructions described at the bottom).
 
 All stuffs `dockerized` (build instructions described below).
 
@@ -472,9 +472,13 @@ $ docker-compose up
 
 # Tests
 
-### Types:
-
-* Unit tests
-* Integration tests
-
 ### Run instructions:
+
+* Unit tests :
+  ```shell
+  $ ./tests_runner.sh 1
+  ```
+* Integration tests :
+  ```shell
+  $ ./tests_runner.sh 2
+  ```
