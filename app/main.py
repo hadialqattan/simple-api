@@ -3,21 +3,11 @@ from starlette.requests import Request
 from sqlalchemy.orm import Session
 
 # local import
-from app.crud import (
-    get_configs,
-    get_config,
-    create_config,
-    update_config,
-    delete_config,
-    query_metadata,
-)
-from app.database import SessionLocal, engine
-from app.schemas import ConfigCreate, ConfigUpdate
-from app.models import Base
+from . import crud, models, schemas, database
 
 
 # create the database tables
-Base.metadata.create_all(bind=engine)
+database.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
 
@@ -25,7 +15,7 @@ app = FastAPI()
 # Dependency
 def get_db():
     try:
-        db = SessionLocal()
+        db = database.SessionLocal()
         yield db
     finally:
         db.close()
@@ -46,7 +36,7 @@ def List(db: Session = Depends(get_db)):
     return: valid json contain all configs table rows
     """
     # select all configs
-    configs = get_configs(db=db)
+    configs = crud.get_configs(db=db)
     # convert metadatac to metadata
     configslist = [
         {"name": config.name, "metadata": config.metadatac} for config in configs
@@ -56,7 +46,7 @@ def List(db: Session = Depends(get_db)):
 
 
 @app.post("/configs")
-def Create(config: ConfigCreate, db: Session = Depends(get_db)):
+def Create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
     """
     SQL query: INSERT INTO configs (name, metadata) VALUES (nameValue, metadataValue)
     
@@ -67,10 +57,10 @@ def Create(config: ConfigCreate, db: Session = Depends(get_db)):
     return: json response contain success message or failed message with 400 
     """
     # check for exists config
-    if get_config(name=config.name, db=db):
+    if crud.get_config(name=config.name, db=db):
         raise HTTPException(status_code=400, detail="name already exists")
     # create new config
-    new_config = create_config(config=config, db=db)
+    new_config = crud.create_config(config=config, db=db)
     return {
         "New config has created": {"name": config.name, "metadata": config.metadata}
     }
@@ -88,7 +78,7 @@ def Get(name: str, db: Session = Depends(get_db)):
     return: json response if name exists else failed message with 404
     """
     # get config by name
-    config = get_config(name=name, db=db)
+    config = crud.get_config(name=name, db=db)
     # check for unexists name
     if not config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
@@ -108,9 +98,9 @@ def Update(name: str, metadata: dict, db: Session = Depends(get_db)):
     return: json response
     """
     # create new config with update value
-    config_schema = ConfigUpdate(name=name, metadata=metadata)
+    config_schema = schemas.ConfigUpdate(name=name, metadata=metadata)
     # update the config with new metadata value
-    db_config = update_config(config=config_schema, db=db)
+    db_config = crud.update_config(config=config_schema, db=db)
     # check for unexists name
     if not db_config:
         raise HTTPException(status_code=404, detail="name doesn't exists")
@@ -130,7 +120,7 @@ def Delete(name: str, db: Session = Depends(get_db)):
     return: json succeed message if config has deleted else failed message if config doesn't exists
     """
     # delete config by name
-    success = delete_config(name=name, db=db)
+    success = crud.delete_config(name=name, db=db)
     # check for unexists name
     if not success:
         raise HTTPException(status_code=404, detail="name doesn't exists")
@@ -151,7 +141,7 @@ def Query(key: str, value: str, db: Session = Depends(get_db)):
     # fetch query keys from query params
     keys = key.split(".")
     # get all matched configs
-    configs = query_metadata(keys=key, value=value, db=db)
+    configs = crud.query_metadata(keys=key, value=value, db=db)
     # convert metadatac to metadata
     configslist = [
         {"name": config.name, "metadata": config.metadatac} for config in configs
