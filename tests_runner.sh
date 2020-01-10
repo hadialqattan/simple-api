@@ -38,7 +38,7 @@ tests_runner() {
     echo ""
     echo -e "${GREEN}Waiting${NC} labdb..."
     echo ""
-    for i in {1..5}; do
+    for i in {1..3}; do
         echo -e "${GREEN}${i}${NC}"
         sleep 1
     done
