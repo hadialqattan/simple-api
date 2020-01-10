@@ -1,2 +1,5 @@
-BASE_URL = "http://localhost:8000/configs"
-QUERY_URL = "http://localhost:8000/search"
+import os
+
+
+BASE_URL = "http://localhost:" + os.environ["APP_PORT"] + "/configs"
+QUERY_URL = "http://localhost:" + os.environ["APP_PORT"] + "/search"
