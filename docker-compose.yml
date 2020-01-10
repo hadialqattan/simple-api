@@ -5,11 +5,8 @@ services:
   api:
     build: .
     image: simpleapi
-    command: uvicorn main:app --host 0.0.0.0 --port 5057
+    command: uvicorn app.main:app --host 0.0.0.0 --port 5057
     environment:
-      - DB=${DB}
-      - DB_OWNER=${DB_OWNER}
-      - DB_PASSWORD=${DB_PASSWORD}
       - DB_URL=${DB_URL}
     ports:
       - "5057:5057"
@@ -21,9 +18,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=${DB_OWNER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
 
 volumes:
   postgres_data:
