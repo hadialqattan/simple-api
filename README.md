@@ -478,14 +478,3 @@ $ docker-compose up
 * Integration tests
 
 ### Run instructions:
-
-- open new bash window
-- mount volume at run time
-  ```shell
-  $ docker run -it --rm -v ${PWD}:/lab -w /lab simpleapi /bin/bash
-  ```
-- run tests runner 
-  ```shell 
-  $ ./tests_runner.sh
-  ```
-- follow tests runner instructions
