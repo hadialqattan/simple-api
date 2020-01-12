@@ -9,72 +9,79 @@ NC='\033[0m' # No Color
 
 # create labdb container from postgres:12.0-alpine image
 labdb_init() {
+    # creating .evn-tests file
+    cat >.env-tests <<EOL
+POSTGRES_USER=lab
+POSTGRES_PASSWORD=lab000111
+POSTGRES_DB=labdb
+DB_HOST=172.18.0.1
+APP_HOST=172.18.0.1
+APP_PORT=5057
+EOL
+
     # creating labdb
-    echo ""
-    echo -e "${GREEN}Creating${NC} labdb..."
+    echo -e "\n${GREEN}Creating${NC} labdb...\n"
     docker run --rm -d \
         --name labdb \
-        -p 6551:5432 \
+        -p 5432 \
         -h 0.0.0.0 \
         --env-file ./.env-tests \
         postgres:12.0-alpine
-    echo ""
 }
 
 
 # stop labdb container
 labdb_stop() {
     # stopping labdb
-    echo ""
-    echo -e "${RED}Stopping${NC} labdb..."
+    echo -e "\n${RED}Stopping${NC} labdb...\n"
     docker stop labdb
-    echo ""
+
+    # remove .env-tests file
+    rm -fr .env-tests
 }
 
 
 # start tests
 tests_runner() {
-    # waiting labdb init
-    echo ""
-    echo -e "${GREEN}Waiting${NC} labdb..."
-    echo ""
-    for i in {1..3}; do
+    # append labdb port to .env-tests file
+    port=$(docker port labdb)
+    port=${port:20:25}
+    echo "DB_PORT=$port" >> .env-tests
+
+    # waiting for labdb
+    echo -e "\n${GREEN}Waiting${NC} labdb...\n"
+    sleep 1
+    i=0
+    while ! nc -z localhost $port; do 
+        i+=1
         echo -e "${GREEN}${i}${NC}"
         sleep 1
     done
 
-    # set export command
+    # init tests command
     CMDs=()
     # set tests commands
-    if [[ ${BASH_ARGV[$1]} == "b" ]]; then 
-        echo ""
-        echo -e "${GREEN}Starting${NC} both unit & integraion tests..."
-        echo ""
+    if [[ ${BASH_ARGV[$1]} == "b" ]]; then
+        echo -e "\n${GREEN}Starting${NC} both unit & integraion tests...\n"
         declare -a CMDs=("echo 'Unit tests:';", "cd unit;", "pytest -vv;", "cd ..;", "echo '';", "echo 'Integration tests:';", "cd integration;", "nosetests --verbosity=2 test_integration.py;")
     elif [[ ${BASH_ARGV[$1]} == "u" ]]; then
-        echo ""
-        echo -e "${GREEN}Starting${NC} unit tests..."
-        echo ""
+        echo -e "\n${GREEN}Starting${NC} unit tests...\n"
         declare -a CMDs=("cd unit;", "pytest -vv;")
-    elif [[ ${BASH_ARGV[$1]} == "i" ]]; then 
-        echo ""
-        echo -e "${GREEN}Starting${NC} integration tests..."
-        echo ""
+    elif [[ ${BASH_ARGV[$1]} == "i" ]]; then
+        echo -e "\n${GREEN}Starting${NC} integration tests...\n"
         declare -a CMDs=("cd integration;", "nosetests --verbosity=2 test_integration.py;")
     fi
     # extract array elements without commas
     nCMDs="${CMDs[@]%,}"
     # run the test inside docker
     docker run \
-            --name testslab \
-            --link labdb \
-            --network simple-project-1_default \
-            --env-file ./.env-tests \
-            --rm -v ${PWD}:/lab -w /lab simpleapi \
-            /bin/bash -c "${nCMDs[@]}"
-    echo ""
-    echo -e "${GREEN}Goodbye!${NC}"
-    echo ""
+        --name testslab \
+        --link labdb \
+        --network simple-project-1_default \
+        --env-file ./.env-tests \
+        --rm -v ${PWD}:/lab -w /lab simpleapi \
+        /bin/bash -c "${nCMDs[@]}"
+    echo -e "\n${GREEN}Goodbye!${NC}\n"
 }
 
 

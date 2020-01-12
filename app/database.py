@@ -5,7 +5,7 @@ import os
 
 
 # database URL and engine
-SQLALCHEMY_DATABASE_URL = f"postgresql://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@{os.environ['DB_HOST']}:{os.environ['DB_POST']}/{os.environ['POSTGRES_DB']}"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['POSTGRES_DB']}"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 # database session class
