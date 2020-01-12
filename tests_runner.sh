@@ -45,12 +45,15 @@ labdb_stop() {
 tests_runner() {
     # append DB_PORT to .env-tests
     port=$(docker port labdb)
-    echo -e "DB_PORT=${port:20:25}" >> .env-tests
+    port=${port:20:25}
+    echo -e "DB_PORT=$port" >> .env-tests
 
-    # waiting labdb init
+    # waiting for labdb port
     echo -e "\n${GREEN}Waiting${NC} labdb...\n"
-    for i in {1..3}; do
-        echo -e "${GREEN}${i}${NC}"
+    i=0
+    while ! nc -z localhost $port; do
+        i+=1
+        echo $i
         sleep 1
     done
 
