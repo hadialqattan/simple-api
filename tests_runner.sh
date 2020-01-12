@@ -36,38 +36,34 @@ labdb_stop() {
     echo -e "\n${RED}Stopping${NC} labdb...\n"
     docker stop labdb
 
-    # remove .env-tests file
+    # delete .env-tests
     rm -fr .env-tests
 }
 
 
 # start tests
 tests_runner() {
-    # append labdb port to .env-tests file
+    # append DB_PORT to .env-tests
     port=$(docker port labdb)
-    port=${port:20:25}
-    echo "DB_PORT=$port" >> .env-tests
+    echo -e "DB_PORT=${port:20:25}" >> .env-tests
 
-    # waiting for labdb
+    # waiting labdb init
     echo -e "\n${GREEN}Waiting${NC} labdb...\n"
-    sleep 1
-    i=0
-    while ! nc -z localhost $port; do 
-        i+=1
+    for i in {1..3}; do
         echo -e "${GREEN}${i}${NC}"
         sleep 1
     done
 
-    # init tests command
+    # set export command
     CMDs=()
     # set tests commands
-    if [[ ${BASH_ARGV[$1]} == "b" ]]; then
+    if [[ ${BASH_ARGV[$1]} == "b" ]]; then 
         echo -e "\n${GREEN}Starting${NC} both unit & integraion tests...\n"
         declare -a CMDs=("echo 'Unit tests:';", "cd unit;", "pytest -vv;", "cd ..;", "echo '';", "echo 'Integration tests:';", "cd integration;", "nosetests --verbosity=2 test_integration.py;")
     elif [[ ${BASH_ARGV[$1]} == "u" ]]; then
         echo -e "\n${GREEN}Starting${NC} unit tests...\n"
         declare -a CMDs=("cd unit;", "pytest -vv;")
-    elif [[ ${BASH_ARGV[$1]} == "i" ]]; then
+    elif [[ ${BASH_ARGV[$1]} == "i" ]]; then 
         echo -e "\n${GREEN}Starting${NC} integration tests...\n"
         declare -a CMDs=("cd integration;", "nosetests --verbosity=2 test_integration.py;")
     fi
@@ -75,12 +71,12 @@ tests_runner() {
     nCMDs="${CMDs[@]%,}"
     # run the test inside docker
     docker run \
-        --name testslab \
-        --link labdb \
-        --network simple-project-1_default \
-        --env-file ./.env-tests \
-        --rm -v ${PWD}:/lab -w /lab simpleapi \
-        /bin/bash -c "${nCMDs[@]}"
+            --name testslab \
+            --link labdb \
+            --network simple-project-1_default \
+            --env-file ./.env-tests \
+            --rm -v ${PWD}:/lab -w /lab simpleapi \
+            /bin/bash -c "${nCMDs[@]}"
     echo -e "\n${GREEN}Goodbye!${NC}\n"
 }
 
@@ -99,4 +95,4 @@ else
     echo -e "  | ${RED}i${NC}  |  ${GREEN}Integration${NC} |"
     echo -e "  ---------------------"
     echo ""
-fi 
+fi
