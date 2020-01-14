@@ -38,6 +38,9 @@ labdb_stop() {
 
     # delete .env-tests
     rm -fr .env-tests
+
+    # remove untagged images
+    docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
 }
 
 

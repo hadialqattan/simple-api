@@ -21,7 +21,7 @@ All stuffs `dockerized` (build instructions described below).
 | Get    | `GET` | `/configs/{name}` 
 | Update | `PUT` | `/configs/{name}` 
 | Delete | `DELETE` | `/configs/{name}` 
-| Query  | `GET`  | `/search?metadata.key=value`
+| Query  | `GET`  | `/search/metadata.key=value`
 
 #### Schema
 
@@ -372,7 +372,7 @@ response body:
 }
 ```
 ---
-## `GET /search?metadata.key=value` 
+## `GET /search/metadata.key=value` 
 
 ### Request
 
