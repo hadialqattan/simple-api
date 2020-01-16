@@ -37,6 +37,7 @@ jobs:
     - name: Unit tests with pytest
       run: |
         export $(cat .env)
+        export DB_HOST=localhost
         cd unit
         pytest -vv
         
