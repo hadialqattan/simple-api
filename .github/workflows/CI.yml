@@ -1,4 +1,4 @@
-name: Python application
+name: SimpleAPI(CI)
 
 on:
   push:
@@ -12,21 +12,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        sudo apt-get install libpq-dev
-        pip install -r requirements.txt
-        sudo docker run --rm -d \
-          --name=apidb \
-          -p=5432:5432 \
-          -h=0.0.0.0 \
-          --env-file=./.env \
-          postgres:12.0-alpine
+    
     - name: Lint with flake8
       run: |
         pip install flake8
@@ -34,6 +25,22 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        sudo apt-get install libpq-dev
+        pip install -r requirements.txt
+    
+    - name: Run postgresql DB
+      run: |
+        sudo docker run --rm -d \
+          --name=apidb \
+          -p=5432:5432 \
+          -h=0.0.0.0 \
+          --env-file=./.env \
+          postgres:12.0-alpine
+    
     - name: Unit tests with pytest
       run: |
         export $(cat .env)
