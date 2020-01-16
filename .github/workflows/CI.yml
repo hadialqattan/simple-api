@@ -31,9 +31,6 @@ jobs:
         python -m pip install --upgrade pip
         sudo apt-get install libpq-dev
         pip install -r requirements.txt
-    
-    - name: Run postgresql DB
-      run: |
         sudo docker run --rm -d \
           --name=apidb \
           -p=5432:5432 \
@@ -47,4 +44,6 @@ jobs:
         export DB_HOST=localhost
         cd unit
         pytest -vv
-        
+    
+    - name: Black Code Formatter
+      uses: lgeiger/black-action@v1.0.1
