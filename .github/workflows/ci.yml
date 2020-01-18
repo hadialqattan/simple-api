@@ -59,17 +59,18 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Unit tests with pytest
-      run: |
-        export $(cat .env)
-        export DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb)
-        cd unit
-        pytest -vv
-    
     - name: Integration tests with nose
       run: |
         export APP_PORT=5057
         export APP_HOST=localhost
         cd integration 
         nosetests --verbosity=2 test_integration.py
+
+    - name: Unit tests with pytest
+      run: |
+        export $(cat .env)
+        export DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb)
+        cd unit
+        pytest -vv
+  
     
