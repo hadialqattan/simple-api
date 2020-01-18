@@ -50,7 +50,7 @@ jobs:
         dbport=$(docker port apidb)
         dbport=${dbport:20:25}
         export DB_PORT=$dbport
-        export DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb)
+        export DB_HOST=localhost
         cd unit
         pytest -vv
   
