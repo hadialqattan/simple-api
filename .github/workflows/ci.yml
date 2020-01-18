@@ -32,21 +32,6 @@ jobs:
           -h=0.0.0.0 \
           --env-file=./.env \
           postgres:12.0-alpine
-        
-        dbport=$(docker port apidb)
-        dbport=${dbport:20:25}
-        
-        sudo docker build -t simpleapi .
-        
-        sudo docker run --rm -d \
-          --name=simpleapi \
-          --link=apidb \
-          -p=5057:5057 \
-          -h=0.0.0.0 \
-          --env-file=./.env \
-          --env=DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb) \
-          --env=DB_PORT=$dbport \
-          simpleapi:latest
     
     - name: Black code formatter
       uses: lgeiger/black-action@v1.0.1
@@ -59,16 +44,11 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Integration tests with nose
-      run: |
-        export APP_PORT=5057
-        export APP_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' simpleapi)
-        cd integration 
-        nosetests --verbosity=2 test_integration.py
-
     - name: Unit tests with pytest
       run: |
-        export $(cat .env)
+        dbport=$(docker port apidb)
+        dbport=${dbport:20:25}
+        export DB_PORT=$dbport
         export DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb)
         cd unit
         pytest -vv
