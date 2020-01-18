@@ -46,6 +46,7 @@ jobs:
 
     - name: Unit tests with pytest
       run: |
+        export $(cat .env)
         dbport=$(docker port apidb)
         dbport=${dbport:20:25}
         export DB_PORT=$dbport
