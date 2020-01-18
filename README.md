@@ -1,5 +1,5 @@
 # SimpleAPI
-![](https://github.com/mojtaba42/simple-project-1/workflows/SimpleAPI%28CI%29/badge.svg?branch=Hadi) ![](https://github.com/mojtaba42/simple-project-1/workflows/SimpleAPI%28CD%29/badge.svg?branch=Hadi)
+![](https://github.com/HadiZakiAlQattan/simple-api/workflows/SimpleAPI%28CI%29/badge.svg?branch=Hadi) ![](https://github.com/HadiZakiAlQattan/simple-api/workflows/SimpleAPI%28CD%29/badge.svg?branch=Hadi)
 
 SimpleAPI is a restful API provids simple service that stores and returns configurations using FastAPI and PostgreSQL.
 
