@@ -59,11 +59,11 @@ def Create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
     if crud.get_config(name=config.name, db=db):
         raise HTTPException(status_code=400, detail="name already exists")
     # create new config
-    new_config = crud.create_config(config=config, db=db)
+    crud.create_config(config=config, db=db)
     return {
         "New config has created": {
-            "name": new_config.name,
-            "metadata": new_config.metadatac,
+            "name": config.name,
+            "metadata": config.metadata,
         }
     }
 
