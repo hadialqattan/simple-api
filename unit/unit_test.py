@@ -1,5 +1,5 @@
 from starlette.testclient import TestClient
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 # local import
 from app.main import app

@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Depends, HTTPException, Body
-from starlette.requests import Request
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 # local import
-from . import crud, models, schemas, database
+from . import crud, schemas, database
 
 
 # create the database tables
@@ -62,7 +61,10 @@ def Create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
     # create new config
     new_config = crud.create_config(config=config, db=db)
     return {
-        "New config has created": {"name": config.name, "metadata": config.metadata}
+        "New config has created": {
+            "name": new_config.name,
+            "metadata": new_config.metadatac,
+        }
     }
 
 
@@ -141,7 +143,7 @@ def Query(key: str, value: str, db: Session = Depends(get_db)):
     # fetch query keys from query params
     keys = key.split(".")
     # get all matched configs
-    configs = crud.query_metadata(keys=key, value=value, db=db)
+    configs = crud.query_metadata(keys=keys, value=value, db=db)
     # convert metadatac to metadata
     configslist = [
         {"name": config.name, "metadata": config.metadatac} for config in configs
