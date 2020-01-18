@@ -62,7 +62,7 @@ jobs:
     - name: Integration tests with nose
       run: |
         export APP_PORT=5057
-        export APP_HOST=localhost
+        export APP_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' simpleapi)
         cd integration 
         nosetests --verbosity=2 test_integration.py
 
