@@ -56,18 +56,25 @@ jobs:
   
     - name: Integration tests with nose
       run: |
-        dbport=$(docker port apidb)
+        sudo docker run --rm -d \
+          --name=apidbi \
+          -p=5432 \
+          -h=0.0.0.0 \
+          --env-file=./.env \
+          postgres:12.0-alpine
+
+        dbport=$(docker port apidbi)
         dbport=${dbport:20:25}
 
         sudo docker build -t simpleapi .
 
         sudo docker run --rm -d \
           --name=api \
-          --link=apidb \
+          --link=apidbi \
           -p=5057 \
           -h=0.0.0.0 \
           --env-file=./.env \
-          --env=DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb) \
+          --env=DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidbi) \
           --env=DB_PORT=$dbport \
           simpleapi:latest
           
