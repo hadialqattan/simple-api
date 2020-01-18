@@ -12,7 +12,7 @@ All app env vars have set in `.env` include (app & db) (hosts & ports).
 All stuffs `dockerized` (build instructions described below).
 
 <br>
-
+ 
 # Endpoints and config schema
 
 | Name   | Method      | URL
