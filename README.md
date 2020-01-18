@@ -6,7 +6,7 @@ SimpleAPI is a restful API provids simple service that stores and returns config
 The entire API is contained within the `app` folder.
 
 `tests_runner.sh` full automated script aim to run tests inside docker container (run instructions described at the bottom).
-
+ 
 All app env vars have set in `.env` include (app & db) (hosts & ports).
 
 All stuffs `dockerized` (build instructions described below).
