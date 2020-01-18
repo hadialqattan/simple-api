@@ -24,7 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         sudo apt-get install libpq-dev
-        sudo pip install pytest nose
+        sudo pip install -r requirements.txt
         
         sudo docker run --rm -d \
           --name=apidb \
