@@ -81,7 +81,7 @@ jobs:
         apiport=$(docker port api)
         apiport=${apiport:20:25}
         export APP_PORT=$apiport
-        export APP_HOST=localhost
+        export APP_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' api)
 
         cd integration
         nosetests --verbosity=2 test_integration.py
