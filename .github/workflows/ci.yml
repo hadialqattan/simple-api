@@ -32,21 +32,6 @@ jobs:
           -h=0.0.0.0 \
           --env-file=./.env \
           postgres:12.0-alpine
-
-        dbport=$(docker port apidb)
-        dbport=${dbport:20:25}
-
-        sudo docker build -t simpleapi .
-
-        sudo docker run --rm -d \
-          --name=api \
-          --link=apidb \
-          -p=5057 \
-          -h=0.0.0.0 \
-          --env-file=./.env \
-          --env=DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb) \
-          --env=DB_PORT=$dbport \
-          simpleapi:latest
     
     - name: Black code formatter
       uses: lgeiger/black-action@v1.0.1
@@ -71,6 +56,20 @@ jobs:
   
     - name: Integration tests with nose
       run: |
+        dbport=$(docker port apidb)
+        dbport=${dbport:20:25}
+
+        sudo docker build -t simpleapi .
+
+        sudo docker run --rm -d \
+          --name=api \
+          --link=apidb \
+          -p=5057 \
+          -h=0.0.0.0 \
+          --env-file=./.env \
+          --env=DB_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apidb) \
+          --env=DB_PORT=$dbport \
+          simpleapi:latest
         apiport=$(docker port api)
         apiport=${apiport:20:25}
         export APP_PORT=$apiport
