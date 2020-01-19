@@ -476,15 +476,6 @@ $ docker-compose up
 # Tests
 
 ### Run instructions:
-* Both (Unit & Integration) tests
-  - run docker-compose services (required for integation tests) :
-    ```shell 
-    $ docker-compose up
-    ```
-  - run unit && integation tests :
-    ```shell 
-    $ ./tests_runner.sh b
-    ```
 
 * Unit tests :
   - run unit tests :

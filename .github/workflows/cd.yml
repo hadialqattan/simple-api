@@ -58,6 +58,7 @@ jobs:
       run: |
         docker push gcr.io/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
         
+
     # Set up kustomize
     - name: Set up Kustomize
       run: |
@@ -72,3 +73,4 @@ jobs:
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/simpleapi
         kubectl get services -o wide
+        

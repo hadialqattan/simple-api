@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: simpleapi
-        image: gcr.io/simpleapi-1010101/simpleapi:TAG
+        image: gcr.io/simpleapi-1010101/simpleapi:latest
         ports:
         - containerPort: 5057
         resources:
