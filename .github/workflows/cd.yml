@@ -54,9 +54,8 @@ jobs:
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
         
-        docker build -t gcr.io/"$GKE_PROJECT"/"$DB":"$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" postgres:12.0-alpine
+        docker pull postgres:12.0-alpine
+        docker tag postgres:12.0-alpine gcr.io/$GKE_PROJECT/$DB:$GITHUB_SHA
 
     # Push the Docker image to Google Container Registry
     - name: Publish
