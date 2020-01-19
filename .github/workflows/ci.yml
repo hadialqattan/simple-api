@@ -32,11 +32,6 @@ jobs:
           -h=0.0.0.0 \
           --env-file=./.env \
           postgres:12.0-alpine
-    
-    - name: Black code formatter
-      uses: lgeiger/black-action@v1.0.1
-      with:
-        args: .
 
     - name: Lint with flake8
       run: |

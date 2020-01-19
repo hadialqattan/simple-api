@@ -61,10 +61,7 @@ def Create(config: schemas.ConfigCreate, db: Session = Depends(get_db)):
     # create new config
     crud.create_config(config=config, db=db)
     return {
-        "New config has created": {
-            "name": config.name,
-            "metadata": config.metadata,
-        }
+        "New config has created": {"name": config.name, "metadata": config.metadata,}
     }
 
 
