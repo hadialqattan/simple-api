@@ -1,0 +1,12 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "api-config"
+  namespace: "default"
+  labels:
+    app: "simpleapi"
+data:
+  APP_HOST: "35.222.74.133"
+  APP_PORT: "5057"
+  DB_HOST: postgres
+  DB_PORT: "5432"

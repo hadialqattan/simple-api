@@ -2,11 +2,11 @@
 #
 # To configure this workflow:
 #
-# [DONE!] => 1. Ensure that your repository contains the necessary configuration for your Google Kubernetes Engine cluster, including deployment.yml, kustomization.yml, service.yml, etc.
+# 1. Ensure that your repository contains the necessary configuration for your Google Kubernetes Engine cluster, including deployment.yml, kustomization.yml, service.yml, etc.
 #
-# [DONE!] => 2. Set up secrets in your workspace: GKE_PROJECT* with the name of the project, GKE_EMAIL* with the service account email, GKE_KEY* with the service account key.
+# 2. Set up secrets in your workspace: GKE_PROJECT* with the name of the project, GKE_EMAIL* with the service account email, GKE_KEY* with the service account key.
 #
-# [DONE!] => 3. Change the values for the GKE_ZONE*, GKE_CLUSTER* and IMAGE* environment variables (below).
+# 3. Change the values for the GKE_ZONE*, GKE_CLUSTER* and IMAGE* environment variables (below).
 
 name: SimpleAPI(CD)
 
@@ -62,5 +62,7 @@ jobs:
     - name: Deploy
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-        kubectl apply -f gcp/deployment.yaml
-        
+        kubectl apply -f \
+          gcp/api-config.yaml,gcp/api-deployment.yaml,gcp/api-service.yaml \
+          gcp/postgres-config.yaml,gcp/postgres-deployment.yaml,gcp/postgres-service.yaml \
+          gcp/postgres-volume.yaml

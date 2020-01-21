@@ -1,0 +1,11 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-config"
+  namespace: "default"
+  labels:
+    app: "postgres"
+data:
+  POSTGRES_DB: "apidb"
+  POSTGRES_USER: "api_owner"
+  POSTGRES_PASSWORD: "api112233"
