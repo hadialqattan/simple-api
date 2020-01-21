@@ -13,7 +13,7 @@ name: SimpleAPI(CD)
 on:
   push:
     branches:
-      - Hadi
+      - master
 
 env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
