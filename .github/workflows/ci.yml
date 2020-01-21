@@ -26,6 +26,10 @@ jobs:
         sudo apt-get install libpq-dev
         pip install -r requirements.txt
 
+        sudo apk add --no-cache --virtual .build-deps gcc libc-dev make \
+          && pip install uvicorn gunicorn \
+          && apk del .build-deps gcc libc-dev make
+
         sudo docker run --rm -d \
           --name=apidb \
           -p=5432 \
@@ -53,20 +57,12 @@ jobs:
 
     - name: Integration tests with nose
       run: |
-        sudo docker build -t simpleapi .
         export $(cat .env)
-        export DB_HOST=172.18.0.1
+        export DB_HOST=localhost
         dbport=$(docker port apidb)
         dbport=${dbport:20:25}
         export DB_PORT=$dbport
-        sudo docker run --rm -d \
-          --name=simpleapi \
-          --link=apidb \
-          -p=5057:5057 \
-          -h=0.0.0.0 \
-          --env-file=./.env \
-          simpleapi
+        uvicorn app.main:app
         cd integration
         nosetests --verbosity=2 test_integration.py
-        sudo docker stop apidb
-        sudo docker stop simpleapi
+        
