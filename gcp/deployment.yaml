@@ -1,0 +1,173 @@
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "api-config"
+  namespace: "default"
+  labels:
+    app: "simpleapi"
+data:
+  APP_HOST: localhost
+  APP_PORT: "5057"
+  DB_HOST: postgres
+  DB_PORT: "5432"
+
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "postgres-config"
+  namespace: "default"
+  labels:
+    app: "postgres"
+data:
+  POSTGRES_DB: "apidb"
+  POSTGRES_USER: "api_owner"
+  POSTGRES_PASSWORD: "api112233"
+
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "simpleapi"
+  namespace: "default"
+  labels:
+    app: "simpleapi"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "simpleapi"
+  template:
+    metadata:
+      labels:
+        app: "simpleapi"
+    spec:
+      containers:
+      - name: "simpleapi"
+        image: "gcr.io/simpleapi-1234/simpleapi"
+        env:
+        - name: "APP_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "APP_HOST"
+              name: "api-config"
+        - name: "APP_PORT"
+          valueFrom:
+            configMapKeyRef:
+              key: "APP_PORT"
+              name: "api-config"
+        - name: "DB_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_HOST"
+              name: "api-config"
+        - name: "DB_PORT"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_PORT"
+              name: "api-config"
+        - name: "POSTGRES_DB"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_DB"
+              name: "postgres-config"
+        - name: "POSTGRES_USER"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_USER"
+              name: "postgres-config"
+        - name: "POSTGRES_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_PASSWORD"
+              name: "postgres-config"
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "simpleapi-service"
+  namespace: "default"
+  labels:
+    app: "simpleapi"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 5057
+    targetPort: 5057
+  selector:
+    app: "simpleapi"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
+
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "postgres"
+  namespace: "default"
+  labels:
+    app: "postgres"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "postgres"
+  template:
+    metadata:
+      labels:
+        app: "postgres"
+    spec:
+      containers:
+      - name: "postgres"
+        image: "postgres:9.6.2"
+        env:
+        - name: "POSTGRES_DB"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_DB"
+              name: "postgres-config"
+        - name: "POSTGRES_USER"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_USER"
+              name: "postgres-config"
+        - name: "POSTGRES_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "POSTGRES_PASSWORD"
+              name: "postgres-config"
+        ports:
+          - containerPort: 5432
+            name: postgres
+        volumeMounts:
+          - name: postgres-storage
+            mountPath: /var/lib/postgresql/db-data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: postgres

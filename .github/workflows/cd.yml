@@ -20,10 +20,9 @@ env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
-  GKE_ZONE: us-central1-a
+  GKE_ZONE: us-central1-a	
   GKE_CLUSTER: api-cluster
   IMAGE: simpleapi
-  DB: postgresdb
 
 jobs:
   setup-build-publish-deploy:
@@ -53,28 +52,15 @@ jobs:
         docker build -t gcr.io/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
-        
-        docker pull postgres:12.0-alpine
-        docker tag postgres:12.0-alpine gcr.io/$GKE_PROJECT/$DB:$GITHUB_SHA
 
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
         docker push gcr.io/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
-        docker push gcr.io/$GKE_PROJECT/$DB:$GITHUB_SHA
-
-    # Set up kustomize
-    - name: Set up Kustomize
-      run: |
-        curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-        chmod u+x ./kustomize
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-        ./kustomize edit set image gcr.io/$GKE_PROJECT/$IMAGE:${GITHUB_SHA}
-        ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/simpleapi
-        kubectl get services -o wide
+        kubectl apply -f gcp/deployment.yaml
         
