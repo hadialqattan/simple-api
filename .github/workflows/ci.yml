@@ -25,13 +25,6 @@ jobs:
         python -m pip install --upgrade pip
         sudo apt-get install libpq-dev
         pip install -r requirements.txt
-        
-        sudo docker run --rm -d \
-          --name=apidb \
-          -p=5432 \
-          -h=0.0.0.0 \
-          --env-file=./.env \
-          postgres:12.0-alpine
 
     - name: Lint with flake8
       run: |
@@ -42,12 +35,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Unit tests with pytest
-      run: |
-        export $(cat .env)
-        dbport=$(docker port apidb)
-        dbport=${dbport:20:25}
-        export DB_PORT=$dbport
-        export DB_HOST=localhost
-        cd unit
-        pytest -vv
-  
+      run: ./tests_runner.sh u
+      

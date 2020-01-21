@@ -11,6 +11,8 @@ All app env vars have set in `.env` include (app & db) (hosts & ports).
 
 All stuffs `dockerized` (build instructions described below).
 
+The api deployed on GCP at <b>http://35.222.74.133:5057/docs</b> (for more details take a look at deployment section below).
+
 <br>
  
 # Endpoints and config schema
@@ -458,18 +460,26 @@ response body:
 
 <br>
 
-# Dockerizing the app
+# Deployment
 
-### Prerequisites:
+- ## Cloud deployment (google cloud platform)
+  We made full CI/CD pipeline using Github actions.
+  #TODO...
 
-* docker 
-* docker-compose
+- ## Local deployment (docker containers)
 
-### Build the image and run docker-compose services
+  ### Dockerizing the app
 
-``` shell
-$ docker-compose up
-```
+  ### Prerequisites:
+
+  * docker 
+  * docker-compose
+
+  ### Build the image and run docker-compose services
+
+  ``` shell
+  $ docker-compose up
+  ```
 
 <br>
 
