@@ -36,5 +36,6 @@ jobs:
 
     - name: Unit tests with pytest
       run: |
+        sudo docker build -t simpleapi .
         sudo chmod +x ./tests_runner.sh
         ./tests_runner.sh u
