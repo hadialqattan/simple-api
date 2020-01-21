@@ -25,10 +25,7 @@ jobs:
         python -m pip install --upgrade pip
         sudo apt-get install libpq-dev
         pip install -r requirements.txt
-
-        sudo apk add --no-cache --virtual .build-deps gcc libc-dev make \
-          && pip install uvicorn gunicorn \
-          && apk del .build-deps gcc libc-dev make
+        pip install uvicorn
 
         sudo docker run --rm -d \
           --name=apidb \
@@ -62,6 +59,6 @@ jobs:
         dbport=$(docker port apidb)
         dbport=${dbport:20:25}
         export DB_PORT=$dbport
-        sudo uvicorn app.main:app
+        uvicorn app.main:app
         cd integration
         nosetests --verbosity=2 test_integration.py
