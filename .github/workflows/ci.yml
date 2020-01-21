@@ -35,5 +35,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Unit tests with pytest
-      run: ./tests_runner.sh u
-      
+      run: |
+        sudo chmod +x ./tests_runner.sh
+        ./tests_runner.sh u
