@@ -463,12 +463,26 @@ response body:
 # Deployment
 
 - ## Cloud deployment (google cloud platform)
-  We made full CI/CD pipeline using Github actions.
-  #TODO...
+  We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP.
+  ```shell 
+  .
+  |
+  ├── gcp # GCP Kubernetes services (postgresdb & app) yaml files 
+  │   ├── api-config.yaml # api service configs contained env vars
+  │   ├── api-deployment.yaml # api deployment config
+  │   ├── api-service.yaml  # api service describe
+  │   ├── postgres-config.yaml  # postgres service configs contained env vars
+  │   ├── postgres-deployment.yaml # postgres deployment config
+  │   ├── postgres-service.yaml # postgres service describe
+  │   └── postgres-volume.yaml # postgres persistent volume config
+  |
+  └── .github
+       └── workflows 
+           └── cicd.yml # CI/CD using github actions
+  ```
+  
 
-- ## Local deployment (docker containers)
-
-  ### Dockerizing the app
+- ## Local deployment ( Dockerizing )
 
   ### Prerequisites:
 
@@ -476,7 +490,6 @@ response body:
   * docker-compose
 
   ### Build the image and run docker-compose services
-
   ``` shell
   $ docker-compose up
   ```
