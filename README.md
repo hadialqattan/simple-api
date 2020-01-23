@@ -1,5 +1,5 @@
 # SimpleAPI
-![](https://github.com/HadiZakiAlQattan/simple-api/workflows/SimpleAPI%28CI%29/badge.svg) ![](https://github.com/HadiZakiAlQattan/simple-api/workflows/SimpleAPI%28CD%29/badge.svg) <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+![](https://github.com/HadiZakiAlQattan/simple-api/workflows/SimpleAPI%28CI%2FCD%29/badge.svg) <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
 SimpleAPI is a restful API provids simple service that stores and returns configurations using FastAPI and PostgreSQL.
 

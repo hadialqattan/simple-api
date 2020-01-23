@@ -7,7 +7,7 @@ on:
 
 env: 
   # CI env
-  POSTGRES_USER: testdb
+  POSTGRES_USER: testdb_owner
   POSTGRES_PASSWORD: test112233
   POSTGRES_DB: testdb
   DB_HOST: localhost
@@ -24,14 +24,18 @@ env:
 
 jobs: 
 
-  CI:
-    name: SimpleAPI(CI)
+  CICD:
+    name: SimpleAPI(CI/CD)
     runs-on: ubuntu-latest
 
     steps:
+    
+    # clone the repo
     - name: Checkout
       uses: actions/checkout@v1
     
+    
+    # --- --- --- --- CI --- --- --- --- #
     # setup python3.7
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
@@ -50,7 +54,9 @@ jobs:
           --name=apidb \
           -p=5432 \
           -h=0.0.0.0 \
-          --env-file=./.env \
+          --env=POSTGRES_USER=$POSTGRES_USER \
+          --env=POSTGRES_PASSWORD=$POSTGRES_PASSWORD \
+          --env=POSTGRES_DB=$POSTGRES_DB \
           postgres:12.0-alpine
 
     # lint the codes using flake8
@@ -79,41 +85,34 @@ jobs:
         nosetests --verbosity=2 test_integration.py
 
 
-  CD: 
-    name: SimpleAPI(CD)
-    runs-on: ubuntu-latest
+    # --- --- --- --- CD --- --- --- --- #
+    # Setup gcloud CLI
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: "270.0.0"
+        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_key: ${{ secrets.GKE_KEY }}
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
+    # Configure docker to use the gcloud command-line tool as a credential helper
+    - run: |
+        # Set up docker to authenticate
+        # via gcloud command-line tool.
+        gcloud auth configure-docker
 
-      # Setup gcloud CLI
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          version: "270.0.0"
-          service_account_email: ${{ secrets.GKE_EMAIL }}
-          service_account_key: ${{ secrets.GKE_KEY }}
+    # Build the Docker image
+    - name: Build
+      run: |
+        docker build -t gcr.io/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" .
 
-      # Configure docker to use the gcloud command-line tool as a credential helper
-      - run: |
-          # Set up docker to authenticate
-          # via gcloud command-line tool.
-          gcloud auth configure-docker
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |
+        docker push gcr.io/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
 
-      # Build the Docker image
-      - name: Build
-        run: |
-          docker build -t gcr.io/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
-            --build-arg GITHUB_SHA="$GITHUB_SHA" \
-            --build-arg GITHUB_REF="$GITHUB_REF" .
-
-      # Push the Docker image to Google Container Registry
-      - name: Publish
-        run: |
-          docker push gcr.io/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
-
-      # Deploy the Docker image to the GKE cluster
-      - name: Deploy
-        run: |
-          gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-          kubectl apply -f gcp/api-config.yaml,gcp/api-deployment.yaml,gcp/api-service.yaml,gcp/postgres-config.yaml,gcp/postgres-deployment.yaml,gcp/postgres-service.yaml,gcp/postgres-volume.yaml
+    # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |
+        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
+        kubectl apply -f gcp/api-config.yaml,gcp/api-deployment.yaml,gcp/api-service.yaml,gcp/postgres-config.yaml,gcp/postgres-deployment.yaml,gcp/postgres-service.yaml,gcp/postgres-volume.yaml
