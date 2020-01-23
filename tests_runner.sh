@@ -9,21 +9,14 @@ NC='\033[0m' # No Color
 
 # create .evn-tests file
 create_env_tests() {
-    if [[ ${BASH_ARGV[$1]} == "u" ]]; then 
-        cat >.env-tests <<EOL
+    cat >.env-tests <<EOL
 POSTGRES_USER=lab
 POSTGRES_PASSWORD=lab000111
 POSTGRES_DB=labdb
 DB_HOST=172.18.0.1
-APP_HOST=172.18.0.1
+APP_HOST=localhost
 APP_PORT=5057
 EOL
-    elif [[ ${BASH_ARGV[$1]} == "i" ]]; then 
-        cat >.env-tests <<EOL
-APP_HOST=172.18.0.1
-APP_PORT=5057
-EOL
-    fi
 }
 
 
@@ -68,25 +61,14 @@ run_tests() {
     fi
     # extract array elements without commas
     nCMDs="${CMDs[@]%,}"
-    # set tests commands
-    if [[ ${BASH_ARGV[$1]} == "u" ]]; then
-        # run the test inside docker
-        docker run \
-            --name testslab \
-            --link labdb \
-            --network simple-project-1_default \
-            --env-file ./.env-tests \
-            --rm -v ${PWD}:/lab -w /lab simpleapi \
-            /bin/bash -c "${nCMDs[@]}"
-    elif [[ ${BASH_ARGV[$1]} == "i" ]]; then 
-        # run the test inside docker
-        docker run \
-            --name testslab \
-            --network simple-project-1_default \
-            --env-file ./.env-tests \
-            --rm -v ${PWD}:/lab -w /lab simpleapi \
-            /bin/bash -c "${nCMDs[@]}"
-    fi
+    # run the tests inside docker
+    docker run \
+        --name testslab \
+        --link labdb \
+        --env-file ./.env-tests \
+        --rm -v ${PWD}:/lab -w /lab simpleapi \
+        /bin/bash -c "${nCMDs[@]}"
+    # print goodbye statement
     echo -e "\n${GREEN}Goodbye!${NC}\n"
 }
 
@@ -101,13 +83,9 @@ labdb_stop() {
 
 if [[ $1 == "u" ]] || [[ $1 == "i" ]]; then 
     create_env_tests
-    if [[ $1 == "u" ]]; then 
-        labdb_init
-    fi
+    labdb_init
     run_tests
-    if [[ $1 == "u" ]]; then 
-        labdb_stop
-    fi 
+    labdb_stop
     # delete .env-tests
     rm -fr .env-tests
 else 

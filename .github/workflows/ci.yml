@@ -59,6 +59,5 @@ jobs:
         dbport=$(docker port apidb)
         dbport=${dbport:20:25}
         export DB_PORT=$dbport
-        uvicorn app.main:app
         cd integration
         nosetests --verbosity=2 test_integration.py

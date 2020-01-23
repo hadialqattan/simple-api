@@ -494,10 +494,6 @@ response body:
     ```
 
 * Integration tests :
-  - run docker-compose services :
-    ```shell 
-    $ docker-compose up
-    ```
   - run integration tests :
     ```shell
     $ ./tests_runner.sh i

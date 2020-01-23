@@ -1,6 +1,12 @@
-from nose.tools import assert_equal
+from nose.tools import assert_equal, with_setup
+from multiprocessing import Process
+import requests
+import uvicorn
+import time
 
 # local import
+from app.main import app
+from .constants import BASE_URL
 from .services import (
     get_configs,
     get_config,
@@ -11,7 +17,33 @@ from .services import (
 )
 
 
+def run_app():
+    """ 
+    run the app using uvicorn
+    """
+    uvicorn.run(app=app, host="127.0.0.1", port=5057)
+
+
+def setup_function():
+    """
+    start the app in the background using mulitprocessing.Process before any test
+    """
+    # start app thread
+    proc = Process(target=run_app, args=(), daemon=True)
+    proc.start()
+    # waiting for the app
+    for i in range(5):
+        try:
+            req = requests.get(BASE_URL)
+            if req.status_code == 200:
+                break
+        except Exception as requestErr:
+            print("Waiting for the app: sleep 2.5s")
+            time.sleep(2.5)
+
+
 # [list : GET : /configs] endpoint
+@with_setup(setup=setup_function)
 def test_get_all_empty():
     """
     get all configs from empty table 
