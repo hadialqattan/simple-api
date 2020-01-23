@@ -3,7 +3,7 @@ name: SimpleAPI(CI)
 on:
   push:
     branches:
-    - Hadi
+    - master
 
 jobs:
   
