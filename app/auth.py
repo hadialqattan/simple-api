@@ -112,6 +112,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     except PyJWTError:
         raise credentials_exception
     from .main import database
+
     user = get_user(db=database.SessionLocal(), username=token_data.username)
     if user is None:
         raise credentials_exception

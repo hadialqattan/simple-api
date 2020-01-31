@@ -73,8 +73,14 @@ class IntegrationTests_Users(unittest.TestCase):
             headers=self.inputs["test_01_get_access_token_success"]["headers"],
             data=self.inputs["test_01_get_access_token_success"]["user2"],
         )
-        assert res1.status_code == self.outputs["test_01_get_access_token_success"]["status_code"]
-        assert res2.status_code == self.outputs["test_01_get_access_token_success"]["status_code"]
+        assert (
+            res1.status_code
+            == self.outputs["test_01_get_access_token_success"]["status_code"]
+        )
+        assert (
+            res2.status_code
+            == self.outputs["test_01_get_access_token_success"]["status_code"]
+        )
         IntegrationTests_Users.admin_token = res1.json()["access_token"]
         IntegrationTests_Users.user2_token = res2.json()["access_token"]
 
@@ -85,7 +91,10 @@ class IntegrationTests_Users(unittest.TestCase):
             headers=self.inputs["test_02_get_access_token_401"]["headers"],
             data=self.inputs["test_02_get_access_token_401"]["data"],
         )
-        assert res.status_code == self.outputs["test_02_get_access_token_401"]["status_code"]
+        assert (
+            res.status_code
+            == self.outputs["test_02_get_access_token_401"]["status_code"]
+        )
         assert res.json() == self.outputs["test_02_get_access_token_401"]["json"]
 
     # [GetMe : GET : /users/me/]
@@ -110,7 +119,9 @@ class IntegrationTests_Users(unittest.TestCase):
             self.urls["ListUsers"],
             headers=self.inputs["test_04_ListUsers_success"]["headers"],
         )
-        assert res.status_code == self.outputs["test_04_ListUsers_success"]["status_code"]
+        assert (
+            res.status_code == self.outputs["test_04_ListUsers_success"]["status_code"]
+        )
         assert res.json() == self.outputs["test_04_ListUsers_success"]["json"]
 
     # [ListUsers : GET : /users]
@@ -136,7 +147,9 @@ class IntegrationTests_Users(unittest.TestCase):
             self.urls["GetAdmins"],
             headers=self.inputs["test_06_GetAdmins_success"]["headers"],
         )
-        assert res.status_code == self.outputs["test_06_GetAdmins_success"]["status_code"]
+        assert (
+            res.status_code == self.outputs["test_06_GetAdmins_success"]["status_code"]
+        )
         assert res.json() == self.outputs["test_06_GetAdmins_success"]["json"]
 
     # [ListUsers : GET : /users]
@@ -163,7 +176,9 @@ class IntegrationTests_Users(unittest.TestCase):
             headers=self.inputs["test_08_CreateUser_success"]["headers"],
             json=self.inputs["test_08_CreateUser_success"]["json"],
         )
-        assert res.status_code == self.outputs["test_08_CreateUser_success"]["status_code"]
+        assert (
+            res.status_code == self.outputs["test_08_CreateUser_success"]["status_code"]
+        )
         assert res.json() == self.outputs["test_08_CreateUser_success"]["json"]
 
     # [CreateUser : POST : /user]
@@ -249,7 +264,9 @@ class IntegrationTests_Users(unittest.TestCase):
             ),
             headers=self.inputs["test_14_UpdateUser_success"]["headers"],
         )
-        assert res.status_code == self.outputs["test_14_UpdateUser_success"]["status_code"]
+        assert (
+            res.status_code == self.outputs["test_14_UpdateUser_success"]["status_code"]
+        )
         assert res.json() == self.outputs["test_14_UpdateUser_success"]["json"]
 
     # [UpdateUser : PUT : /user/{username}/{set_admin}]
@@ -331,4 +348,3 @@ class IntegrationTests_Users(unittest.TestCase):
         )
         assert res.status_code == self.outputs["test_19_Delete_404"]["status_code"]
         assert res.json() == self.outputs["test_19_Delete_404"]["json"]
-

@@ -9,11 +9,9 @@ def create_admin():
         if not crud.get_user(
             db=database.SessionLocal(), username="admin"
         ) and not crud.get_admins(db=database.SessionLocal()):
-            user = schemas.UserCreate(**{
-                "username":"admin", 
-                "password":"admin", 
-                "isadmin": True
-            })
+            user = schemas.UserCreate(
+                **{"username": "admin", "password": "admin", "isadmin": True}
+            )
             crud.create_user(db=database.SessionLocal(), user=user)
     except Exception as ex:
         print("Cannot create default admin: (there's no admin)")

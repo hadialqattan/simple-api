@@ -272,9 +272,8 @@ def query_metadata(db: Session, keys: list, value: str, all: bool, owner: str = 
         return (
             db.query(models.Config)
             .filter(
-                models.Config.owner == owner and 
-                models.Config.metadatac[keys].astext == value
+                models.Config.owner == owner
+                and models.Config.metadatac[keys].astext == value
             )
             .all()
-        ) 
-        
+        )
