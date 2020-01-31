@@ -58,6 +58,7 @@
 
 <br>
 ---
+
 ## `get_access_token POST /token`
 
 ### Request
