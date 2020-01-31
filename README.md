@@ -816,7 +816,7 @@ ________________________________________________________
 - ## Cloud deployment (Google cloud platform)
 We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP : 
 
-![CI/CD workflow diagram](https://github.com/HadiZakiAlQattan/simple-api/blob/Hadi/gcp/cd%20(2).jpg)
+![CI/CD workflow diagram](https://github.com/HadiZakiAlQattan/simple-api/blob/Hadi/gcp/cicd-diagram.jpg)
 
 ```shell 
 .
