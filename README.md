@@ -814,26 +814,26 @@ ________________________________________________________
 # Deployment
 
 - ## Cloud deployment (Google cloud platform)
-  We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP.
-  ```shell 
-  .
-  |
-  ├── gcp # GCP Kubernetes services (postgresdb & app) yaml files 
-  │   ├── api-config.yaml # api service configs contained env vars
-  │   ├── api-deployment.yaml # api deployment config
-  │   ├── api-service.yaml  # api service describe
-  │   ├── postgres-config.yaml  # postgres service configs contained env vars
-  │   ├── postgres-deployment.yaml # postgres deployment config
-  │   ├── postgres-service.yaml # postgres service describe
-  │   └── postgres-volume.yaml # postgres persistent volume config
-  |
-  └── .github
-       └── workflows 
-           └── cicd.yml # CI/CD using github actions
-  ```
+We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP : 
 
-<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile modified=\&quot;2020-01-31T21:51:44.980Z\&quot; host=\&quot;www.draw.io\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36\&quot; etag=\&quot;w7h3dzRJjLt7UZ_SwetM\&quot; version=\&quot;12.6.2\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;Ht1M8jgEwFfnCIfOTk4-\&quot; name=\&quot;Page-1\&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
-<script type="text/javascript" src="https://www.draw.io/js/viewer.min.js"></script>
+![CI/CD workflow diagram](https://github.com/HadiZakiAlQattan/simple-api/blob/Hadi/gcp/cd%20(2).jpg)
+
+```shell 
+.
+├── gcp # GCP Kubernetes services (postgresdb & app) yaml files 
+│   ├── api-config.yaml # api service configs contained env vars
+│   ├── api-deployment.yaml # api deployment config
+│   ├── api-service.yaml  # api service describe
+│   ├── postgres-config.yaml  # postgres service configs contained env vars
+│   ├── postgres-deployment.yaml # postgres deployment config
+│   ├── postgres-service.yaml # postgres service describe
+│   └── postgres-volume.yaml # postgres persistent volume config
+└── .github
+      └── workflows 
+          └── cicd.yml # CI/CD using github actions
+```
+
+<br>
 
 - ## Local deployment ( Dockerizing )
 
