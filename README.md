@@ -3,6 +3,9 @@
 
 ### SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL.
 
+<br>
+
+# Project structure
 ```shell
 .
 ├── app/
