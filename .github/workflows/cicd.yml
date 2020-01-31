@@ -71,18 +71,18 @@ jobs:
     # run unit tests with pytest
     - name: Unit tests with pytest
       run: |
-        cd unit
+        cd tests
         dbport=$(docker port apidb)
         export DB_PORT=${dbport:20:25}
-        pytest -vv
+        pytest -vv unit/users.py unit/configs.py
 
     # run integration tests with nose
     - name: Integration tests with nose
       run: |
-        cd integration
+        cd tests
         dbport=$(docker port apidb)
         export DB_PORT=${dbport:20:25}
-        nosetests --verbosity=2 test_integration.py
+        pytest -vv integration/users.py integration/configs.py
 
 
     # --- --- --- --- CD --- --- --- --- #

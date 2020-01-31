@@ -54,10 +54,10 @@ run_tests() {
     # set tests commands
     if [[ ${BASH_ARGV[$1]} == "u" ]]; then
         echo -e "\n${GREEN}Starting${NC} unit tests...\n"
-        declare -a CMDs=("cd unit;", "pytest -vv;")
+        declare -a CMDs=("pytest -vv unit/users.py unit/configs.py;")
     elif [[ ${BASH_ARGV[$1]} == "i" ]]; then 
         echo -e "\n${GREEN}Starting${NC} integration tests...\n"
-        declare -a CMDs=("cd integration;", "nosetests --verbosity=2 test_integration.py;")
+        declare -a CMDs=("pytest -vv integration/users.py integration/configs.py;")
     fi
     # extract array elements without commas
     nCMDs="${CMDs[@]%,}"
@@ -82,12 +82,22 @@ labdb_stop() {
 
 
 if [[ $1 == "u" ]] || [[ $1 == "i" ]]; then 
-    create_env_tests
-    labdb_init
-    run_tests
-    labdb_stop
-    # delete .env-tests
-    rm -fr .env-tests
+    (
+        set -Ee
+        function _finally {
+            labdb_stop
+            # delete .env-tests
+            rm -fr .env-tests
+        }
+        
+        # finally
+        trap _finally EXIT
+        
+        # try
+        create_env_tests
+        labdb_init
+        run_tests
+    )
 else 
     echo ""
     echo -e "  ---------------------"
