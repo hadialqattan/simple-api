@@ -57,6 +57,7 @@
   + password (string of length no more than 50 characters)
 
 <br>
+
 ---
 
 ## `get_access_token POST /token`
