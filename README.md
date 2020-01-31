@@ -17,7 +17,7 @@
 ├── Dockerfile
 ├── docker-compose.yml
 └── .env
-```
+``` 
 
 - app/ contains the entire API :
   - [Users endpoints](#users)
