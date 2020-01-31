@@ -8,4 +8,4 @@ metadata:
 data:
   POSTGRES_DB: "apidb"
   POSTGRES_USER: "api_owner"
-  POSTGRES_PASSWORD: "api112233"
+  POSTGRES_PASSWORD: "api112233" 

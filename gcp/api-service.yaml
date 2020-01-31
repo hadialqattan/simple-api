@@ -8,7 +8,7 @@ metadata:
 spec:
   ports:
   - protocol: "TCP"
-    port: 5057
+    port: 5057 
     targetPort: 5057
   selector:
     app: "simpleapi"

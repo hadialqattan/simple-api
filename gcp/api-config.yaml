@@ -10,3 +10,4 @@ data:
   APP_PORT: "5057"
   DB_HOST: postgres
   DB_PORT: "5432"
+  
