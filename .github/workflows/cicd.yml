@@ -8,7 +8,7 @@ name: SimpleAPI(CI/CD)
 on: 
   push: 
     branches: 
-      - Hadi
+      - master
 
 env: 
   # CI env

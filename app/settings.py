@@ -32,7 +32,7 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="SimpleAPI",
         version="2.0.0",
-        description="SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL. <a href='https://github.com/HadiZakiAlQattan/simple-api/blob/Hadi/README.md'>Full documentation</a>",
+        description="SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL. <a href='https://github.com/HadiZakiAlQattan/simpleapi/blob/master/README.md'>Full documentation</a>",
         routes=main.app.routes
     )
     main.app.openapi_schema = openapi_schema

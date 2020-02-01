@@ -1,5 +1,5 @@
 # SimpleAPI
-![](https://github.com/HadiZakiAlQattan/simple-api/workflows/SimpleAPI%28CI%2FCD%29/badge.svg) <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+![](https://github.com/HadiZakiAlQattan/simpleapi/workflows/SimpleAPI%28CI%2FCD%29/badge.svg) <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
 #### SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL.
 
@@ -818,7 +818,7 @@ ________________________________________________________
 - ## Cloud deployment (Google cloud platform)
 We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP : 
 
-![CI/CD workflow diagram](https://github.com/HadiZakiAlQattan/simple-api/blob/Hadi/gcp/cicd-diagram.jpg)
+![CI/CD workflow diagram](https://github.com/HadiZakiAlQattan/simpleapi/blob/Hadi/gcp/cicd-diagram.jpg)
 
 ```shell 
 .
