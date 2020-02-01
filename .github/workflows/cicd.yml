@@ -26,6 +26,7 @@ env:
   GKE_ZONE: us-central1-a
   GKE_CLUSTER: api-cluster
   IMAGE: simpleapi
+  TAG: $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
 jobs: 
 
@@ -107,14 +108,14 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |
-        docker build --no-cache=true -t gcr.io/"$GKE_PROJECT"/"$IMAGE":latest \
+        docker build --no-cache=true -t gcr.io/"$GKE_PROJECT"/"$IMAGE":"$TAG" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
 
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
-        docker push gcr.io/$GKE_PROJECT/$IMAGE:latest
+        docker push gcr.io/$GKE_PROJECT/$IMAGE:$TAG
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
