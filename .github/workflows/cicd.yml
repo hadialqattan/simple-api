@@ -26,7 +26,7 @@ env:
   GKE_ZONE: us-central1-a
   GKE_CLUSTER: api-cluster
   IMAGE: simpleapi
-  TAG: $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+  TAG: latest
 
 jobs: 
 
