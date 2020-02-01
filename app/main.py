@@ -13,6 +13,8 @@ database.Base.metadata.create_all(bind=database.engine)
 # init the app
 app = FastAPI()
 
+# set custom openapi schema
+app.openapi = settings.custom_openapi
 
 # Dependency
 def get_db():
