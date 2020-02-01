@@ -75,15 +75,15 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     # run unit tests with pytest
-    - name: Unit tests with pytest
+    - name: Unit tests
       run: |
         cd tests
         dbport=$(docker port apidb)
         export DB_PORT=${dbport:20:25}
         pytest -vv unit/users.py unit/configs.py
 
-    # run integration tests with nose
-    - name: Integration tests with nose
+    # run integration tests with pytest
+    - name: Integration tests
       run: |
         cd tests
         dbport=$(docker port apidb)
