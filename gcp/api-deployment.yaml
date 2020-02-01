@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: "simpleapi"
-        image: IMAGE_NAME
+        image: $IMAGE_NAME
         imagePullPolicy: Always
         env:
         - name: "APP_HOST"
