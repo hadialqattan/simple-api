@@ -120,4 +120,4 @@ jobs:
     - name: Deploy
       run: |
         gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-        kubectl apply -f gcp/api-config.yaml,gcp/api-deployment.yaml,gcp/api-service.yaml,gcp/postgres-config.yaml,gcp/postgres-deployment.yaml,gcp/postgres-service.yaml,gcp/postgres-volume.yaml
+        sed -e 's|IMAGE_NAME|"gcr.io/simpleapi-1234/simpleapi:$GITHUB_SHA"|g' gcp/api-deployment.yaml | kubectl apply -f gcp/api-config.yaml,gcp/api-deployment.yaml,gcp/api-service.yaml,gcp/postgres-config.yaml,gcp/postgres-deployment.yaml,gcp/postgres-service.yaml,gcp/postgres-volume.yaml
