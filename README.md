@@ -12,8 +12,8 @@
 ├── gcp/
 ├── tests/
 │   ├── unit/
-│   └── integration/
-├── tests_runner.sh
+│   ├── integration/
+│   └── tests_runner.sh
 ├── Dockerfile
 ├── docker-compose.yml
 └── .env

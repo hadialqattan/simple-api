@@ -25,9 +25,9 @@ def custom_openapi():
     """
     custom openapi 
     """
-    """# cache openapi
+    # cache openapi
     if main.app.openapi_schema: 
-        return main.app.openapi_schema"""
+        return main.app.openapi_schema
     # get the schema
     openapi_schema = get_openapi(
         title="SimpleAPI",
