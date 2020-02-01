@@ -18,6 +18,7 @@ spec:
       containers:
       - name: "simpleapi"
         image: "gcr.io/simpleapi-1234/simpleapi"
+        imagePullPolicy: Always
         env:
         - name: "APP_HOST"
           valueFrom:
