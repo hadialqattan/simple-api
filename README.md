@@ -39,6 +39,7 @@
 # Endpoints and schemas
 
 ## Users
+Default admin user will created automatically if there's no admin in the DB :->(username=admin, password=admin, isadmin=true)
 
 | Name   | Method      | URL
 | ---    | ---         | ---
@@ -54,10 +55,10 @@
 #### Schema
 
 * **User**
-  + Id (integer)
-  + public_id (string of length no more than 50 characters)
-  + name (string of length no more than 50 characters)
-  + password (string of length no more than 50 characters)
+  + username (string of length no more than 50 characters)
+  + password (password hash - string - of length no more than 80 characters)
+  + isadmin (boolean value)
+  + configs (relationship with user configs in configs table)
 
 <br>
 
@@ -291,10 +292,11 @@ ________________________________________________________
 #### Schema
 
 * **Config**
-  + User_id (integer)
-  + Name (string of length no more than 120 characters)
-  + Metadata (nested key:value pairs where both key and value are strings of length no more than 160 characters)
-  + Note (string of arbitrary length)
+  + id (integer auto increment)
+  + owner (foreign key of user.username - string - of length no more than 50 characters)
+  + name (string of length no more than 120 characters)
+  + metadata (nested key:value pairs where both key and value are strings of length no more than 160 characters)
+  + note (string of arbitrary length)
 
 <br>
 
