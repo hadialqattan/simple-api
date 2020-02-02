@@ -288,47 +288,47 @@ def INPUTS_CONFIGS():
         "test_04_Create_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
             "json": {
-                "owner":"admin",
-                "name":"api-3",
+                "owner": "admin",
+                "name": "api-3",
                 "metadata": {
-                    "name":"SimpleAPI",
-                    "url":"http://127.0.0.1:5057", 
-                    "database":{
-                        "name":"apidb", 
-                        "type":"sql", 
-                        "ms":"postgresql", 
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
                         "host": "0.0.0.0",
                         "port": "5432",
-                        "enabled":True, 
-                        "running": True
+                        "enabled": True,
+                        "running": True,
                     },
-                    "enabled":True,
-                    "running": True
+                    "enabled": True,
+                    "running": True,
                 },
-                "note":"everything is running."
+                "note": "everything is running.",
             },
         },
         "test_05_Create_400": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
             "json": {
-                "owner":"admin",
-                "name":"api-3",
+                "owner": "admin",
+                "name": "api-3",
                 "metadata": {
-                    "name":"SimpleAPI",
-                    "url":"http://127.0.0.1:5057", 
-                    "database":{
-                        "name":"apidb", 
-                        "type":"sql", 
-                        "ms":"postgresql", 
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
                         "host": "0.0.0.0",
                         "port": "5432",
-                        "enabled":True, 
-                        "running": True
+                        "enabled": True,
+                        "running": True,
                     },
-                    "enabled":True,
-                    "running": True
+                    "enabled": True,
+                    "running": True,
                 },
-                "note":"everything is running."
+                "note": "everything is running.",
             },
         },
         "test_06_Get_success": {
@@ -352,130 +352,138 @@ def INPUTS_CONFIGS():
         },
         "test_10_Update_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {
-                        "name":"SimpleAPI",
-                        "url":"http://127.0.0.1:5057", 
-                        "database":{
-                            "name":"apidb",
-                            "type":"sql", 
-                            "ms":"postgresql", 
-                            "host": "0.0.0.0",
-                            "port": "5432",
-                            "enabled":False, 
-                            "running": True
-                        },
-                        "enabled":False, 
-                        "running": True
+            "json": {
+                "metadata": {
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled": False,
+                        "running": True,
                     },
-                    "note":"every thing has disabled."}
-            "name": "api-3",
-            "owner": "admin",
-        },
+                    "enabled": False,
+                    "running": True,
+                },
+                "note": "every thing has disabled.",
+                "name": "api-3",
+                "owner": "admin",
+            },
             "name": "api-3",
         },
         "test_11_Update_success_owner": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {
-                        "name":"SimpleAPI",
-                        "url":"http://127.0.0.1:5057", 
-                        "database":{
-                            "name":"apidb",
-                            "type":"sql", 
-                            "ms":"postgresql", 
+            "json": {
+                "metadata": {
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled": False,
+                        "running": False,
+                    },
+                    "enabled": False,
+                    "running": False,
+                },
+                "note": "every thing has disabeld and nothing is running.",
+            },
+            "test_12_Update_401": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "json": {
+                    "metadata": {
+                        "name": "SimpleAPI",
+                        "url": "http://127.0.0.1:5057",
+                        "database": {
+                            "name": "apidb",
+                            "type": "sql",
+                            "ms": "postgresql",
                             "host": "0.0.0.0",
                             "port": "5432",
-                            "enabled":False, 
-                            "running": False
+                            "enabled": False,
+                            "running": True,
                         },
-                        "enabled":False, 
-                        "running": False
+                        "enabled": False,
+                        "running": True,
                     },
-                    "note":"every thing has disabeld and nothing is running.",}
-        "test_12_Update_401": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {
-            "name":"SimpleAPI",
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb",
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":False, 
-                "running": True
+                    "note": "every thing has disabled.",
+                },
+                "name": "api-3",
+                "owner": "admin",
             },
-            "enabled":False, 
-            "running": True
-        },
-        "note":"every thing has disabled."},
-            "name": "api-3",
-            "owner": "admin",
-        },
-        "test_13_Update_404": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {
-            "name":"SimpleAPI",
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb",
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":False, 
-                "running": True
+            "test_13_Update_404": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "json": {
+                    "metadata": {
+                        "name": "SimpleAPI",
+                        "url": "http://127.0.0.1:5057",
+                        "database": {
+                            "name": "apidb",
+                            "type": "sql",
+                            "ms": "postgresql",
+                            "host": "0.0.0.0",
+                            "port": "5432",
+                            "enabled": False,
+                            "running": True,
+                        },
+                        "enabled": False,
+                        "running": True,
+                    },
+                    "note": "every thing has disabled.",
+                },
+                "name": "404config",
+                "owner": "admin",
             },
-            "enabled":False, 
-            "running": True
-        },
-        "note":"every thing has disabled."},
-            "name": "404config",
-            "owner": "admin",
-        },
-        "test_14_Delete_success": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "api-3",
-        },
-        "test_15_Delete_success_owner": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "api-2",
-            "owner": "user2",
-        },
-        "test_16_Delete_401": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "doesnotmatter",
-            "owner": "notme",
-        },
-        "test_17_Delete_404": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "404config",
-            "owner": "404user",
-        },
-        "test_18_Query_success": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "database.enabled",
-            "value": "True",
-            "all": "False",
-        },
-        "test_19_Query_success_all": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "running",
-            "value": "True",
-            "all": "True",
-        },
-        "test_20_Query_success_owner": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "database.running",
-            "value": "True",
-            "all": "False",
-            "owner": "admin",
-        },
-        "test_21_Query_401": {
-            "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "database.running",
-            "value": "True",
-            "all": "True",
+            "test_14_Delete_success": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "name": "api-3",
+            },
+            "test_15_Delete_success_owner": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "name": "api-2",
+                "owner": "user2",
+            },
+            "test_16_Delete_401": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "name": "doesnotmatter",
+                "owner": "notme",
+            },
+            "test_17_Delete_404": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "name": "404config",
+                "owner": "404user",
+            },
+            "test_18_Query_success": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "key": "database.enabled",
+                "value": "True",
+                "all": "False",
+            },
+            "test_19_Query_success_all": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "key": "running",
+                "value": "True",
+                "all": "True",
+            },
+            "test_20_Query_success_owner": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "key": "database.running",
+                "value": "True",
+                "all": "False",
+                "owner": "admin",
+            },
+            "test_21_Query_401": {
+                "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
+                "key": "database.running",
+                "value": "True",
+                "all": "True",
+            },
         },
     }
 
@@ -495,44 +503,44 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
-                        "owner":"admin", 
-                        "name":"api-1",
+                        "owner": "admin",
+                        "name": "api-1",
                         "metadata": {
-                            "name":"SimpleAPI", 
-                            "url":"http://127.0.0.1:5057", 
-                            "database":{
-                                "name":"apidb", 
-                                "type":"sql", 
-                                "ms":"postgresql", 
+                            "name": "SimpleAPI",
+                            "url": "http://127.0.0.1:5057",
+                            "database": {
+                                "name": "apidb",
+                                "type": "sql",
+                                "ms": "postgresql",
                                 "host": "0.0.0.0",
                                 "port": "5432",
-                                "enabled":True, 
-                                "running": True
+                                "enabled": True,
+                                "running": True,
                             },
-                            "enabled":True,
-                            "running": True
+                            "enabled": True,
+                            "running": True,
                         },
-                        "note":"The api has been enabled."
+                        "note": "The api has been enabled.",
                     },
                     {
-                        "owner":"user2",
-                        "name":"api-2",
+                        "owner": "user2",
+                        "name": "api-2",
                         "metadata": {
-                            "name":"SimpleAPI",
-                            "url":"http://127.0.0.1:5057", 
-                            "database":{
-                                "name":"apidb", 
-                                "type":"sql", 
-                                "ms":"postgresql", 
+                            "name": "SimpleAPI",
+                            "url": "http://127.0.0.1:5057",
+                            "database": {
+                                "name": "apidb",
+                                "type": "sql",
+                                "ms": "postgresql",
                                 "host": "0.0.0.0",
                                 "port": "5432",
-                                "enabled":True,
-                                "running": False
+                                "enabled": True,
+                                "running": False,
                             },
-                            "enabled":True, 
-                            "running": False
+                            "enabled": True,
+                            "running": False,
                         },
-                        "note":"The api has been enabled without the DB!"
+                        "note": "The api has been enabled without the DB!",
                     },
                 ]
             },
@@ -542,24 +550,24 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
-                        "owner":"user2",
-                        "name":"api-2",
+                        "owner": "user2",
+                        "name": "api-2",
                         "metadata": {
-                            "name":"SimpleAPI",
-                            "url":"http://127.0.0.1:5057", 
-                            "database":{
-                                "name":"apidb", 
-                                "type":"sql", 
-                                "ms":"postgresql", 
+                            "name": "SimpleAPI",
+                            "url": "http://127.0.0.1:5057",
+                            "database": {
+                                "name": "apidb",
+                                "type": "sql",
+                                "ms": "postgresql",
                                 "host": "0.0.0.0",
                                 "port": "5432",
-                                "enabled":True,
-                                "running": False
+                                "enabled": True,
+                                "running": False,
                             },
-                            "enabled":True, 
-                            "running": False
+                            "enabled": True,
+                            "running": False,
                         },
-                        "note":"The api has been enabled without the DB!"
+                        "note": "The api has been enabled without the DB!",
                     }
                 ]
             },
@@ -572,25 +580,25 @@ def OUTPUTS_CONFIGS():
             "status_code": 200,
             "json": {
                 "Created": {
-        "owner":"admin",
-        "name":"api-3",
-        "metadata": {
-            "name":"SimpleAPI",
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"everything is running."
-    }
+                    "owner": "admin",
+                    "name": "api-3",
+                    "metadata": {
+                        "name": "SimpleAPI",
+                        "url": "http://127.0.0.1:5057",
+                        "database": {
+                            "name": "apidb",
+                            "type": "sql",
+                            "ms": "postgresql",
+                            "host": "0.0.0.0",
+                            "port": "5432",
+                            "enabled": True,
+                            "running": True,
+                        },
+                        "enabled": True,
+                        "running": True,
+                    },
+                    "note": "everything is running.",
+                }
             },
         },
         "test_05_Create_400": {
@@ -600,213 +608,215 @@ def OUTPUTS_CONFIGS():
         "test_06_Get_success": {
             "status_code": 200,
             "json": {
-        "owner":"admin", 
-        "name":"api-1",
-        "metadata": {
-            "name":"SimpleAPI", 
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
+                "owner": "admin",
+                "name": "api-1",
+                "metadata": {
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled": True,
+                        "running": True,
+                    },
+                    "enabled": True,
+                    "running": True,
+                },
+                "note": "The api has been enabled.",
             },
-            "enabled":True,
-            "running": True
-        },
-        "note":"The api has been enabled."
-    },
-        "test_07_Get_success_owner": {
-            "status_code": 200,
-            "json": {
-        "owner":"admin", 
-        "name":"api-1",
-        "metadata": {
-            "name":"SimpleAPI", 
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
+            "test_07_Get_success_owner": {
+                "status_code": 200,
+                "json": {
+                    "owner": "admin",
+                    "name": "api-1",
+                    "metadata": {
+                        "name": "SimpleAPI",
+                        "url": "http://127.0.0.1:5057",
+                        "database": {
+                            "name": "apidb",
+                            "type": "sql",
+                            "ms": "postgresql",
+                            "host": "0.0.0.0",
+                            "port": "5432",
+                            "enabled": True,
+                            "running": True,
+                        },
+                        "enabled": True,
+                        "running": True,
+                    },
+                    "note": "The api has been enabled.",
+                },
+                "test_08_Get_401": {
+                    "status_code": 401,
+                    "json": {"detail": "Only admins can perform this function"},
+                },
+                "test_09_Get_404": {
+                    "status_code": 404,
+                    "json": {"detail": "name doesn't exists"},
+                },
+                "test_10_Update_success": {
+                    "status_code": 200,
+                    "json": {
+                        "Update": {
+                            "owner": "admin",
+                            "name": "api-3",
+                            "metadata": {
+                                "name": "SimpleAPI",
+                                "url": "http://127.0.0.1:5057",
+                                "database": {
+                                    "name": "apidb",
+                                    "type": "sql",
+                                    "ms": "postgresql",
+                                    "host": "0.0.0.0",
+                                    "port": "5432",
+                                    "enabled": True,
+                                    "running": True,
+                                },
+                                "enabled": True,
+                                "running": True,
+                            },
+                            "note": "everything is running.",
+                        }
+                    },
+                },
+                "test_11_Update_success_owner": {
+                    "status_code": 200,
+                    "json": {
+                        "Update": {
+                            "owner": "admin",
+                            "name": "api-3",
+                            "metadata": {
+                                "name": "SimpleAPI",
+                                "url": "http://127.0.0.1:5057",
+                                "database": {
+                                    "name": "apidb",
+                                    "type": "sql",
+                                    "ms": "postgresql",
+                                    "host": "0.0.0.0",
+                                    "port": "5432",
+                                    "enabled": True,
+                                    "running": True,
+                                },
+                                "enabled": True,
+                                "running": True,
+                            },
+                            "note": "everything is running.",
+                        }
+                    },
+                },
+                "test_12_Update_401": {
+                    "status_code": 401,
+                    "json": {"detail": "Only admins can perform this function"},
+                },
+                "test_13_Update_404": {
+                    "status_code": 404,
+                    "json": {"detail": "name doesn't exists"},
+                },
+                "test_14_Delete_success": {
+                    "status_code": 200,
+                    "json": {"Delete": {"owner": "admin", "name": "api-3"}},
+                },
+                "test_15_Delete_success_owner": {
+                    "status_code": 200,
+                    "json": {"Delete": {"owner": "user2", "name": "api-2"}},
+                },
+                "test_16_Delete_401": {
+                    "status_code": 401,
+                    "json": {"detail": "Only admins can perform this function"},
+                },
+                "test_17_Delete_404": {
+                    "status_code": 404,
+                    "json": {"detail": "name doesn't exists"},
+                },
+                "test_18_Query_success": {
+                    "status_code": 200,
+                    "json": {
+                        "Configs": [
+                            {
+                                "owner": "admin",
+                                "name": "api-1",
+                                "metadata": {
+                                    "name": "SimpleAPI",
+                                    "url": "http://127.0.0.1:5057",
+                                    "database": {
+                                        "name": "apidb",
+                                        "type": "sql",
+                                        "ms": "postgresql",
+                                        "host": "0.0.0.0",
+                                        "port": "5432",
+                                        "enabled": True,
+                                        "running": True,
+                                    },
+                                    "enabled": True,
+                                    "running": True,
+                                },
+                                "note": "The api has been enabled.",
+                            }
+                        ]
+                    },
+                },
+                "test_19_Query_success_all": {
+                    "status_code": 200,
+                    "json": {
+                        "Configs": [
+                            {
+                                "owner": "admin",
+                                "name": "api-1",
+                                "metadata": {
+                                    "name": "SimpleAPI",
+                                    "url": "http://127.0.0.1:5057",
+                                    "database": {
+                                        "name": "apidb",
+                                        "type": "sql",
+                                        "ms": "postgresql",
+                                        "host": "0.0.0.0",
+                                        "port": "5432",
+                                        "enabled": True,
+                                        "running": True,
+                                    },
+                                    "enabled": True,
+                                    "running": True,
+                                },
+                                "note": "The api has been enabled.",
+                            }
+                        ]
+                    },
+                },
+                "test_20_Query_success_owner": {
+                    "status_code": 200,
+                    "json": {
+                        "Configs": [
+                            {
+                                "owner": "admin",
+                                "name": "api-1",
+                                "metadata": {
+                                    "name": "SimpleAPI",
+                                    "url": "http://127.0.0.1:5057",
+                                    "database": {
+                                        "name": "apidb",
+                                        "type": "sql",
+                                        "ms": "postgresql",
+                                        "host": "0.0.0.0",
+                                        "port": "5432",
+                                        "enabled": True,
+                                        "running": True,
+                                    },
+                                    "enabled": True,
+                                    "running": True,
+                                },
+                                "note": "The api has been enabled.",
+                            }
+                        ]
+                    },
+                },
+                "test_21_Query_401": {
+                    "status_code": 401,
+                    "json": {"detail": "Only admins can perform this function"},
+                },
             },
-            "enabled":True,
-            "running": True
-        },
-        "note":"The api has been enabled."
-    },
-        "test_08_Get_401": {
-            "status_code": 401,
-            "json": {"detail": "Only admins can perform this function"},
-        },
-        "test_09_Get_404": {
-            "status_code": 404,
-            "json": {"detail": "name doesn't exists"},
-        },
-        "test_10_Update_success": {
-            "status_code": 200,
-            "json": {
-                "Update": {
-        "owner":"admin",
-        "name":"api-3",
-        "metadata": {
-            "name":"SimpleAPI",
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"everything is running."
-    }
-            },
-        },
-        "test_11_Update_success_owner": {
-            "status_code": 200,
-            "json": {
-                "Update": {
-        "owner":"admin",
-        "name":"api-3",
-        "metadata": {
-            "name":"SimpleAPI",
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"everything is running."
-    }
-            },
-        },
-        "test_12_Update_401": {
-            "status_code": 401,
-            "json": {"detail": "Only admins can perform this function"},
-        },
-        "test_13_Update_404": {
-            "status_code": 404,
-            "json": {"detail": "name doesn't exists"},
-        },
-        "test_14_Delete_success": {
-            "status_code": 200,
-            "json": {"Delete": {"owner": "admin", "name": "api-3"}},
-        },
-        "test_15_Delete_success_owner": {
-            "status_code": 200,
-            "json": {"Delete": {"owner": "user2", "name": "api-2"}},
-        },
-        "test_16_Delete_401": {
-            "status_code": 401,
-            "json": {"detail": "Only admins can perform this function"},
-        },
-        "test_17_Delete_404": {
-            "status_code": 404,
-            "json": {"detail": "name doesn't exists"},
-        },
-        "test_18_Query_success": {
-            "status_code": 200,
-            "json": {
-                "Configs": [
-                    {
-        "owner":"admin", 
-        "name":"api-1",
-        "metadata": {
-            "name":"SimpleAPI", 
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"The api has been enabled."
-    }
-                ]
-            },
-        },
-        "test_19_Query_success_all": {
-            "status_code": 200,
-            "json": {
-                "Configs": [
-                    {
-        "owner":"admin", 
-        "name":"api-1",
-        "metadata": {
-            "name":"SimpleAPI", 
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"The api has been enabled."
-    }
-                ]
-            },
-        },
-        "test_20_Query_success_owner": {
-            "status_code": 200,
-            "json": {
-                "Configs": [
-                    {
-        "owner":"admin", 
-        "name":"api-1",
-        "metadata": {
-            "name":"SimpleAPI", 
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"The api has been enabled."
-    }
-                ]
-            },
-        },
-        "test_21_Query_401": {
-            "status_code": 401,
-            "json": {"detail": "Only admins can perform this function"},
         },
     }
 
@@ -856,112 +866,112 @@ def MOCK_CONFIGS():
         ),
         "api-1": models.Config(
             **{
-        "owner":"admin", 
-        "name":"api-1",
-        "metadatac": {
-            "name":"SimpleAPI", 
-            "url":"http://127.0.0.1:5057", 
-            "database":{
-                "name":"apidb", 
-                "type":"sql", 
-                "ms":"postgresql", 
-                "host": "0.0.0.0",
-                "port": "5432",
-                "enabled":True, 
-                "running": True
-            },
-            "enabled":True,
-            "running": True
-        },
-        "note":"The api has been enabled."
-    }
+                "owner": "admin",
+                "name": "api-1",
+                "metadatac": {
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled": True,
+                        "running": True,
+                    },
+                    "enabled": True,
+                    "running": True,
+                },
+                "note": "The api has been enabled.",
+            }
         ),
         "api-2": models.Config(
             **{
-                "owner":"user2",
-                "name":"api-2",
+                "owner": "user2",
+                "name": "api-2",
                 "metadatac": {
-                    "name":"SimpleAPI",
-                    "url":"http://127.0.0.1:5057", 
-                    "database":{
-                        "name":"apidb", 
-                        "type":"sql", 
-                        "ms":"postgresql", 
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
                         "host": "0.0.0.0",
                         "port": "5432",
-                        "enabled":True,
-                        "running": False
+                        "enabled": True,
+                        "running": False,
                     },
-                    "enabled":True, 
-                    "running": False
+                    "enabled": True,
+                    "running": False,
                 },
-                "note":"The api has been enabled without the DB!"
+                "note": "The api has been enabled without the DB!",
             }
         ),
         "api-3": models.Config(
             **{
-                "owner":"admin",
-                "name":"api-3",
+                "owner": "admin",
+                "name": "api-3",
                 "metadata": {
-                    "name":"SimpleAPI",
-                    "url":"http://127.0.0.1:5057", 
-                    "database":{
-                        "name":"apidb", 
-                        "type":"sql", 
-                        "ms":"postgresql", 
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
                         "host": "0.0.0.0",
                         "port": "5432",
-                        "enabled":True, 
-                        "running": True
+                        "enabled": True,
+                        "running": True,
                     },
-                    "enabled":True,
-                    "running": True
+                    "enabled": True,
+                    "running": True,
                 },
-                "note":"everything is running."
+                "note": "everything is running.",
             }
         ),
         "api-32": models.Config(
             **{
-                "owner":"admin",
-                "name":"api-3",
+                "owner": "admin",
+                "name": "api-3",
                 "metadatac": {
-                    "name":"SimpleAPI",
-                    "url":"http://127.0.0.1:5057", 
-                    "database":{
-                        "name":"apidb",
-                        "type":"sql", 
-                        "ms":"postgresql", 
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
                         "host": "0.0.0.0",
                         "port": "5432",
-                        "enabled":False, 
-                        "running": True
+                        "enabled": False,
+                        "running": True,
                     },
-                    "enabled":False, 
-                    "running": True
+                    "enabled": False,
+                    "running": True,
                 },
-                "note":"every thing has disabled."
+                "note": "every thing has disabled.",
             }
         ),
         "api-33": models.Config(
             **{
-                "owner":"admin",
-                "name":"api-3",
+                "owner": "admin",
+                "name": "api-3",
                 "metadatac": {
-                    "name":"SimpleAPI",
-                    "url":"http://127.0.0.1:5057", 
-                    "database":{
-                        "name":"apidb",
-                        "type":"sql", 
-                        "ms":"postgresql", 
+                    "name": "SimpleAPI",
+                    "url": "http://127.0.0.1:5057",
+                    "database": {
+                        "name": "apidb",
+                        "type": "sql",
+                        "ms": "postgresql",
                         "host": "0.0.0.0",
                         "port": "5432",
-                        "enabled":False, 
-                        "running": False
+                        "enabled": False,
+                        "running": False,
                     },
-                    "enabled":False, 
-                    "running": False
+                    "enabled": False,
+                    "running": False,
                 },
-                "note":"every thing has disabeld and nothing is running."
+                "note": "every thing has disabeld and nothing is running.",
             }
         ),
     }

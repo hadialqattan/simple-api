@@ -1,4 +1,5 @@
 # SimpleAPI
+
 ![](https://github.com/HadiZakiAlQattan/simpleapi/workflows/SimpleAPI%28CI%2FCD%29/badge.svg) <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 #### SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL.
@@ -6,7 +7,8 @@
 <br>
 
 # Project structure
-```shell
+
+``` shell
 .
 ├── app/
 ├── gcp/
@@ -19,38 +21,39 @@
 └── .env
 ``` 
 
-- app/ contains the entire API :
-  - [Users endpoints](#users)
-  - [Configs endpoints](#configs)
+* app/ contains the entire API :
+  + [Users endpoints](#users)
+  + [Configs endpoints](#configs)
 
-- gcp/ contains GCP Kubernetes deployment *.yml files -> [GCP deployment](#deployment)
+* gcp/ contains GCP Kubernetes deployment *.yml files -> [GCP deployment](#deployment)
 
-- tests/ contains the entire CI tests : -> [run instructions](#tests)
-  - unit/
-  - integration/ 
-  - `tests_runner.sh` full automated script aim to run tests inside docker container.
+* tests/ contains the entire CI tests : -> [run instructions](#tests)
+  + unit/
+  + integration/ 
+  + `tests_runner.sh` full automated script aim to run tests inside docker container.
 
-- Dockerfile & docker-compose -> [Dockerizing](#deployment)
+* Dockerfile & docker-compose -> [Dockerizing](#deployment)
 
-- .env contains env vars include (app & db) (host & port).
+* .env contains env vars include (app & db) (host & port).
 
 <br>
 
 # Endpoints and schemas
 
 ## Users
+
 Default admin user will created automatically if there's no admin in the DB :->(username=admin, password=admin, isadmin=true)
 
 | Name   | Method      | URL
 | ---    | ---         | ---
-| get_access_token       | `POST` |  `/token`
-| GetMe       | `GET` | `/users/me/`
+| get_access_token       | `POST` | `/token` 
+| GetMe       | `GET` | `/users/me/` 
 | ListUsers   | `GET` | `/users` 
-| GetAdmins   | `GET` | `/users/admins`
+| GetAdmins   | `GET` | `/users/admins` 
 | CreateUser | `POST` | `/user` 
 | GetUser    | `GET` | `/user/{name}` 
 | UpdateUser | `PUT` | `/user/{name}` 
-| DeleteUser | `DELETE` | `/user/{name}`
+| DeleteUser | `DELETE` | `/user/{name}` 
 
 #### Schema
 
@@ -64,7 +67,7 @@ Default admin user will created automatically if there's no admin in the DB :->(
 
 ---
 
-## `get_access_token POST /token`
+## `get_access_token POST /token` 
 
 ### Request
 ```shell 
@@ -72,6 +75,7 @@ $ curl -X POST "http://127.0.0.1:5057/token" -H "accept: application/json" -H "C
 ```
 
 ### Response
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -83,13 +87,15 @@ server: uvicorn
 ________________________________________________________
 
 {
-"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MTA3OX0.Dy2-LeV7OWeffE-SneTAYYvgxmbjcSET4lWy2XKMJx0",
+"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MTA3OX0. Dy2-LeV7OWeffE-SneTAYYvgxmbjcSET4lWy2XKMJx0", 
 "token_type": "bearer"
 }
-```
+
+``` 
 
 ---
-## `GetMe GET /users/me`
+
+## `GetMe GET /users/me` 
 
 ### Request
 ```shell 
@@ -97,6 +103,7 @@ $ curl -X GET "http://127.0.0.1:5057/users/me/" -H "accept: application/json" -H
 ```
 
 ### Response
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -108,13 +115,15 @@ server: uvicorn
 ________________________________________________________
 
 {
-  "username": "admin",
-  "isadmin": true,
+  "username": "admin", 
+  "isadmin": true, 
   "configs": []
 }
-```
+
+``` 
 ---
-## `ListUsers GET /users`
+
+## `ListUsers GET /users` 
 
 ### Request (:: admin permission required)
 ```shell 
@@ -122,6 +131,7 @@ $ curl -X GET "http://127.0.0.1:5057/users" -H "accept: application/json" -H "Au
 ```
 
 ### Response (:: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -134,17 +144,21 @@ ________________________________________________________
 
 {
   "Users": [
+
     {
       "username": "admin",
       "isadmin": true,
       "configs": []
     }
+
   ]
 }
-```
+
+``` 
 
 ---
-## `GetAdmins GET /users/admins`
+
+## `GetAdmins GET /users/admins` 
 
 ### Request (:: admin permission required)
 ```shell 
@@ -152,6 +166,7 @@ $ curl -X GET "http://127.0.0.1:5057/users/admins" -H "accept: application/json"
 ```
 
 ### Response (:: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -164,16 +179,20 @@ ________________________________________________________
 
 {
   "Admins": [
+
     {
       "username": "admin",
       "isadmin": true,
       "configs": []
     }
+
   ]
 }
-```
+
+``` 
 ---
-## `CreateUser POST /user`
+
+## `CreateUser POST /user` 
 
 ### Request (:: admin permission required)
 ```shell 
@@ -181,6 +200,7 @@ $ curl -X POST "http://127.0.0.1:5057/user" -H "accept: application/json" -H "Au
 ```
 
 ### Response (:: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -193,14 +213,18 @@ ________________________________________________________
 
 {
   "created": {
+
     "username": "user2",
     "isadmin": true,
     "configs": []
+
   }
 }
-```
+
+``` 
 ---
-## `GetUser GET /user/{name}`
+
+## `GetUser GET /user/{name}` 
 
 ### Request (:: admin permission required)
 ```shell 
@@ -208,6 +232,7 @@ $ curl -X GET "http://127.0.0.1:5057/user/user2" -H "accept: application/json" -
 ```
 
 ### Response (:: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -219,13 +244,15 @@ server: uvicorn
 ________________________________________________________
 
 {
-  "username": "user2",
-  "isadmin": true,
+  "username": "user2", 
+  "isadmin": true, 
   "configs": []
 }
-```
+
+``` 
 ---
-## `UpdateUser PUT /user/{name}`
+
+## `UpdateUser PUT /user/{name}` 
 
 ### Request (:: admin permission required)
 ```shell 
@@ -233,6 +260,7 @@ $ curl -X PUT "http://127.0.0.1:5057/user/user2/false" -H "accept: application/j
 ```
 
 ### Response (:: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -245,13 +273,17 @@ ________________________________________________________
 
 {
   "Updated": {
+
     "username": "user2",
     "isadmin": false
+
   }
 }
-```
+
+``` 
 ---
-## `DeleteUser DELETE /user/{name}`
+
+## `DeleteUser DELETE /user/{name}` 
 
 ### Request (:: admin permission required)
 ```shell 
@@ -259,6 +291,7 @@ $ curl -X DELETE "http://127.0.0.1:5057/user/user2" -H "accept: application/json
 ```
 
 ### Response (:: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -271,10 +304,13 @@ ________________________________________________________
 
 {
   "Deleted": {
+
     "username": "user2"
+
   }
 }
-```
+
+``` 
 ---
 <br>
 
@@ -286,8 +322,8 @@ ________________________________________________________
 | Create | `POST` | `/configs` 
 | Get    | `GET` | `/configs/{name}` 
 | Update | `PUT` | `/configs/{name}` 
-| Delete | `DELETE` | `/configs/{name}`
-| Query  | `GET`  | `/search/metadata.key=value`
+| Delete | `DELETE` | `/configs/{name}` 
+| Query  | `GET` | `/search/metadata.key=value` 
 
 #### Schema
 
@@ -301,6 +337,7 @@ ________________________________________________________
 <br>
 
 ---
+
 ## `List GET /configs` 
 
 ### Request (without 'owner' query param :: without admin permission)
@@ -309,6 +346,7 @@ $ curl -X GET "http://127.0.0.1:5057/configs" -H "accept: application/json" -H "
 ```
 
 ### Response (without 'owner' query param :: without admin permission)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -321,6 +359,7 @@ ________________________________________________________
 
 {
   "Configs": [
+
     {
       "owner":"user2",
       "name":"api-2",
@@ -341,16 +380,20 @@ ________________________________________________________
       },
       "note":"The api has been enabled without the DB!"
     }
+
   ]
 }
-```
+
+``` 
 
 ### Request (without 'owner' query param :: with admin permission)
+
 ```shell 
 $ curl -X GET "http://127.0.0.1:5057/configs" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjE3Nn0.irXQwbe9ZuHHiH3mZqVXrgdjZMYj6Xn9AdBLQTGBltQ"
 ```
 
 ### Response (without 'owner' query param :: with admin permission)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -365,7 +408,7 @@ ________________________________________________________
   "Configs": [
     {
       "owner":"admin", 
-      "name":"api-1",
+      "name":"api-1", 
       "metadata": {
           "name":"SimpleAPI", 
           "url":"http://127.0.0.1:5057", 
@@ -373,16 +416,17 @@ ________________________________________________________
               "name":"apidb", 
               "type":"sql", 
               "ms":"postgresql", 
-              "host": "0.0.0.0",
-              "port": "5432",
+              "host": "0.0.0.0", 
+              "port": "5432", 
               "enabled":true, 
               "running": true
-          },
-          "enabled":true,
+          }, 
+          "enabled":true, 
           "running": true
-      },
+      }, 
       "note":"The api has been enabled."
-    },
+    }, 
+
     {
       "owner":"user2",
       "name":"api-2",
@@ -403,16 +447,20 @@ ________________________________________________________
       },
       "note":"The api has been enabled without the DB!"
     }
+
   ]
 }
-```
+
+``` 
 
 ### Request (with 'owner' query param :: admin permission required)
+
 ```shell 
 $ curl -X GET "http://127.0.0.1:5057/configs?owner=admin" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjE3Nn0.irXQwbe9ZuHHiH3mZqVXrgdjZMYj6Xn9AdBLQTGBltQ"
 ```
 
 ### Response (with 'owner' query param :: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -425,7 +473,9 @@ ________________________________________________________
 
 {
   "Configs": [
+
     {
+
       "owner":"admin", 
       "name":"api-1",
       "metadata": {
@@ -445,9 +495,11 @@ ________________________________________________________
       },
       "note":"The api has been enabled."
     }
+
   ]
 }
-```
+
+``` 
 
 ---
 
@@ -459,6 +511,7 @@ $ curl -X POST "http://127.0.0.1:5057/configs" -H "accept: application/json" -H 
 ```
 
 ### Response
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -471,6 +524,7 @@ ________________________________________________________
 
 {
   "Created": {
+
       "owner":"admin", 
       "name":"api-1",
       "metadata": {
@@ -490,8 +544,10 @@ ________________________________________________________
       },
       "note":"The api has been enabled."
     }
+
 }
-```
+
+``` 
 
 ---
 
@@ -503,6 +559,7 @@ $ curl -X GET "http://127.0.0.1:5057/configs/api-1" -H "accept: application/json
 ```
 
 ### Response (without owner query param)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -515,8 +572,9 @@ ________________________________________________________
 
 {
   "owner":"admin", 
-  "name":"api-1",
+  "name":"api-1", 
   "metadata": {
+
       "name":"SimpleAPI", 
       "url":"http://127.0.0.1:5057", 
       "database":{
@@ -530,17 +588,21 @@ ________________________________________________________
       },
       "enabled":true,
       "running": true
-  },
+
+  }, 
   "note":"The api has been enabled."
 }
-```
+
+``` 
 
 ### Request (with owner query param :: admin permission required)
+
 ```shell 
 $ curl -X GET "http://127.0.0.1:5057/configs/api-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU"
 ```
 
 ### Response (with owner query param :: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -552,9 +614,10 @@ server: uvicorn
 ________________________________________________________
 
 {
-  "owner":"user2",
-  "name":"api-2",
+  "owner":"user2", 
+  "name":"api-2", 
   "metadata": {
+
       "name":"SimpleAPI",
       "url":"http://127.0.0.1:5057", 
       "database":{
@@ -568,10 +631,12 @@ ________________________________________________________
       },
       "enabled":true, 
       "running": false
-  },
+
+  }, 
   "note":"The api has been enabled without the DB!"
 }
-```
+
+``` 
 
 ---
 
@@ -583,6 +648,7 @@ $ curl -X PUT "http://127.0.0.1:5057/configs/api-1" -H "accept: application/json
 ```
 
 ### Response (without owner query param)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -595,6 +661,7 @@ ________________________________________________________
 
 {
   "Update": {
+
     "owner":"admin", 
     "name":"api-1",
     "metadata": {
@@ -613,16 +680,20 @@ ________________________________________________________
         "running": true
     },
     "note":"The api has been enabled."
+
   }
 }
-```
+
+``` 
 
 ### Request (without owner query param :: admin permission required)
+
 ```shell 
 $ curl -X PUT "http://127.0.0.1:5057/configs/api-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU" -H "Content-Type: application/json" -d "{\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"false\",\"value\":\"250m\"}}},\"note\":\"the cpu has disabled\"}"
 ```
 
 ### Response (without owner query param :: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -635,6 +706,7 @@ ________________________________________________________
 
 {
   "Update": {
+
     "owner":"user2",
     "name":"api-2",
     "metadata": {
@@ -653,9 +725,11 @@ ________________________________________________________
         "running": false
     },
     "note":"The api has been enabled without the DB!"
+
   }
 }
-```
+
+``` 
 
 ---
 
@@ -667,6 +741,7 @@ $ curl -X DELETE "http://127.0.0.1:5057/configs/api-1" -H "accept: application/j
 ```
 
 ### Response (without owner query param)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -679,18 +754,23 @@ ________________________________________________________
 
 {
   "Delete": {
+
     "owner": "admin",
     "name": "api-1"
+
   }
 }
-```
+
+``` 
 
 ### Request (with admin query param :: admin permission required)
+
 ```shell 
 $ curl -X DELETE "http://127.0.0.1:5057/configs/api-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
 ```
 
 ### Response (with admin query :: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -703,12 +783,16 @@ ________________________________________________________
 
 {
   "Delete": {
+
     "owner": "user2",
     "name": "api-2"
+
   }
 }
-```
+
+``` 
 ---
+
 ## `Query GET /search/metadata.key=value` 
 
 ### Request (without owner query param :: all query param => default value = false)
@@ -717,6 +801,7 @@ $ curl -X GET "http://127.0.0.1:5057/search/metadata.monitoring.enabled=true" -H
 ```
 
 ### Response (without owner query param :: all query param => default value = false)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -729,7 +814,9 @@ ________________________________________________________
 
 {
   "Configs": [
+
     {
+
       "owner":"admin", 
       "name":"api-1",
       "metadata": {
@@ -749,16 +836,20 @@ ________________________________________________________
       },
       "note":"The api has been enabled."
     }
+
   ]
 }
-```
+
+``` 
 
 ### Request (without owner query param :: with all query param => true :: admin permission required)
+
 ```shell 
 $ curl -X GET "http://127.0.0.1:5057/search/metadata.monitoring.enabled=true?all=true" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
 ```
 
 ### Response (without owner query param :: with all query param => true :: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -773,7 +864,7 @@ ________________________________________________________
   "Configs": [
     {
       "owner":"admin", 
-      "name":"api-1",
+      "name":"api-1", 
       "metadata": {
           "name":"SimpleAPI", 
           "url":"http://127.0.0.1:5057", 
@@ -781,16 +872,17 @@ ________________________________________________________
               "name":"apidb", 
               "type":"sql", 
               "ms":"postgresql", 
-              "host": "0.0.0.0",
-              "port": "5432",
+              "host": "0.0.0.0", 
+              "port": "5432", 
               "enabled":true, 
               "running": true
-          },
-          "enabled":true,
+          }, 
+          "enabled":true, 
           "running": true
-      },
+      }, 
       "note":"The api has been enabled."
-    },
+    }, 
+
     {
       "owner":"user2",
       "name":"api-2",
@@ -811,16 +903,20 @@ ________________________________________________________
       },
       "note":"The api has been enabled without the DB!"
     }
+
   ]
 }
-```
+
+``` 
 
 ### Request (with owner query param :: all query param => default value = false :: admin permission required)
+
 ```shell 
 $ curl -X GET "http://127.0.0.1:5057/search/metadata.limits.cpu.enabled=false?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
 ```
 
 ### Response (with owner query param :: all query param => default value = false :: admin permission required)
+
 ```shell 
 200 ok
 ________________________________________________________
@@ -833,6 +929,7 @@ ________________________________________________________
 
 {
   "Configs": [
+
     {
       "owner":"user2",
       "name":"api-2",
@@ -853,9 +950,11 @@ ________________________________________________________
       },
       "note":"The api has been enabled without the DB!"
     }
+
   ]
 }
-```
+
+``` 
 ---
 <br>
 
@@ -867,7 +966,8 @@ ________________________________________________________
 
 # Deployment
 
-- ## Cloud deployment (Google cloud platform)
+* ## Cloud deployment (Google cloud platform)
+
 We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP : 
 
 ![CI/CD workflow diagram](https://github.com/HadiZakiAlQattan/simpleapi/blob/master/gcp/cicd-diagram.jpg)
@@ -889,15 +989,17 @@ We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP :
 
 <br>
 
-- ## Local deployment ( Dockerizing )
+* ## Local deployment ( Dockerizing )
 
   ### Prerequisites:
 
-  * docker 
-  * docker-compose
+  + docker 
+  + docker-compose
 
   ### Build the image and run docker-compose services
-  ``` shell
+  
+
+``` shell
   $ docker-compose up
   ```
 
@@ -908,13 +1010,20 @@ We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP :
 ### Run instructions:
 
 * Unit tests :
-  - run unit tests :
-    ```shell
+  + run unit tests :
+
+    
+
+``` shell
     $ ./tests_runner.sh u
     ```
 
 * Integration tests :
-  - run integration tests :
-    ```shell
+  + run integration tests :
+
+    
+
+``` shell
     $ ./tests_runner.sh i
     ```
+

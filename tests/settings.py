@@ -31,59 +31,55 @@ def create_configs():
     # admin default config for testing
     config1 = schemas.ConfigCreate(
         **{
-            "owner":"admin", 
-            "name":"api-1",
+            "owner": "admin",
+            "name": "api-1",
             "metadata": {
-                "name":"SimpleAPI", 
-                "url":"http://127.0.0.1:5057", 
-                "database":{
-                    "name":"apidb", 
-                    "type":"sql", 
-                    "ms":"postgresql", 
+                "name": "SimpleAPI",
+                "url": "http://127.0.0.1:5057",
+                "database": {
+                    "name": "apidb",
+                    "type": "sql",
+                    "ms": "postgresql",
                     "host": "0.0.0.0",
                     "port": "5432",
-                    "enabled":True, 
-                    "running": True
+                    "enabled": True,
+                    "running": True,
                 },
-                "enabled":True,
-                "running": True
+                "enabled": True,
+                "running": True,
             },
-            "note":"The api has been enabled."
+            "note": "The api has been enabled.",
         }
     )
 
     # user2 default config for testing
     config2 = schemas.ConfigCreate(
         **{
-            "owner":"user2",
-            "name":"api-2",
+            "owner": "user2",
+            "name": "api-2",
             "metadata": {
-                "name":"SimpleAPI",
-                "url":"http://127.0.0.1:5057", 
-                "database":{
-                    "name":"apidb", 
-                    "type":"sql", 
-                    "ms":"postgresql", 
+                "name": "SimpleAPI",
+                "url": "http://127.0.0.1:5057",
+                "database": {
+                    "name": "apidb",
+                    "type": "sql",
+                    "ms": "postgresql",
                     "host": "0.0.0.0",
                     "port": "5432",
-                    "enabled":True,
-                    "running": False
+                    "enabled": True,
+                    "running": False,
                 },
-                "enabled":True, 
-                "running": False
+                "enabled": True,
+                "running": False,
             },
-            "note":"The api has been enabled without the DB!"
+            "note": "The api has been enabled without the DB!",
         }
     )
 
     # create admin config
-    if not crud.get_config(
-        db=database.SessionLocal(), name="api-1", owner="admin"
-    ):
+    if not crud.get_config(db=database.SessionLocal(), name="api-1", owner="admin"):
         crud.create_config(db=database.SessionLocal(), config=config1, owner="admin")
 
     # create user2 config
-    if not crud.get_config(
-        db=database.SessionLocal(), name="api-2", owner="user2"
-    ):
+    if not crud.get_config(db=database.SessionLocal(), name="api-2", owner="user2"):
         crud.create_config(db=database.SessionLocal(), config=config2, owner="user2")
