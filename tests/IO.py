@@ -394,8 +394,8 @@ def INPUTS_CONFIGS():
                 },
                 "note": "every thing has disabeld and nothing is running.",
             },
-            "owner":"user2",
-            "name":"api-3", 
+            "owner": "user2",
+            "name": "api-3",
         },
         "test_12_Update_401": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
