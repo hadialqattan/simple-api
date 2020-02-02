@@ -1010,8 +1010,8 @@ We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP :
   
 
 ``` shell
-  $ docker-compose up
-  ```
+ $ docker-compose up
+```
 
 <br>
 
@@ -1021,19 +1021,13 @@ We made full CI/CD pipeline using Github actions to Kubernetes cluster at GCP :
 
 * Unit tests :
   + run unit tests :
-
-    
-
-``` shell
+    ``` shell
     $ ./tests_runner.sh u
     ```
 
 * Integration tests :
   + run integration tests :
-
-    
-
-``` shell
+    ```shell
     $ ./tests_runner.sh i
     ```
 
