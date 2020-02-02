@@ -372,11 +372,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true,
-              "running": false
+              "enabled": "true",
+              "running": "false"
           },
-          "enabled":true, 
-          "running": false
+          "enabled": "true", 
+          "running": "false"
       },
       "note":"The api has been enabled without the DB!"
     }
@@ -418,11 +418,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0", 
               "port": "5432", 
-              "enabled":true, 
-              "running": true
+              "enabled": "true", 
+              "running": "true"
           }, 
-          "enabled":true, 
-          "running": true
+          "enabled": "true", 
+          "running": "true"
       }, 
       "note":"The api has been enabled."
     }, 
@@ -439,11 +439,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true,
-              "running": false
+              "enabled": "true",
+              "running": "false"
           },
-          "enabled":true, 
-          "running": false
+          "enabled": "true", 
+          "running": "false"
       },
       "note":"The api has been enabled without the DB!"
     }
@@ -487,11 +487,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true, 
-              "running": true
+              "enabled": "true", 
+              "running": "true"
           },
-          "enabled":true,
-          "running": true
+          "enabled": "true",
+          "running": "true"
       },
       "note":"The api has been enabled."
     }
@@ -536,11 +536,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true, 
-              "running": true
+              "enabled": "true", 
+              "running": "true"
           },
-          "enabled":true,
-          "running": true
+          "enabled": "true",
+          "running": "true"
       },
       "note":"The api has been enabled."
     }
@@ -583,11 +583,11 @@ ________________________________________________________
           "ms":"postgresql", 
           "host": "0.0.0.0",
           "port": "5432",
-          "enabled":true, 
-          "running": true
+          "enabled": "true", 
+          "running": "true"
       },
-      "enabled":true,
-      "running": true
+      "enabled": "true",
+      "running": "true"
 
   }, 
   "note":"The api has been enabled."
@@ -626,11 +626,11 @@ ________________________________________________________
           "ms":"postgresql", 
           "host": "0.0.0.0",
           "port": "5432",
-          "enabled":true,
-          "running": false
+          "enabled": "true",
+          "running": "false"
       },
-      "enabled":true, 
-      "running": false
+      "enabled": "true", 
+      "running": "false"
 
   }, 
   "note":"The api has been enabled without the DB!"
@@ -673,11 +673,11 @@ ________________________________________________________
             "ms":"postgresql", 
             "host": "0.0.0.0",
             "port": "5432",
-            "enabled":true, 
-            "running": true
+            "enabled": "true", 
+            "running": "true"
         },
-        "enabled":true,
-        "running": true
+        "enabled": "true",
+        "running": "true"
     },
     "note":"The api has been enabled."
 
@@ -718,11 +718,11 @@ ________________________________________________________
             "ms":"postgresql", 
             "host": "0.0.0.0",
             "port": "5432",
-            "enabled":true,
-            "running": false
+            "enabled": "true",
+            "running": "false"
         },
-        "enabled":true, 
-        "running": false
+        "enabled": "true", 
+        "running": "false"
     },
     "note":"The api has been enabled without the DB!"
 
@@ -828,11 +828,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true, 
-              "running": true
+              "enabled": "true", 
+              "running": "true"
           },
-          "enabled":true,
-          "running": true
+          "enabled": "true",
+          "running": "true"
       },
       "note":"The api has been enabled."
     }
@@ -874,11 +874,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0", 
               "port": "5432", 
-              "enabled":true, 
-              "running": true
+              "enabled": "true", 
+              "running": "true"
           }, 
-          "enabled":true, 
-          "running": true
+          "enabled": "true", 
+          "running": "true"
       }, 
       "note":"The api has been enabled."
     }, 
@@ -895,11 +895,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true,
-              "running": false
+              "enabled": "true",
+              "running": "false"
           },
-          "enabled":true, 
-          "running": false
+          "enabled": "true", 
+          "running": "false"
       },
       "note":"The api has been enabled without the DB!"
     }
@@ -942,11 +942,11 @@ ________________________________________________________
               "ms":"postgresql", 
               "host": "0.0.0.0",
               "port": "5432",
-              "enabled":true,
-              "running": false
+              "enabled": "true",
+              "running": "false"
           },
-          "enabled":true, 
-          "running": false
+          "enabled": "true", 
+          "running": "false"
       },
       "note":"The api has been enabled without the DB!"
     }

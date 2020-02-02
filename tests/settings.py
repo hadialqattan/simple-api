@@ -6,20 +6,20 @@ def create_users():
     """
     create test users: 
 
-        - username: admin, password: admin, isadmin: True
+        - username: admin, password: admin, isadmin: "true"
         
-        - username: user2, password: user2pass, isadmin: False
+        - username: user2, password: user2pass, isadmin: "false"
     """
     if not crud.get_user(
         db=database.SessionLocal(), username="admin"
     ) and not crud.get_admins(db=database.SessionLocal()):
         user = schemas.UserCreate(
-            **{"username": "admin", "password": "admin", "isadmin": True}
+            **{"username": "admin", "password": "admin", "isadmin": "true"}
         )
         crud.create_user(db=database.SessionLocal(), user=user)
     if not crud.get_user(db=database.SessionLocal(), username="user2"):
         user = schemas.UserCreate(
-            **{"username": "user2", "password": "user2pass", "isadmin": False}
+            **{"username": "user2", "password": "user2pass", "isadmin": "false"}
         )
         crud.create_user(db=database.SessionLocal(), user=user)
 
@@ -42,11 +42,11 @@ def create_configs():
                     "ms": "postgresql",
                     "host": "0.0.0.0",
                     "port": "5432",
-                    "enabled": True,
-                    "running": True,
+                    "enabled": "true",
+                    "running": "true",
                 },
-                "enabled": True,
-                "running": True,
+                "enabled": "true",
+                "running": "true",
             },
             "note": "The api has been enabled.",
         }
@@ -66,11 +66,11 @@ def create_configs():
                     "ms": "postgresql",
                     "host": "0.0.0.0",
                     "port": "5432",
-                    "enabled": True,
-                    "running": False,
+                    "enabled": "true",
+                    "running": "false",
                 },
-                "enabled": True,
-                "running": False,
+                "enabled": "true",
+                "running": "false",
             },
             "note": "The api has been enabled without the DB!",
         }

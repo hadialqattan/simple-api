@@ -236,7 +236,7 @@ class IntegrationTests_Configs(unittest.TestCase):
     def test_10_Update_success(self):
         self.inputs["test_10_Update_success"]["headers"]["Authorization"] = (
             self.inputs["test_10_Update_success"]["headers"]["Authorization"]
-            % self.__class__.admin_token
+            % self.__class__.user2_token
         )
         res = requests.put(
             (self.urls["Update"] % self.inputs["test_10_Update_success"]["name"]),
@@ -305,7 +305,7 @@ class IntegrationTests_Configs(unittest.TestCase):
     def test_14_Delete_success(self):
         self.inputs["test_14_Delete_success"]["headers"]["Authorization"] = (
             self.inputs["test_14_Delete_success"]["headers"]["Authorization"]
-            % self.__class__.admin_token
+            % self.__class__.user2_token
         )
         res = requests.delete(
             (self.urls["Delete"] % self.inputs["test_14_Delete_success"]["name"]),

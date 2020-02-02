@@ -242,11 +242,11 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.auth.get_user")  # 1
     @patch("app.crud.update_config")  # 2
     def test_10_Update_success(self, patch2, patch1):
-        patch1.return_value = self.mockdb["admin"]
+        patch1.return_value = self.mockdb["user2"]
         patch2.return_value = self.mockdb["api-32"]
         self.inputs["test_10_Update_success"]["headers"]["Authorization"] = (
             self.inputs["test_10_Update_success"]["headers"]["Authorization"]
-            % self.__class__.admin_token
+            % self.__class__.user2_token
         )
         res = self.client.put(
             (self.urls["Update"] % self.inputs["test_10_Update_success"]["name"]),
@@ -323,11 +323,11 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.auth.get_user")  # 1
     @patch("app.crud.delete_config")  # 2
     def test_14_Delete_success(self, patch2, patch1):
-        patch1.return_value = self.mockdb["admin"]
+        patch1.return_value = self.mockdb["user2"]
         patch2.return_value = True
         self.inputs["test_14_Delete_success"]["headers"]["Authorization"] = (
             self.inputs["test_14_Delete_success"]["headers"]["Authorization"]
-            % self.__class__.admin_token
+            % self.__class__.user2_token
         )
         res = self.client.delete(
             (self.urls["Delete"] % self.inputs["test_14_Delete_success"]["name"]),

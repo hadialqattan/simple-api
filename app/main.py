@@ -457,12 +457,12 @@ def Update(
     return: json response
     """
     # for admin but not admin
-    if (not current_user.isadmin) and owner is not None:
+    if (not current_user.isadmin) and owner:
         raise HTTPException(
             status_code=401, detail="Only admins can perform this function"
         )
     # for admin
-    elif current_user.isadmin and owner is not None:
+    elif current_user.isadmin and owner:
         config = crud.update_config(db=db, config=config, name=name, owner=owner)
         resowner = owner
     else:
