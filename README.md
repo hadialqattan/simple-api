@@ -322,20 +322,24 @@ ________________________________________________________
 {
   "Configs": [
     {
-      "owner": "user2",
-      "name": "datacenter-2",
+      "owner":"user2",
+      "name":"api-2",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "250m",
-            "enabled": "true"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI",
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true,
+              "running": false
+          },
+          "enabled":true, 
+          "running": false
       },
-      "note": "the cpu has already enabled"
+      "note":"The api has been enabled without the DB!"
     }
   ]
 }
@@ -360,36 +364,44 @@ ________________________________________________________
 {
   "Configs": [
     {
-      "owner": "admin",
-      "name": "datacenter-1",
+      "owner":"admin", 
+      "name":"api-1",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "300m",
-            "enabled": "false"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI", 
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true, 
+              "running": true
+          },
+          "enabled":true,
+          "running": true
       },
-      "note": "the cpu has not enabled yet"
+      "note":"The api has been enabled."
     },
     {
-      "owner": "user2",
-      "name": "datacenter-2",
+      "owner":"user2",
+      "name":"api-2",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "250m",
-            "enabled": "true"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI",
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true,
+              "running": false
+          },
+          "enabled":true, 
+          "running": false
       },
-      "note": "the cpu has already enabled"
+      "note":"The api has been enabled without the DB!"
     }
   ]
 }
@@ -414,20 +426,24 @@ ________________________________________________________
 {
   "Configs": [
     {
-      "owner": "admin",
-      "name": "datacenter-1",
+      "owner":"admin", 
+      "name":"api-1",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "300m",
-            "enabled": "false"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI", 
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true, 
+              "running": true
+          },
+          "enabled":true,
+          "running": true
       },
-      "note": "the cpu has not enabled yet"
+      "note":"The api has been enabled."
     }
   ]
 }
@@ -439,7 +455,7 @@ ________________________________________________________
 
 ### Request
 ```shell 
-$ curl -X POST "http://127.0.0.1:5057/configs" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MTQ1NX0.AVrdoL2hIBGsiPJ6AisO-5jL1XgL-Q-IEMLkofsd0g8" -H "Content-Type: application/json" -d "{\"owner\":\"admin\",\"note\":\"the cpu has not enabled yet\",\"name\":\"datacenter-1\",\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"false\",\"value\":\"300m\"}}}}"
+$ curl -X POST "http://127.0.0.1:5057/configs" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MTQ1NX0.AVrdoL2hIBGsiPJ6AisO-5jL1XgL-Q-IEMLkofsd0g8" -H "Content-Type: application/json" -d "{\"owner\":\"admin\",\"name\":\"api-1\",\"metadata\":{\"name\":\"SimpleAPI\",\"url\":\"http:\/\/127.0.0.1:5057\",\"database\":{\"name\":\"apidb\",\"type\":\"sql\",\"ms\":\"postgresql\",\"host\":\"0.0.0.0\",\"port\":\"5432\",\"enabled\":true,\"running\":true},\"enabled\":true,\"running\":true},\"note\":\"The api has been enabled.\"}"
 ```
 
 ### Response
@@ -455,21 +471,25 @@ ________________________________________________________
 
 {
   "Created": {
-    "owner": "admin",
-    "name": "datacenter-1",
-    "metadata": {
-      "limits": {
-        "cpu": {
-          "value": "300m",
-          "enabled": "false"
-        }
+      "owner":"admin", 
+      "name":"api-1",
+      "metadata": {
+          "name":"SimpleAPI", 
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true, 
+              "running": true
+          },
+          "enabled":true,
+          "running": true
       },
-      "monitoring": {
-        "enabled": "true"
-      }
-    },
-    "note": "the cpu has not enabled yet"
-  }
+      "note":"The api has been enabled."
+    }
 }
 ```
 
@@ -479,7 +499,7 @@ ________________________________________________________
 
 ### Request (without owner query param)
 ```shell 
-$ curl -X GET "http://127.0.0.1:5057/configs/datacenter-1" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMiIsImV4cCI6MTU4MDQ3MjYyOX0.4hdblMjb51nWQ9C6gO_4AzTvMZS4P9VJsVqq8omFFq8"
+$ curl -X GET "http://127.0.0.1:5057/configs/api-1" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMiIsImV4cCI6MTU4MDQ3MjYyOX0.4hdblMjb51nWQ9C6gO_4AzTvMZS4P9VJsVqq8omFFq8"
 ```
 
 ### Response (without owner query param)
@@ -494,26 +514,30 @@ server: uvicorn
 ________________________________________________________
 
 {
+  "owner":"admin", 
+  "name":"api-1",
   "metadata": {
-    "limits": {
-      "cpu": {
-        "value": "300m",
-        "enabled": "false"
-      }
-    },
-    "monitoring": {
-      "enabled": "true"
-    }
+      "name":"SimpleAPI", 
+      "url":"http://127.0.0.1:5057", 
+      "database":{
+          "name":"apidb", 
+          "type":"sql", 
+          "ms":"postgresql", 
+          "host": "0.0.0.0",
+          "port": "5432",
+          "enabled":true, 
+          "running": true
+      },
+      "enabled":true,
+      "running": true
   },
-  "note": "the cpu has not enabled yet",
-  "owner": "admin",
-  "name": "datacenter-1"
+  "note":"The api has been enabled."
 }
 ```
 
 ### Request (with owner query param :: admin permission required)
 ```shell 
-$ curl -X GET "http://127.0.0.1:5057/configs/datacenter-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU"
+$ curl -X GET "http://127.0.0.1:5057/configs/api-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU"
 ```
 
 ### Response (with owner query param :: admin permission required)
@@ -528,20 +552,24 @@ server: uvicorn
 ________________________________________________________
 
 {
+  "owner":"user2",
+  "name":"api-2",
   "metadata": {
-    "limits": {
-      "cpu": {
-        "value": "250m",
-        "enabled": "true"
-      }
-    },
-    "monitoring": {
-      "enabled": "true"
-    }
+      "name":"SimpleAPI",
+      "url":"http://127.0.0.1:5057", 
+      "database":{
+          "name":"apidb", 
+          "type":"sql", 
+          "ms":"postgresql", 
+          "host": "0.0.0.0",
+          "port": "5432",
+          "enabled":true,
+          "running": false
+      },
+      "enabled":true, 
+      "running": false
   },
-  "note": "the cpu has already enabled",
-  "owner": "user2",
-  "name": "datacenter-2"
+  "note":"The api has been enabled without the DB!"
 }
 ```
 
@@ -551,7 +579,7 @@ ________________________________________________________
 
 ### Request (without owner query param)
 ```shell 
-$ curl -X PUT "http://127.0.0.1:5057/configs/datacenter-1" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU" -H "Content-Type: application/json" -d "{\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"true\",\"value\":\"300m\"}}},\"note\":\"the cpu has enabled\"}"
+$ curl -X PUT "http://127.0.0.1:5057/configs/api-1" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU" -H "Content-Type: application/json" -d "{\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"true\",\"value\":\"300m\"}}},\"note\":\"the cpu has enabled\"}"
 ```
 
 ### Response (without owner query param)
@@ -567,27 +595,31 @@ ________________________________________________________
 
 {
   "Update": {
-    "owner": "admin",
-    "name": "datacenter-1",
+    "owner":"admin", 
+    "name":"api-1",
     "metadata": {
-      "limits": {
-        "cpu": {
-          "value": "300m",
-          "enabled": "true"
-        }
-      },
-      "monitoring": {
-        "enabled": "true"
-      }
+        "name":"SimpleAPI", 
+        "url":"http://127.0.0.1:5057", 
+        "database":{
+            "name":"apidb", 
+            "type":"sql", 
+            "ms":"postgresql", 
+            "host": "0.0.0.0",
+            "port": "5432",
+            "enabled":true, 
+            "running": true
+        },
+        "enabled":true,
+        "running": true
     },
-    "note": "the cpu has enabled"
+    "note":"The api has been enabled."
   }
 }
 ```
 
 ### Request (without owner query param :: admin permission required)
 ```shell 
-$ curl -X PUT "http://127.0.0.1:5057/configs/datacenter-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU" -H "Content-Type: application/json" -d "{\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"false\",\"value\":\"250m\"}}},\"note\":\"the cpu has disabled\"}"
+$ curl -X PUT "http://127.0.0.1:5057/configs/api-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3MjkwN30.-zj87zhB_bJLVNKvdvPKGtp1tjaQYQ_isNH-QzcymmU" -H "Content-Type: application/json" -d "{\"metadata\":{\"monitoring\":{\"enabled\":\"true\"},\"limits\":{\"cpu\":{\"enabled\":\"false\",\"value\":\"250m\"}}},\"note\":\"the cpu has disabled\"}"
 ```
 
 ### Response (without owner query param :: admin permission required)
@@ -603,20 +635,24 @@ ________________________________________________________
 
 {
   "Update": {
-    "owner": "user2",
-    "name": "datacenter-2",
+    "owner":"user2",
+    "name":"api-2",
     "metadata": {
-      "limits": {
-        "cpu": {
-          "value": "250m",
-          "enabled": "false"
-        }
-      },
-      "monitoring": {
-        "enabled": "true"
-      }
+        "name":"SimpleAPI",
+        "url":"http://127.0.0.1:5057", 
+        "database":{
+            "name":"apidb", 
+            "type":"sql", 
+            "ms":"postgresql", 
+            "host": "0.0.0.0",
+            "port": "5432",
+            "enabled":true,
+            "running": false
+        },
+        "enabled":true, 
+        "running": false
     },
-    "note": "the cpu has disabled"
+    "note":"The api has been enabled without the DB!"
   }
 }
 ```
@@ -627,7 +663,7 @@ ________________________________________________________
 
 ### Request (without owner query param)
 ```shell 
-$ curl -X DELETE "http://127.0.0.1:5057/configs/datacenter-1" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
+$ curl -X DELETE "http://127.0.0.1:5057/configs/api-1" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
 ```
 
 ### Response (without owner query param)
@@ -644,14 +680,14 @@ ________________________________________________________
 {
   "Delete": {
     "owner": "admin",
-    "name": "datacenter-1"
+    "name": "api-1"
   }
 }
 ```
 
 ### Request (with admin query param :: admin permission required)
 ```shell 
-$ curl -X DELETE "http://127.0.0.1:5057/configs/datacenter-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
+$ curl -X DELETE "http://127.0.0.1:5057/configs/api-2?owner=user2" -H "accept: application/json" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4MDQ3Mzc0MH0.QaxTlU-1dJQGO_GpTTjJvSeuDnAdSkut0wkP3sHeTfM"
 ```
 
 ### Response (with admin query :: admin permission required)
@@ -668,7 +704,7 @@ ________________________________________________________
 {
   "Delete": {
     "owner": "user2",
-    "name": "datacenter-2"
+    "name": "api-2"
   }
 }
 ```
@@ -694,20 +730,24 @@ ________________________________________________________
 {
   "Configs": [
     {
-      "owner": "admin",
-      "name": "datacenter-1",
+      "owner":"admin", 
+      "name":"api-1",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "300m",
-            "enabled": "true"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI", 
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true, 
+              "running": true
+          },
+          "enabled":true,
+          "running": true
       },
-      "note": "the cpu has enabled"
+      "note":"The api has been enabled."
     }
   ]
 }
@@ -732,36 +772,44 @@ ________________________________________________________
 {
   "Configs": [
     {
-      "owner": "admin",
-      "name": "datacenter-1",
+      "owner":"admin", 
+      "name":"api-1",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "300m",
-            "enabled": "true"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI", 
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true, 
+              "running": true
+          },
+          "enabled":true,
+          "running": true
       },
-      "note": "the cpu has enabled"
+      "note":"The api has been enabled."
     },
     {
-      "owner": "user2",
-      "name": "datacenter-2",
+      "owner":"user2",
+      "name":"api-2",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "250m",
-            "enabled": "false"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI",
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true,
+              "running": false
+          },
+          "enabled":true, 
+          "running": false
       },
-      "note": "the cpu has disabled"
+      "note":"The api has been enabled without the DB!"
     }
   ]
 }
@@ -786,20 +834,24 @@ ________________________________________________________
 {
   "Configs": [
     {
-      "owner": "user2",
-      "name": "datacenter-2",
+      "owner":"user2",
+      "name":"api-2",
       "metadata": {
-        "limits": {
-          "cpu": {
-            "value": "250m",
-            "enabled": "false"
-          }
-        },
-        "monitoring": {
-          "enabled": "true"
-        }
+          "name":"SimpleAPI",
+          "url":"http://127.0.0.1:5057", 
+          "database":{
+              "name":"apidb", 
+              "type":"sql", 
+              "ms":"postgresql", 
+              "host": "0.0.0.0",
+              "port": "5432",
+              "enabled":true,
+              "running": false
+          },
+          "enabled":true, 
+          "running": false
       },
-      "note": "the cpu has disabled"
+      "note":"The api has been enabled without the DB!"
     }
   ]
 }

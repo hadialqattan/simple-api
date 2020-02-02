@@ -75,7 +75,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.get_configs")  # 2
     def test_01_List_success(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = [self.mockdb["datacenter-1"], self.mockdb["datacenter-2"]]
+        patch2.return_value = [self.mockdb["api-1"], self.mockdb["api-2"]]
         self.inputs["test_01_List_success"]["headers"]["Authorization"] = (
             self.inputs["test_01_List_success"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -91,7 +91,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.get_configs")  # 2
     def test_02_List_success_owner(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = [self.mockdb["datacenter-2"]]
+        patch2.return_value = [self.mockdb["api-2"]]
         self.inputs["test_02_List_success_owner"]["headers"]["Authorization"] = (
             self.inputs["test_02_List_success_owner"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -129,7 +129,7 @@ class UnitTests_Configs(unittest.TestCase):
     def test_04_Create_success(self, patch3, patch2, patch1):
         patch1.return_value = self.mockdb["user2"]
         patch2.return_value = None
-        patch3.return_value = self.mockdb["datacenter-3"]
+        patch3.return_value = self.mockdb["api-3"]
         self.inputs["test_04_Create_success"]["headers"]["Authorization"] = (
             self.inputs["test_04_Create_success"]["headers"]["Authorization"]
             % self.__class__.user2_token
@@ -147,7 +147,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.get_config")  # 2
     def test_05_Create_400(self, patch2, patch1):
         patch1.return_value = self.mockdb["user2"]
-        patch2.return_value = self.mockdb["datacenter-3"]
+        patch2.return_value = self.mockdb["api-3"]
         self.inputs["test_05_Create_400"]["headers"]["Authorization"] = (
             self.inputs["test_05_Create_400"]["headers"]["Authorization"]
             % self.__class__.user2_token
@@ -165,7 +165,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.get_config")  # 2
     def test_06_Get_success(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = self.mockdb["datacenter-1"]
+        patch2.return_value = self.mockdb["api-1"]
         self.inputs["test_06_Get_success"]["headers"]["Authorization"] = (
             self.inputs["test_06_Get_success"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -182,7 +182,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.get_config")  # 2
     def test_07_Get_success_owner(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = self.mockdb["datacenter-1"]
+        patch2.return_value = self.mockdb["api-1"]
         self.inputs["test_07_Get_success_owner"]["headers"]["Authorization"] = (
             self.inputs["test_07_Get_success_owner"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -243,7 +243,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.update_config")  # 2
     def test_10_Update_success(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = self.mockdb["datacenter-32"]
+        patch2.return_value = self.mockdb["api-32"]
         self.inputs["test_10_Update_success"]["headers"]["Authorization"] = (
             self.inputs["test_10_Update_success"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -261,7 +261,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.update_config")  # 2
     def test_11_Update_success_owner(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = self.mockdb["datacenter-33"]
+        patch2.return_value = self.mockdb["api-33"]
         self.inputs["test_11_Update_success_owner"]["headers"]["Authorization"] = (
             self.inputs["test_11_Update_success_owner"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -403,7 +403,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.query_metadata")  # 2
     def test_18_Query_success(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = [self.mockdb["datacenter-1"]]
+        patch2.return_value = [self.mockdb["api-1"]]
         self.inputs["test_18_Query_success"]["headers"]["Authorization"] = (
             self.inputs["test_18_Query_success"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -428,7 +428,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.query_metadata")  # 2
     def test_19_Query_success_all(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = [self.mockdb["datacenter-1"]]
+        patch2.return_value = [self.mockdb["api-1"]]
         self.inputs["test_19_Query_success_all"]["headers"]["Authorization"] = (
             self.inputs["test_19_Query_success_all"]["headers"]["Authorization"]
             % self.__class__.admin_token
@@ -455,7 +455,7 @@ class UnitTests_Configs(unittest.TestCase):
     @patch("app.crud.query_metadata")  # 2
     def test_20_Query_success_owner(self, patch2, patch1):
         patch1.return_value = self.mockdb["admin"]
-        patch2.return_value = [self.mockdb["datacenter-1"]]
+        patch2.return_value = [self.mockdb["api-1"]]
         self.inputs["test_20_Query_success_owner"]["headers"]["Authorization"] = (
             self.inputs["test_20_Query_success_owner"]["headers"]["Authorization"]
             % self.__class__.admin_token

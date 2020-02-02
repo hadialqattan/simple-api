@@ -288,31 +288,61 @@ def INPUTS_CONFIGS():
         "test_04_Create_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
             "json": {
-                "name": "datacenter-3",
-                "metadata": {"monitoring": {"enabled": "true"}},
-                "note": "the cpu has not enabled yet",
+                "owner":"admin",
+                "name":"api-3",
+                "metadata": {
+                    "name":"SimpleAPI",
+                    "url":"http://127.0.0.1:5057", 
+                    "database":{
+                        "name":"apidb", 
+                        "type":"sql", 
+                        "ms":"postgresql", 
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled":True, 
+                        "running": True
+                    },
+                    "enabled":True,
+                    "running": True
+                },
+                "note":"everything is running."
             },
         },
         "test_05_Create_400": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
             "json": {
-                "name": "datacenter-3",
-                "metadata": {"monitoring": {"enabled": "true"}},
-                "note": "the cpu has not enabled yet",
+                "owner":"admin",
+                "name":"api-3",
+                "metadata": {
+                    "name":"SimpleAPI",
+                    "url":"http://127.0.0.1:5057", 
+                    "database":{
+                        "name":"apidb", 
+                        "type":"sql", 
+                        "ms":"postgresql", 
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled":True, 
+                        "running": True
+                    },
+                    "enabled":True,
+                    "running": True
+                },
+                "note":"everything is running."
             },
         },
         "test_06_Get_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "datacenter-1",
+            "name": "api-1",
         },
         "test_07_Get_success_owner": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "datacenter-1",
+            "name": "api-1",
             "owner": "user2",
         },
         "test_08_Get_401": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "datacenter-1",
+            "name": "api-1",
             "owner": "notme",
         },
         "test_09_Get_404": {
@@ -322,34 +352,94 @@ def INPUTS_CONFIGS():
         },
         "test_10_Update_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {"updated": "success"}, "note": "success"},
-            "name": "datacenter-3",
+            "json": {"metadata": {
+                        "name":"SimpleAPI",
+                        "url":"http://127.0.0.1:5057", 
+                        "database":{
+                            "name":"apidb",
+                            "type":"sql", 
+                            "ms":"postgresql", 
+                            "host": "0.0.0.0",
+                            "port": "5432",
+                            "enabled":False, 
+                            "running": True
+                        },
+                        "enabled":False, 
+                        "running": True
+                    },
+                    "note":"every thing has disabled."}
+            "name": "api-3",
+            "owner": "admin",
+        },
+            "name": "api-3",
         },
         "test_11_Update_success_owner": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {"updated2": "success2"}, "note": "success_owner"},
-            "name": "datacenter-3",
-            "owner": "admin",
-        },
+            "json": {"metadata": {
+                        "name":"SimpleAPI",
+                        "url":"http://127.0.0.1:5057", 
+                        "database":{
+                            "name":"apidb",
+                            "type":"sql", 
+                            "ms":"postgresql", 
+                            "host": "0.0.0.0",
+                            "port": "5432",
+                            "enabled":False, 
+                            "running": False
+                        },
+                        "enabled":False, 
+                        "running": False
+                    },
+                    "note":"every thing has disabeld and nothing is running.",}
         "test_12_Update_401": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {"updated2": "success2"}, "note": "success_owner"},
-            "name": "datacenter-3",
+            "json": {"metadata": {
+            "name":"SimpleAPI",
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb",
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":False, 
+                "running": True
+            },
+            "enabled":False, 
+            "running": True
+        },
+        "note":"every thing has disabled."},
+            "name": "api-3",
             "owner": "admin",
         },
         "test_13_Update_404": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "json": {"metadata": {"updated2": "success2"}, "note": "success_owner"},
+            "json": {"metadata": {
+            "name":"SimpleAPI",
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb",
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":False, 
+                "running": True
+            },
+            "enabled":False, 
+            "running": True
+        },
+        "note":"every thing has disabled."},
             "name": "404config",
             "owner": "admin",
         },
         "test_14_Delete_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "datacenter-3",
+            "name": "api-3",
         },
         "test_15_Delete_success_owner": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "name": "datacenter-2",
+            "name": "api-2",
             "owner": "user2",
         },
         "test_16_Delete_401": {
@@ -364,28 +454,28 @@ def INPUTS_CONFIGS():
         },
         "test_18_Query_success": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "monitoring",
-            "value": "true",
-            "all": "false",
+            "key": "database.enabled",
+            "value": "True",
+            "all": "False",
         },
         "test_19_Query_success_all": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "limits.cpu.enabled",
-            "value": "false",
-            "all": "true",
+            "key": "running",
+            "value": "True",
+            "all": "True",
         },
         "test_20_Query_success_owner": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "limits.cpu.enabled",
-            "value": "false",
-            "all": "false",
+            "key": "database.running",
+            "value": "True",
+            "all": "False",
             "owner": "admin",
         },
         "test_21_Query_401": {
             "headers": {"accept": "application/json", "Authorization": "Bearer %s"},
-            "key": "limits.cpu.enabled",
-            "value": "false",
-            "all": "true",
+            "key": "database.running",
+            "value": "True",
+            "all": "True",
         },
     }
 
@@ -405,22 +495,44 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
+                        "owner":"admin", 
+                        "name":"api-1",
                         "metadata": {
-                            "limits": {"cpu": {"enabled": "false", "value": "300m"}},
-                            "monitoring": {"enabled": "true"},
+                            "name":"SimpleAPI", 
+                            "url":"http://127.0.0.1:5057", 
+                            "database":{
+                                "name":"apidb", 
+                                "type":"sql", 
+                                "ms":"postgresql", 
+                                "host": "0.0.0.0",
+                                "port": "5432",
+                                "enabled":True, 
+                                "running": True
+                            },
+                            "enabled":True,
+                            "running": True
                         },
-                        "name": "datacenter-1",
-                        "note": "The cpu has not enabled yet.",
-                        "owner": "admin",
+                        "note":"The api has been enabled."
                     },
                     {
+                        "owner":"user2",
+                        "name":"api-2",
                         "metadata": {
-                            "limits": {"cpu": {"enabled": "true", "value": "250m"}},
-                            "monitoring": {"enabled": "true"},
+                            "name":"SimpleAPI",
+                            "url":"http://127.0.0.1:5057", 
+                            "database":{
+                                "name":"apidb", 
+                                "type":"sql", 
+                                "ms":"postgresql", 
+                                "host": "0.0.0.0",
+                                "port": "5432",
+                                "enabled":True,
+                                "running": False
+                            },
+                            "enabled":True, 
+                            "running": False
                         },
-                        "name": "datacenter-2",
-                        "note": "The cpu has enabled.",
-                        "owner": "user2",
+                        "note":"The api has been enabled without the DB!"
                     },
                 ]
             },
@@ -430,13 +542,24 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
-                        "owner": "user2",
-                        "name": "datacenter-2",
+                        "owner":"user2",
+                        "name":"api-2",
                         "metadata": {
-                            "limits": {"cpu": {"value": "250m", "enabled": "true"}},
-                            "monitoring": {"enabled": "true"},
+                            "name":"SimpleAPI",
+                            "url":"http://127.0.0.1:5057", 
+                            "database":{
+                                "name":"apidb", 
+                                "type":"sql", 
+                                "ms":"postgresql", 
+                                "host": "0.0.0.0",
+                                "port": "5432",
+                                "enabled":True,
+                                "running": False
+                            },
+                            "enabled":True, 
+                            "running": False
                         },
-                        "note": "The cpu has enabled.",
+                        "note":"The api has been enabled without the DB!"
                     }
                 ]
             },
@@ -449,11 +572,25 @@ def OUTPUTS_CONFIGS():
             "status_code": 200,
             "json": {
                 "Created": {
-                    "owner": "user2",
-                    "name": "datacenter-3",
-                    "metadata": {"monitoring": {"enabled": "true"}},
-                    "note": "the cpu has not enabled yet",
-                }
+        "owner":"admin",
+        "name":"api-3",
+        "metadata": {
+            "name":"SimpleAPI",
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"everything is running."
+    }
             },
         },
         "test_05_Create_400": {
@@ -463,27 +600,47 @@ def OUTPUTS_CONFIGS():
         "test_06_Get_success": {
             "status_code": 200,
             "json": {
-                "metadata": {
-                    "limits": {"cpu": {"value": "300m", "enabled": "false"}},
-                    "monitoring": {"enabled": "true"},
-                },
-                "note": "The cpu has not enabled yet.",
-                "owner": "admin",
-                "name": "datacenter-1",
+        "owner":"admin", 
+        "name":"api-1",
+        "metadata": {
+            "name":"SimpleAPI", 
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
             },
+            "enabled":True,
+            "running": True
         },
+        "note":"The api has been enabled."
+    },
         "test_07_Get_success_owner": {
             "status_code": 200,
             "json": {
-                "metadata": {
-                    "limits": {"cpu": {"value": "300m", "enabled": "false"}},
-                    "monitoring": {"enabled": "true"},
-                },
-                "note": "The cpu has not enabled yet.",
-                "owner": "admin",
-                "name": "datacenter-1",
+        "owner":"admin", 
+        "name":"api-1",
+        "metadata": {
+            "name":"SimpleAPI", 
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
             },
+            "enabled":True,
+            "running": True
         },
+        "note":"The api has been enabled."
+    },
         "test_08_Get_401": {
             "status_code": 401,
             "json": {"detail": "Only admins can perform this function"},
@@ -496,22 +653,50 @@ def OUTPUTS_CONFIGS():
             "status_code": 200,
             "json": {
                 "Update": {
-                    "owner": "admin",
-                    "name": "datacenter-3",
-                    "metadata": {"updated": "success"},
-                    "note": "success",
-                }
+        "owner":"admin",
+        "name":"api-3",
+        "metadata": {
+            "name":"SimpleAPI",
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"everything is running."
+    }
             },
         },
         "test_11_Update_success_owner": {
             "status_code": 200,
             "json": {
                 "Update": {
-                    "owner": "admin",
-                    "name": "datacenter-3",
-                    "metadata": {"updated2": "success2"},
-                    "note": "success_owner",
-                }
+        "owner":"admin",
+        "name":"api-3",
+        "metadata": {
+            "name":"SimpleAPI",
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"everything is running."
+    }
             },
         },
         "test_12_Update_401": {
@@ -524,11 +709,11 @@ def OUTPUTS_CONFIGS():
         },
         "test_14_Delete_success": {
             "status_code": 200,
-            "json": {"Delete": {"owner": "admin", "name": "datacenter-3"}},
+            "json": {"Delete": {"owner": "admin", "name": "api-3"}},
         },
         "test_15_Delete_success_owner": {
             "status_code": 200,
-            "json": {"Delete": {"owner": "user2", "name": "datacenter-2"}},
+            "json": {"Delete": {"owner": "user2", "name": "api-2"}},
         },
         "test_16_Delete_401": {
             "status_code": 401,
@@ -543,14 +728,25 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
-                        "owner": "admin",
-                        "name": "datacenter-1",
-                        "metadata": {
-                            "limits": {"cpu": {"value": "300m", "enabled": "false"}},
-                            "monitoring": {"enabled": "true"},
-                        },
-                        "note": "The cpu has not enabled yet.",
-                    }
+        "owner":"admin", 
+        "name":"api-1",
+        "metadata": {
+            "name":"SimpleAPI", 
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"The api has been enabled."
+    }
                 ]
             },
         },
@@ -559,14 +755,25 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
-                        "owner": "admin",
-                        "name": "datacenter-1",
-                        "metadata": {
-                            "limits": {"cpu": {"value": "300m", "enabled": "false"}},
-                            "monitoring": {"enabled": "true"},
-                        },
-                        "note": "The cpu has not enabled yet.",
-                    }
+        "owner":"admin", 
+        "name":"api-1",
+        "metadata": {
+            "name":"SimpleAPI", 
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"The api has been enabled."
+    }
                 ]
             },
         },
@@ -575,14 +782,25 @@ def OUTPUTS_CONFIGS():
             "json": {
                 "Configs": [
                     {
-                        "owner": "admin",
-                        "name": "datacenter-1",
-                        "metadata": {
-                            "limits": {"cpu": {"value": "300m", "enabled": "false"}},
-                            "monitoring": {"enabled": "true"},
-                        },
-                        "note": "The cpu has not enabled yet.",
-                    }
+        "owner":"admin", 
+        "name":"api-1",
+        "metadata": {
+            "name":"SimpleAPI", 
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"The api has been enabled."
+    }
                 ]
             },
         },
@@ -636,50 +854,114 @@ def MOCK_CONFIGS():
                 "configs": [],
             }
         ),
-        "datacenter-1": models.Config(
+        "api-1": models.Config(
             **{
+        "owner":"admin", 
+        "name":"api-1",
+        "metadatac": {
+            "name":"SimpleAPI", 
+            "url":"http://127.0.0.1:5057", 
+            "database":{
+                "name":"apidb", 
+                "type":"sql", 
+                "ms":"postgresql", 
+                "host": "0.0.0.0",
+                "port": "5432",
+                "enabled":True, 
+                "running": True
+            },
+            "enabled":True,
+            "running": True
+        },
+        "note":"The api has been enabled."
+    }
+        ),
+        "api-2": models.Config(
+            **{
+                "owner":"user2",
+                "name":"api-2",
                 "metadatac": {
-                    "limits": {"cpu": {"enabled": "false", "value": "300m"}},
-                    "monitoring": {"enabled": "true"},
+                    "name":"SimpleAPI",
+                    "url":"http://127.0.0.1:5057", 
+                    "database":{
+                        "name":"apidb", 
+                        "type":"sql", 
+                        "ms":"postgresql", 
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled":True,
+                        "running": False
+                    },
+                    "enabled":True, 
+                    "running": False
                 },
-                "name": "datacenter-1",
-                "note": "The cpu has not enabled yet.",
-                "owner": "admin",
+                "note":"The api has been enabled without the DB!"
             }
         ),
-        "datacenter-2": models.Config(
+        "api-3": models.Config(
             **{
+                "owner":"admin",
+                "name":"api-3",
+                "metadata": {
+                    "name":"SimpleAPI",
+                    "url":"http://127.0.0.1:5057", 
+                    "database":{
+                        "name":"apidb", 
+                        "type":"sql", 
+                        "ms":"postgresql", 
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled":True, 
+                        "running": True
+                    },
+                    "enabled":True,
+                    "running": True
+                },
+                "note":"everything is running."
+            }
+        ),
+        "api-32": models.Config(
+            **{
+                "owner":"admin",
+                "name":"api-3",
                 "metadatac": {
-                    "limits": {"cpu": {"enabled": "true", "value": "250m"}},
-                    "monitoring": {"enabled": "true"},
+                    "name":"SimpleAPI",
+                    "url":"http://127.0.0.1:5057", 
+                    "database":{
+                        "name":"apidb",
+                        "type":"sql", 
+                        "ms":"postgresql", 
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled":False, 
+                        "running": True
+                    },
+                    "enabled":False, 
+                    "running": True
                 },
-                "name": "datacenter-2",
-                "note": "The cpu has enabled.",
-                "owner": "user2",
+                "note":"every thing has disabled."
             }
         ),
-        "datacenter-3": models.Config(
+        "api-33": models.Config(
             **{
-                "owner": "user2",
-                "name": "datacenter-3",
-                "metadatac": {"monitoring": {"enabled": "true"}},
-                "note": "the cpu has not enabled yet",
-            }
-        ),
-        "datacenter-32": models.Config(
-            **{
-                "owner": "admin",
-                "name": "datacenter-3",
-                "metadatac": {"updated": "success"},
-                "note": "success",
-            }
-        ),
-        "datacenter-33": models.Config(
-            **{
-                "owner": "admin",
-                "name": "datacenter-3",
-                "metadatac": {"updated2": "success2"},
-                "note": "success_owner",
+                "owner":"admin",
+                "name":"api-3",
+                "metadatac": {
+                    "name":"SimpleAPI",
+                    "url":"http://127.0.0.1:5057", 
+                    "database":{
+                        "name":"apidb",
+                        "type":"sql", 
+                        "ms":"postgresql", 
+                        "host": "0.0.0.0",
+                        "port": "5432",
+                        "enabled":False, 
+                        "running": False
+                    },
+                    "enabled":False, 
+                    "running": False
+                },
+                "note":"every thing has disabeld and nothing is running."
             }
         ),
     }
