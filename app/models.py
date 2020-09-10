@@ -10,12 +10,12 @@ class Config(Base):
     """
     configs table with five columns
 
-    id: int 
-    
+    id: int
+
     owner: int (owner username)
 
     name: str (unique for user)
-    
+
     metadata: nested key:value implemented as json
 
     note: str
@@ -32,7 +32,7 @@ class Config(Base):
 
 class User(Base):
     """
-    users table with one-to-many relationship with cofigs table 
+    users table with one-to-many relationship with cofigs table
 
     username: str (user name)
 

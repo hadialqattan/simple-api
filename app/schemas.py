@@ -16,10 +16,10 @@ class ConfigBase(BaseModel):
     note: str
 
     class ConfigBase:
-        """ 
+        """
         Pydantic's orm_mode will tell the Pydantic model to read the data even if it is not a dict,
         but an ORM model (or any other arbitrary object with attributes).
-        
+
         This way, instead of only trying to get the id value from a dict, as in:
         name = data['name']
 
@@ -104,10 +104,10 @@ class UserBase(BaseModel):
     isadmin: bool
 
     class ConfigBase:
-        """ 
+        """
         Pydantic's orm_mode will tell the Pydantic model to read the data even if it is not a dict,
         but an ORM model (or any other arbitrary object with attributes).
-        
+
         This way, instead of only trying to get the id value from a dict, as in:
         name = data['name']
 
@@ -123,7 +123,7 @@ class UserCreate(UserBase):
     UserCreate model columns:
 
         - username: str (user name) ::fromBase
- 
+
         - password: str (user password)
 
         - isadmin: bool ::fromBase
@@ -141,7 +141,7 @@ class UserRead(UserBase):
 
         - isadmin: bool ::fromBase
 
-        - configs: List[ConfigBase] 
+        - configs: List[ConfigBase]
 
     """
 
@@ -188,10 +188,10 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     """
-    TokenData contain token data: 
-    
+    TokenData contain token data:
+
         - id: int (user id)
-        
+
     """
 
     username: str = None

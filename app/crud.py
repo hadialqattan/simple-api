@@ -24,7 +24,7 @@ def get_users(db: Session):
 
 
 def get_admins(db: Session):
-    """ 
+    """
     desined for [GetAdmins : GET : /users/admins]
 
     SQL query: SELECT * FROM users WHERE isadmin=true;
@@ -44,7 +44,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
     SQL query: INSERT INTO users (id, pubilc_id, name, password, isadmin) VALUES (idValue, public_idValue, nameValue, passwordValue, isadminValue);
 
-    summary: insert new user into users table 
+    summary: insert new user into users table
 
     arguments: (db: Session [sqlalchemy database session]), (user: schemas.UserCreate [instance of UserCreate model])
 
@@ -119,7 +119,7 @@ def delete_user(db: Session, username: str):
 
 
 def get_configs(db: Session, owner: str = None):
-    """ 
+    """
     designed for [List : GET : /configs] endpoint
 
     SQL query: SELECT * FROM configs;
@@ -182,9 +182,9 @@ def create_config(db: Session, config: schemas.ConfigCreate, owner: str):
 
 
 def get_config(db: Session, name: str, owner: str):
-    """ 
+    """
     designed for [GET : GET : /configs/{name}] endpoint
-    
+
     SQL query: SELECT * FROM configs WHERE name=name && owner=owner;
 
     summary: get config by name
@@ -201,7 +201,7 @@ def get_config(db: Session, name: str, owner: str):
 
 
 def update_config(db: Session, config: schemas.ConfigUpdate, name: str, owner: str):
-    """ 
+    """
     designed for [Update : PUT : /configs/{name}] endpoint
 
     SQL query: UPDATE configs SET metadata=metadata WHERE name=name;
@@ -228,7 +228,7 @@ def update_config(db: Session, config: schemas.ConfigUpdate, name: str, owner: s
 
 def delete_config(db: Session, name: str, owner: str):
     """
-    designed for [Delete : DELETE : /configs/{name}] 
+    designed for [Delete : DELETE : /configs/{name}]
 
     SQL query: DELETE FROM configs WHERE name=name;
 
@@ -252,7 +252,7 @@ def delete_config(db: Session, name: str, owner: str):
 
 def query_metadata(db: Session, keys: list, value: str, all: bool, owner: str = None):
     """
-    designed for [Query : GET : /search] 
+    designed for [Query : GET : /search]
 
     SQL query: SELECT * FROM configs WHERE (configs.metadata #>> %(metadata_1)s) = %(param_1)s;
 

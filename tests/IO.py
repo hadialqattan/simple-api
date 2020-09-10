@@ -43,7 +43,7 @@ def INPUTS_USERS():
 
     arguments: None
 
-    return: Inputs dict 
+    return: Inputs dict
     """
     return {
         "test_01_get_access_token_success": {
@@ -185,7 +185,9 @@ def OUTPUTS_USERS():
         "test_06_GetAdmins_success": {
             "status_code": 200,
             "json": {
-                "Admins": [{"username": "admin", "isadmin": True, "configs": []},]
+                "Admins": [
+                    {"username": "admin", "isadmin": True, "configs": []},
+                ]
             },
         },
         "test_07_GetAdmins_401": {
@@ -249,7 +251,7 @@ def INPUTS_CONFIGS():
 
     arguments: None
 
-    return: Inputs dict 
+    return: Inputs dict
     """
     return {
         "test_00_create_access_token_for_admin_and_user2": {
@@ -499,7 +501,9 @@ def OUTPUTS_CONFIGS():
     return: Output dict
     """
     return {
-        "test_00_create_access_token_for_admin_and_user2": {"status_code": 200,},
+        "test_00_create_access_token_for_admin_and_user2": {
+            "status_code": 200,
+        },
         "test_01_List_success": {
             "status_code": 200,
             "json": {

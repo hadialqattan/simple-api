@@ -47,7 +47,7 @@ async def get_access_token(
 
     arguments: (db: Session), (form_data: OAuth2PasswordRequestForm)
 
-    return: access token 
+    return: access token
     """
     user = auth.authenticate_user(db, form_data.username, form_data.password)
     if not user:
@@ -172,7 +172,7 @@ def CreateUser(
 ):
     """
     SQL query: INSERT INTO users (username, password, isadmin) VALUES (usrenameValue, passwordHashValue, isadminValue)
-    
+
     summary: create new config into configs table
 
     arguments: (user: UserCreate [an instance of UserCreate class])
@@ -287,7 +287,7 @@ def DeleteUser(
 
     arguments: (username: str), (current_user: schemas.UserRead = Depends(auth.get_current_user)), (db: Session = Depends(get_db))
 
-    return: json message 
+    return: json message
     """
     # check for admin
     if not current_user.isadmin:
@@ -318,11 +318,11 @@ def List(
 ):
     """
     SQL query: SELECT * FROM configs;
-    
+
     summary: list all configs
-    
+
     arguments: (owner: str [optional (for admins)])
-    
+
     return: valid json contain all configs table rows
     """
     # for admin but not admin
@@ -365,12 +365,12 @@ def Create(
 ):
     """
     SQL query: INSERT INTO configs (owner, name, metadata, note) VALUES (ownerValue, nameValue, metadataValue, noteValue)
-    
+
     summary: create new config into configs table
 
     arguments: (config: ConfigCeate [an instance of ConfigCreate class]), (current_user: schemas.UserRead = Depends(auth.get_current_user))
 
-    return: json response contain success message or failed message with 400 
+    return: json response contain success message or failed message with 400
     """
     # check for exists config
     if crud.get_config(name=config.name, owner=current_user.username, db=db):

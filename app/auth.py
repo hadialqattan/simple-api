@@ -47,7 +47,7 @@ def authenticate_user(db: Session, username: str, password: str):
     """
     summary: basic auth using password and username
 
-    arguments: (db: Session), (username: str), (password: str) 
+    arguments: (db: Session), (username: str), (password: str)
 
     return: user if auth info is correct else False
     """
@@ -61,7 +61,7 @@ def authenticate_user(db: Session, username: str, password: str):
 
 def create_access_token(*, data: dict, expires_delta: timedelta = None):
     """
-    summary: create jwt access token 
+    summary: create jwt access token
 
     arguments: (data: dict), (expires_delta: timedelta)
 

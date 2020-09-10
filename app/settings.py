@@ -23,7 +23,7 @@ def create_admin():
 
 def custom_openapi():
     """
-    custom openapi 
+    custom openapi
     """
     # cache openapi
     if main.app.openapi_schema:
@@ -32,7 +32,7 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="SimpleAPI",
         version="2.0.0",
-        description="SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL. <a href='https://github.com/HadiZakiAlQattan/simpleapi/blob/master/README.md'>Full documentation</a>",
+        description="SimpleAPI is a restful API provids simple service that stores and returns configurations with simple jwt authentication using FastAPI and PostgreSQL. <a href='https://github.com/hadialqattan/simpleapi/blob/master/README.md'>Full documentation</a>",
         routes=main.app.routes,
     )
     main.app.title = "SimpleAPI"

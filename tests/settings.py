@@ -4,10 +4,10 @@ from .IO import URLs
 
 def create_users():
     """
-    create test users: 
+    create test users:
 
         - username: admin, password: admin, isadmin: "true"
-        
+
         - username: user2, password: user2pass, isadmin: "false"
     """
     if not crud.get_user(
